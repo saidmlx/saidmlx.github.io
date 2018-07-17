@@ -1,0 +1,34 @@
+
+<header id="headerSection">
+  <div class="header-page ">
+    <div class="info">
+      <h3 class="hello">Hola, mi nombre es Said Morales Lemus</h3>
+      <h1>SOY UN ARQUITECTO DE SOFTWARE</h1>
+      <h3 class="who-creates" >siempre en busqueda de nuevos retos </h3>
+    </div>
+    <div id="mouseIcon" class="mouse-icon">
+      <div id="mouseIconDragBall" class="wheel"></div>
+    </div>
+  </div>
+
+    {%- include navbar.html -%}
+    
+</header>
+<script>
+  window.onload = function() {
+    window.onscroll = function() {myFunction()};
+    var headerSection= document.getElementById("headerSection").offsetHeight;
+    myFunction();
+    function myFunction() {
+      console.info('myFunction')
+      var transparency=((window.pageYOffset+50)/headerSection)
+      if(transparency > 1){
+        transparency = 1
+      }
+      document.getElementById("navbar").style.backgroundColor="rgb(255, 255, 255, "+transparency+")";
+      document.getElementById("mouseIcon").style.borderColor="rgb(0, 0 , 0, "+(0.8-transparency)+")";
+      document.getElementById("mouseIconDragBall").style.backgroundColor="rgb(0, 0 , 0, "+(0.8-transparency)+")";
+        
+    }
+  }
+</script>

@@ -1,0 +1,41 @@
+
+  #navbar {
+    position: fixed;
+    left: 0;
+    top: 0px;
+    width: 100%;
+    overflow: hidden;
+    z-index: 10;
+    background-color: #fff;
+    border-bottom: 1px solid rgb(245, 245, 245);
+    &.dark-background{
+      background-color: #f5f5f5;
+    }
+    .topnav-right{
+      float: right;
+    }
+    a {
+      float: left;
+      display: block;
+      color: #121212;
+      text-align: center;
+      padding: 15px 15px;
+      text-decoration: none;
+      font-size: 12px;
+      letter-spacing: 3px;
+      &:hover {
+        //background-color: $background-color;
+        color: #999;
+      }
+      &.active {
+        background-color: $background-color-active;
+        color: white;
+      }
+      &.author{
+        font-size: 20px;
+        font-family: 'Inconsolata', monospace; 
+        font-stretch: 100%
+      }
+      
+    }
+  }
