@@ -13,7 +13,7 @@ $spacing-unit:     30px !default;
 $text-color:       #111 !default;
 $background-color: #fdfdfd !default;
 $background-color-active: #828282 !default;
-$brand-color:      #2a7ae2 !default;
+$brand-color:      #49e2d6 !default;
 
 $grey-color:       #828282 !default;
 $grey-color-light: lighten($grey-color, 40%) !default;
@@ -57,6 +57,13 @@ $on-laptop:        800px !default;
   "navbar",
   "interest",
   "whereiam",
-  "footer"
+  "footer",
+
+  "resume",
+  "fontawesome/fontawesome",
+  "fontawesome/fa-brands",
+  "fontawesome/fa-regular",
+  "fontawesome/fa-solid"
+
 
 ;
