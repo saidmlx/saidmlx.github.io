@@ -73,8 +73,8 @@
   </div><!-- end ifo-description-->
 
   <div class="work">
-    <div class="item">
-      <div class="description-icon"><i class="fas fa-user-graduate"></i></div>
+    <div class="item one">
+      <div class="description-icon"><i class="fas fa-briefcase"></i></div>
       <h3 class="description-title briefcase">Experiencia profesional</h3>
       <ul class="description">
         <li>Towa (BBVA BANCOMER)</li>
@@ -85,19 +85,22 @@
       <p class="large">Líder de Proyecto: coordinar el equipo para desarrollar el producto “Hipoteca Digital” (simulador y precalificador) para la zona privada de personas físicas. </p>
       <p class="large">Aplicando tecnologías y herramientas como Java Spring(web flow), llamada a servicios REST, desarrollo del front html, javascript y CSS con preprocesadores de estilos utilizando herramientas de NodeJS (gulp, browserify, sass). Integracion continua utilizando jenkins</p>
       <p class="large">El entorno de trabajo es bajo SCRUM. </p>
-      <span class="brew active" onclick="experienceExpand('work')">Mas...</span>
-      <span class="large" onclick="experienceExpand('work')">Menos...</span>
+      <span class="brew active" onclick="experienceExpand('one')">Mas...</span>
+      <span class="large" onclick="experienceExpand('one')">Menos...</span>
     </div>
-    <div class="item">
+    <div class="item two">
       <ul class="description ">
         <li>Banco Azteca</li>
         <li>Ciudad de México</li>
         <li>Noviembre 2010 - Marzo 2017</li>
       </ul>
-      <p>Líder de proyecto: desarrollo de nueva plataforma para migrar aplicaciones de Struts (V1, V2) a AngularJS+Java Spring; coordinar el equipo de trabajo; proponer soluciones a los requerimientos que el área requiere para poder entregar los mismos en tiempo, calidad y recursos; capacitación en nuevas herramientas de desarrollo NodeJS( Browserify, Gulp) AngularJS, micro servicios(REST) e integración con Java Spring framework.</p>
-      <p>Desarrollador web: mantenimiento de aplicaciones de Struts(V1, V2), programación de aplicaciones utilizando lenguajes como Java y JavaScript y frameworks de desarrollo como Spring(MVC, Security, Web Flow) y AngularJS; frameworks front-end como Bootstrap y MaterializeCSS; y otras herramientas de desarrollo para generación de Bundlers con Browserify y Gulp y jQuery; Desarrollo de Servicios Web Top Down y Bottom Up(JAX-RS, CFX )  para proveer de información a otras áreas; consumir servicios de otras áreas; desarrollo de APIs de acceso a datos vía REST Services con Java Spring, certificación de aplicaciones a travez de HP Fortify</p>
-      <p>Administrador de base de datos: diseño de la arquitectura de base de datos, diseño de procesos de colección de información de las diferentes áreas donde se genera, resguardo y análisis de los datos a travez de Procedimientos Almacenados, y procesos ETL.</p>
-      <p>Analista de requerimientos: analizar peticiones de los usuarios de Banco México y Latinoamérica donde Banco Azteca tiene presencia; calculara alcances, definir entregables y estimar recursos, así como también proponer soluciones a los requerimientos que las comisiones bancarias requerían.</p>
+      <p class="brew active">Diseñar la arquitectura de aplicación para migrar sistemas actuales, coordinar el de desarrollo de nuevos aplicativos a través de todas sus fases hasta llevarlos a producción.</p>
+      <p class="large">Líder de proyecto: desarrollo de nueva plataforma para migrar aplicaciones de Struts (V1, V2) a AngularJS+Java Spring; coordinar el equipo de trabajo; proponer soluciones a los requerimientos que el área requiere para poder entregar los mismos en tiempo, calidad y recursos; capacitación en nuevas herramientas de desarrollo NodeJS( Browserify, Gulp) AngularJS, micro servicios(REST) e integración con Java Spring framework.</p>
+      <p class="large">Desarrollador web: mantenimiento de aplicaciones de Struts(V1, V2), programación de aplicaciones utilizando lenguajes como Java y JavaScript y frameworks de desarrollo como Spring(MVC, Security, Web Flow) y AngularJS; frameworks front-end como Bootstrap y MaterializeCSS; y otras herramientas de desarrollo para generación de Bundlers con Browserify y Gulp y jQuery; Desarrollo de Servicios Web Top Down y Bottom Up(JAX-RS, CFX )  para proveer de información a otras áreas; consumir servicios de otras áreas; desarrollo de APIs de acceso a datos vía REST Services con Java Spring, certificación de aplicaciones a travez de HP Fortify</p>
+      <p class="large">Administrador de base de datos: diseño de la arquitectura de base de datos, diseño de procesos de colección de información de las diferentes áreas donde se genera, resguardo y análisis de los datos a travez de Procedimientos Almacenados, y procesos ETL.</p>
+      <p class="large">Analista de requerimientos: analizar peticiones de los usuarios de Banco México y Latinoamérica donde Banco Azteca tiene presencia; calculara alcances, definir entregables y estimar recursos, así como también proponer soluciones a los requerimientos que las comisiones bancarias requerían.</p>
+      <span class="brew active" onclick="experienceExpand('two')">Mas...</span>
+      <span class="large" onclick="experienceExpand('two')">Menos...</span>
     </div>
     <div class="item">
       <ul class="description ">
@@ -120,7 +123,7 @@
 
   <div class="skills">
       <div class="item">
-      <div class="description-icon"><i class="fas fa-user-graduate"></i></div>
+      <div class="description-icon"><i class="fas fa-wrench"></i></div>
       <h3 class="description-title wrench">Herramientas y conocimientos</h3>
       <div class="skills-categories">
         <div class="item">
@@ -196,7 +199,7 @@
 
   <div class="courses">
     <div class="item">
-      <div class="description-icon"><i class="fas fa-user-graduate"></i></div>
+      <div class="description-icon"><i class="fas fa-book"></i></div>
       <h3 class="description-title book">Cursos</h3>
       <ul class="list-with-marker expand">
         <li>Curso básico de Vue.js - PLATZI <a href="https://platzi.com/@saidmlx/curso/vuejs/diploma/" target="_blank" ><i class="fas fa-award"></i></a></li>
@@ -225,8 +228,8 @@
   var experienceExpand= function(selectorByClassName){
     console.info(selectorByClassName)
     console.info("."+selectorByClassName+" .brew")
-    document.querySelectorAll("."+selectorByClassName+" .brew").forEach(function(item){console.info(item.classList.toggle('active'))})
-    document.querySelectorAll("."+selectorByClassName+" .large").forEach(function(item){console.info(item.classList.toggle('active'))})
+    document.querySelectorAll(".work ."+selectorByClassName+" .brew").forEach(function(item){console.info(item.classList.toggle('active'))})
+    document.querySelectorAll(".work ."+selectorByClassName+" .large").forEach(function(item){console.info(item.classList.toggle('active'))})
 
   }
   var toolsExpand= function(selectorId){

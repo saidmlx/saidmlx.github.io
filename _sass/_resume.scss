@@ -86,11 +86,11 @@ $resume-ligth-grey: #f4f4f4;
   }
   h1{
     font-weight: 700;
-    font-size: 44px;
+    font-size: 32px;
   }
   h2{
     font-weight: 400;
-    font-size: 32px;
+    font-size: 24px;
     &.subtitle{
       display: block;
     }
@@ -172,6 +172,7 @@ $resume-ligth-grey: #f4f4f4;
       ul{
         list-style: none;
         font-size: 16px;
+        margin-left: 0px;
         li{
           display: inline-block;
           text-align: right;
@@ -181,8 +182,10 @@ $resume-ligth-grey: #f4f4f4;
               display: none;
             }
             i{
-              padding-left: 16px;
+              padding-left: 8px;
+              padding-right: 8px;
               float: right;
+              font-size: 24px;
             }
           }
         }
@@ -203,7 +206,6 @@ $resume-ligth-grey: #f4f4f4;
     flex-direction: column;
     .item{
       border-bottom: 1px dashed $grey-color-light;
-      
       &:first-child{
         border-right: 1px dashed $grey-color-light;
       }
@@ -226,16 +228,19 @@ $resume-ligth-grey: #f4f4f4;
         }
       }    
       .info{
-        padding-left: 8px;
-        padding-right: 8px;
+        padding-left: 16px;
+        padding-right: 16px;
       }
     }
   }
   .work{
     .item{
       border-bottom: 1px solid $grey-color-light;
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 16px;
+      padding-right: 16px;
+      &:last-child{
+        border-bottom: 1px dashed $grey-color-light;
+      }
       ul{
         font-weight: 600;
       }
@@ -243,8 +248,9 @@ $resume-ligth-grey: #f4f4f4;
   }
   .skills{
     .item{
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 16px;
+      padding-right: 16px;
+      border-bottom: 1px dashed $grey-color-light;
     }
     .skill .title{
       text-align: center;
@@ -267,12 +273,12 @@ $resume-ligth-grey: #f4f4f4;
       color: $resume-ligth-blue;
       content: "\f068";
     }
-    
   }
   .courses  {
     .item{
-      padding-left: 8px;
-      padding-right: 8px;
+      padding-left: 16px;
+      padding-right: 16px;
+      border-bottom: 1px dashed $grey-color-light;
     }
     ul.list-with-marker{ 
       list-style: none;
@@ -319,6 +325,14 @@ $resume-ligth-grey: #f4f4f4;
   .container-resume{
     width: 100%;
 
+    h1{
+      font-weight: 700;
+      font-size: 44px;
+    }
+    h2{
+      font-weight: 400;
+      font-size: 32px;
+    }
     h2.subtitle{
       display: none;
     }
@@ -361,8 +375,13 @@ $resume-ligth-grey: #f4f4f4;
           margin-right: 16px;
           li {
             display: block;
-            a span{
-            display: inherit;
+            a{ 
+              i{
+                font-size: 16px;
+              }
+              span{
+                display: inherit;
+              }
             }
           }
         }
