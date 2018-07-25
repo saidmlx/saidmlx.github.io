@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Lato:100,400,700');
 
+
+
 $resume-dark-blue: #072146;
 $resume-blue: #1464a5;
 $resume-ligth-blue: #1973b8;
@@ -21,13 +23,28 @@ $resume-ligth-grey: #f4f4f4;
   line-height: 1;   
   color: $resume-dark-blue;   
 }
+%bullet{
+  width: 7px;
+  height: 4px;
+  border-top: 0px solid transparent;
+  border-bottom: 4px solid $resume-ligth-blue;
+  border-right: 0px;
+  display: inline-block;
+  margin-left: 8px;
+  margin-right: 8px;
+  border-left: 2px solid transparent;
+  margin-bottom: 4px; 
+  content: " "
+}
 
 .container-resume{
   font-family: 'Lato', sans-serif;
   margin-left: auto;
   margin-right: auto;
-  width: 800px;
+  width: 100%;
   color: $resume-black;
+  padding-top: 24px;
+  padding-bottom: 48px;
   ul.description{
     list-style: none;
     margin-left: 0px;
@@ -47,6 +64,14 @@ $resume-ligth-grey: #f4f4f4;
       }
     }
   }
+  ul.list-with-marker{
+    list-style: none;
+    text-align: center;
+    display: none;
+    &.expand{
+      display: block;
+    }
+  }
   .bullet{
     width: 7px;
     height: 4px;
@@ -58,8 +83,7 @@ $resume-ligth-grey: #f4f4f4;
     margin-right: 8px;
     border-left: 2px solid transparent;
     margin-bottom: 4px; 
-}
-
+  }
   h1{
     font-weight: 700;
     font-size: 44px;
@@ -67,13 +91,19 @@ $resume-ligth-grey: #f4f4f4;
   h2{
     font-weight: 400;
     font-size: 32px;
+    &.subtitle{
+      display: block;
+    }
   }
   h3{
     margin: 16px 0px;
     font-weight: 700;
     color: $resume-grey;
     font-size: 24px;
-    &.rigth{
+    &.title{
+      text-align: center;
+    }
+    /*&.rigth{
       text-align: right;
     }
     &.rigth:after{
@@ -89,7 +119,7 @@ $resume-ligth-grey: #f4f4f4;
     &:after, &:before {
       @extend %iconfont;
     }
-    &.rigth.graduation:after, {
+    &.rigth.graduation:after{
      content: "\f501"; 
     }
     &.left.briefcase:before {
@@ -100,41 +130,80 @@ $resume-ligth-grey: #f4f4f4;
     }
     &.left.book:before {
       content: "\f02d"; 
-    }
+    }*/
     
     
     
   }
+
   p{
     text-align: justify;
   }
+  .brew, .large{
+    display: none;
+  }
+  .brew.active, .large.active{
+    display: block;
+  }
+  span.brew, span.large{
+    padding-left: 8px;
+    color:$resume-ligth-blue;
+    cursor: pointer;
+    text-align: center;
+    &:hover{
+      color: $resume-grey;
+    }
+  }
+
+  .work.item, .skills.item,.courses.item{
+    padding-right: 8px;
+    padding-left: 8px;
+  }
+  .description-icon{
+    font-size: 32px;
+  }
+  .description-icon, .description-title, .description{
+    text-align: center;
+  }
   .header{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     .item{
-      width: 50%;
       ul{
-        float: right;
         list-style: none;
+        font-size: 16px;
         li{
+          display: inline-block;
           text-align: right;
           a{
             color: #121212;
-            padding-right: 8px;
+            span{
+              display: none;
+            }
             i{
               padding-left: 16px;
+              float: right;
             }
           }
+        }
+      }
+      &.contact{
+        text-align: center;
+        font-size: 22px;
+      }
+      &.title{
+        h1,h2{
+          text-align: center;
         }
       }
     }
   }
   .ifo-description{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     .item{
-      width: 50%;
       border-bottom: 1px dashed $grey-color-light;
+      
       &:first-child{
         border-right: 1px dashed $grey-color-light;
       }
@@ -152,28 +221,78 @@ $resume-ligth-grey: #f4f4f4;
         padding: 16px 4px;
           &.dark{
             background: $background-color-active;
+            display: none;
           }
         }
-      }
-      p{
-        text-align: justify;
-        padding: 0px 8px;
+      }    
+      .info{
+        padding-left: 8px;
+        padding-right: 8px;
       }
     }
   }
   .work{
     .item{
       border-bottom: 1px solid $grey-color-light;
+      padding-left: 8px;
+      padding-right: 8px;
       ul{
         font-weight: 600;
       }
     }
   }
   .skills{
-    ul.list-skills{
+    .item{
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    .skill .title{
+      text-align: center;
+    }
+  }
+  .skills .skill{
+    .title{
+      font-weight: 600;
+      cursor: pointer;
+    }
+    .title.plus:before{
+      @extend %iconfont;
+      padding-right: 4px;
+      color: $resume-ligth-blue;
+      content: "\f067";
+    }
+    .title.less:before{
+      @extend %iconfont;
+      padding-right: 4px;
+      color: $resume-ligth-blue;
+      content: "\f068";
+    }
+    
+  }
+  .courses  {
+    .item{
+      padding-left: 8px;
+      padding-right: 8px;
+    }
+    ul.list-with-marker{ 
       list-style: none;
-      li:before{
-        width: 7px;
+      li a{
+        color: #d8be75;
+      }
+    }
+  }
+}
+
+
+
+
+
+
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) { 
+  %bulletb{
+    width: 7px;
     height: 4px;
     border-top: 0px solid transparent;
     border-bottom: 4px solid $resume-ligth-blue;
@@ -184,21 +303,108 @@ $resume-ligth-grey: #f4f4f4;
     border-left: 2px solid transparent;
     margin-bottom: 4px; 
     content: " "
+  }
+  %iconfontb{
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+    display: inline-block;
+    font-style: normal;
+    font-variant: normal;
+    text-rendering: auto;
+    line-height: 1;   
+    color: $resume-dark-blue;   
+  }
+  .container-resume{
+    width: 100%;
+
+    h2.subtitle{
+      display: none;
+    }
+
+    ul.list-with-marker{
+      text-align: left;
+      li:before{
+        @extend %bulletb;
+      }
+    }
+    .description-icon{
+      display: none;
+    }
+    .description-icon, .description-title, .description{
+      text-align: left;
+    }
+    h3.description-title:before{
+      @extend %iconfontb;
+      padding-right: 8px;
+    }
+    h3.description-title.graduation:before{
+      content: "\f501"
+    }
+    h3.description-title.briefcase:before {
+      content: "\f0b1"; 
+    }
+    h3.description-title.wrench:before {
+      content: "\f0ad"; 
+    }
+    h3.description-title.book:before {
+      content: "\f02d"; 
+    }
+    .header{
+      flex-direction: row;
+      .item{
+        width: 50%;
+        ul{
+          display: block;
+          text-align: right;
+          margin-right: 16px;
+          li {
+            display: block;
+            a span{
+            display: inherit;
+            }
+          }
+        }
+        &.title{
+          h1,h2{
+            text-align: left;
+          }
+        }
+      }
+    }
+    .ifo-description {
+      flex-direction: row;
+      .item{
+        width: 50%;
+        .info {
+          .description-title, .description{
+            text-align: right;
+          }
+        }
+        h2.title.dark{
+          display: block;
+        }
+      }
+    }
+    .skills{
+      .skill .title{
+        text-align: left;
       }
     }
   }
+ }
 
-
-}
-//800
-@include media-query($on-laptop){
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) { 
   .container-resume{
-    background-color: rebeccapurple;
+    width: 900px;
   }
-}
-//600
-@include media-query($on-palm) {
+ }
+ // Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) { 
   .container-resume{
-    background-color: rgb(74, 230, 222);
+    
+    width: 1100px;
   }
-}
+ }
