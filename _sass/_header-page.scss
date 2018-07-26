@@ -6,6 +6,7 @@
     background: url('/assets/images/main-2-640x429.jpeg');
     
     height: 100vh;
+    max-height: 429px;
     position: relative;
     
   
@@ -94,5 +95,6 @@
   @media (min-width: 768px) { 
     .header-page {
       background: url('/assets/images/main-2-1280x858.jpeg');
+      max-height: 858px;
     }
   }
