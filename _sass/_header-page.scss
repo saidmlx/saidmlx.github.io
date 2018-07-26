@@ -3,7 +3,7 @@
     background-color: #f1f1f1;
     text-align: center;
     //background: url('/assets/images/main-1280x853.jpg');
-    background: url('/assets/images/main-2-1280x858.jpeg');
+    background: url('/assets/images/main-2-640x429.jpeg');
     
     height: 100vh;
     position: relative;
@@ -89,4 +89,10 @@
       100% { top:25px; opacity: 0;}
     }
   
+  }
+
+  @media (min-width: 768px) { 
+    .header-page {
+      background: url('/assets/images/main-2-1280x858.jpeg');
+    }
   }
