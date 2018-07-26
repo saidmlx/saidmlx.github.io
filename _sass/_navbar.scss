@@ -14,17 +14,18 @@
     .topnav-right{
       float: right;
     }
+    .wrapper{
+      position: relative;
+      text-align: center
+    }
     a {
-      float: left;
       display: block;
       color: #121212;
-      text-align: center;
-      padding: 15px 15px;
+      padding: 4px 4px;
       text-decoration: none;
       font-size: 12px;
       letter-spacing: 3px;
       &:hover {
-        //background-color: $background-color;
         color: #999;
       }
       &.active {
@@ -36,6 +37,42 @@
         font-family: 'Inconsolata', monospace; 
         font-stretch: 100%
       }
-      
+      &.menu-option{
+        display: none;
+        &.visible{
+          display: block;
+        }
+      }
+      &.icon{
+        font-size: 20px;
+        position: absolute;
+        right: 0px;
+        top: 0px;
+        width: 25px;
+      }
+    }
+  }
+
+  @media (min-width: 768px) { 
+    #navbar {
+      .wrapper{
+        text-align: right;        
+      }
+      a{
+        display: inline-block;
+        padding: 16px 16px;
+        &:first-child{
+          float: left;
+        }
+        &.menu-option{
+          display: inline-block;
+          &.visible{
+            display: inline-block;
+          }
+        }
+        &.icon{
+          display: none;
+        }
+      }
     }
   }
