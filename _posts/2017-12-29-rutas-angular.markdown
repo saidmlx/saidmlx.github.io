@@ -2,7 +2,7 @@
 layout: post
 title:  Como manejar rutas en angular
 date:   2017-12-29 12:00:00 -0000
-categories: javascript angular
+categories: Javascript Angular
 tags: Angular TypeScript JavaScript
 short: Cuando se trabaja con Angular uno de los features mas importantes son las rutas estas son muy facil de implementar. 
 ---

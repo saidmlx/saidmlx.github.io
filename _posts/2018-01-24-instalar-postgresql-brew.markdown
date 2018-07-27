@@ -2,8 +2,8 @@
 layout: post
 title:  Instalar Postgresql utilizando brew
 date: 2018-01-02 12:00:00 
-categories: sql postgresql
-tags: Postgresql SQL Brew 
+categories: Databse PostgreSQL
+tags: PostgreSQL SQL Brew 
 short: Como instalar postgres en OSX con brew
 ---
 

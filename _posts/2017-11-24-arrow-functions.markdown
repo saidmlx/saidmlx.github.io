@@ -2,7 +2,7 @@
 layout: post
 title:  Trabajando con nuevas funcionalidades de Javascript
 date:   2017-11-24 12:00:00 -0000
-categories: javascript
+categories: Javascript
 short: Ejemplos de nuevas funcionalidades de Javascript, como son los metodos reduce, map, filter, uso de arrow funcion y trabajo con objetos ...
 ---
 

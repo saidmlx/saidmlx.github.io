@@ -2,7 +2,7 @@
 layout: post
 title:  Configuración básica de Java Spring
 date:   2016-02-08 12:00:00 -0000
-categories: java
+categories: Java
 short: Java es una de los lenguajes mas utilizados y Java Spring es una de las herramientas más utilizadas para desarrollar aplicaciones web, en esta publicacion vamos a construir una aplicación con spring MVC...
 ---
 

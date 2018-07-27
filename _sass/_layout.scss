@@ -204,11 +204,32 @@
 .post-meta {
   font-size: $small-font-size;
   color: $grey-color;
+  margin-bottom: 0px;
+  &.tag{
+    margin-right: 4px;
+  }
 }
 
 .post-link {
   display: block;
   @include relative-font-size(1.5);
+  
+}
+.tags-expo-list{
+  padding-bottom: 32px;
+}
+a.post-tag {  
+  padding: 4px 8px;
+  background: $resume-ligth-grey;
+  font-size: 16px;
+  margin: 4px  4px;
+  display: inline-block;
+}
+.post-li{
+  display:none;
+  &.active{
+    display:block;
+  }
 }
 
 
@@ -256,4 +277,11 @@
       @include relative-font-size(1.125);
     }
   }
+}
+
+.tag{
+  padding-right: 4px;
+}
+.categories{
+  padding-right: 4px;
 }

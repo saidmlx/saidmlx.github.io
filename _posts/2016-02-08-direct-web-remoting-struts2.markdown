@@ -2,7 +2,7 @@
 layout: post
 title:  Proyecto con Direct Web Remoting (DWR) con Struts2
 date:   2016-02-08 12:00:00 -0000
-categories: java, struts2, AJAX
+categories: Java
 short: Direct Web Remoting (DWR) es una librería que nos permite hacer peticiones HTTP desde Javascript, si hacer peticiones AJAX, de esta forma podemos hacer nuestras aplicaciones más dinamicas dentro de una aplicacón con Struts2
 
 ---

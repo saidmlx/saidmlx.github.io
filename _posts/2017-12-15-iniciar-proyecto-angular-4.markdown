@@ -2,7 +2,7 @@
 layout: post
 title:  Creando un proyecto con angular 4
 date:   2017-12-15 12:00:00 -0000
-categories: javascript angular
+categories: Javascript Angular
 tags: angular TypeScript JavaScript
 short: Angular es uno de los frameworks mas populares por lo que tener conocimientos mas que basicos son de gran importancia para ...
 ---
