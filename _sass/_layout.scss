@@ -220,7 +220,8 @@
 }
 a.post-tag {  
   padding: 4px 8px;
-  background: $resume-ligth-grey;
+  
+  border: 1px solid $brand-color-dark;
   font-size: 16px;
   margin: 4px  4px;
   display: inline-block;

@@ -15,9 +15,11 @@ $background-color: #fdfdfd !default;
 $background-color-active: #828282 !default;
 $brand-color:      #49e2d6 !default;
 
+$brand-color-dark: darken($brand-color, 25%);
+$brand-color-light: lighten($brand-color, 15%);
 
 $grey-color:       #828282 !default;
-$resume-ligth-grey: #f4f4f4;
+
 $grey-color-light: lighten($grey-color, 40%) !default;
 $grey-color-dark:  darken($grey-color, 25%) !default;
 
