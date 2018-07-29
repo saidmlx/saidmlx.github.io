@@ -4,9 +4,10 @@
 .highlight {
   background: #fff;
   @extend %vertical-rhythm;
+  font-family: "Roboto Mono", monospace;
 
   .highlighter-rouge & {
-    background: #eef;
+    background: $brand-color-highlight;
   }
 
   .c     { color: #998; font-style: italic } // Comment

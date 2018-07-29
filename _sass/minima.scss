@@ -17,6 +17,7 @@ $brand-color:      #49e2d6 !default;
 
 $brand-color-dark: darken($brand-color, 25%);
 $brand-color-light: lighten($brand-color, 15%);
+$brand-color-highlight: lighten($brand-color, 25%);
 
 $grey-color:       #828282 !default;
 
@@ -48,9 +49,11 @@ $on-laptop:        800px !default;
   font-size: $base-font-size * $ratio;
 }
 
+//fonts
 @import url('https://fonts.googleapis.com/css?family=Roboto+Condensed');
 @import url('https://fonts.googleapis.com/css?family=Inconsolata');
 @import url('https://fonts.googleapis.com/css?family=Lato:100,100i,300,300i,400,400i,700,700i,900,900i');
+@import url('https://fonts.googleapis.com/css?family=Roboto+Mono:100,300,400,500,700');
 
 // Import partials.
 
