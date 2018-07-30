@@ -211,7 +211,11 @@ ___
 
 
 ## Documentación 
+
+[Java Architecture for XML Binding (JAXB)](https://es.wikipedia.org/wiki/JAXB){:target="_blank"}
+
 [Maven Quickstart Archetype
 ](https://maven.apache.org/archetypes/maven-archetype-quickstart/){:target="_blank"}
+
 [JAXB2 Maven Plugin
 ](https://github.com/highsource/maven-jaxb2-plugin){:target="_blank"}
