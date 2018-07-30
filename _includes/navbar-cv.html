@@ -1,0 +1,37 @@
+{%- assign default_paths = site.pages | map: "path" -%}
+{%- assign page_paths = site.header_pages | default: default_paths -%}
+
+{%- assign root = "" -%}
+<div id="navbar" >
+    <div class="wrapper">
+        <a class="author" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
+        
+        {%- if page_paths -%}
+        
+        {%- for path in page_paths -%}
+        {%- assign my_page = site.pages | where: "path", path | first -%}
+        {%- if my_page.title -%}
+        
+        {%- if page.title == my_page.title    -%}
+        <a  href="{{ my_page.url | relative_url }}" class="menu-option" >{{ my_page.title | escape }} </a>
+        {%- endif -%}
+        {%- if page.title != my_page.title -%}
+        <a  href="{{ my_page.url | relative_url }}" class="menu-option" >{{ my_page.title | escape }} </a>
+        {%- endif -%}
+        {%- endif -%}
+        {%- endfor -%}
+        
+        
+        <a href="javascript:void(0);" class="icon" onclick="showMenuResponsive()">
+            <i class="fa fa-bars"></i>
+        </a>
+        {%- endif -%}
+    </div>
+</div>
+<script>
+    var showMenuResponsive = function(){
+        console.info('showMenuResponsive');
+        document.querySelectorAll('.menu-option').forEach(function(item){item.classList.toggle('visible')});
+    }
+</script>
+
