@@ -124,22 +124,18 @@ El concepto de Marshaling es el proceso de Serialización(Marshal) corresponde a
 Para ese proceso de Marshaling se escribe la clase **_online.saidmlx.database.northwind.marshalling.Demo_**
 ```java
 package online.saidmlx.database.northwind.marshalling;
-
 import java.io.StringReader;
 import java.io.StringWriter;
-
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-
 import online.saidmlx.database.northwind.products.Categories;
 import online.saidmlx.database.northwind.products.Products;
 
-
 public class Demo {
 
-public static void main(String[] args) {
+  public static void main(String[] args) {
   try {
     //-- fill data
     Products products = new Products();
@@ -162,20 +158,16 @@ public static void main(String[] args) {
     Marshaller marshaler = context.createMarshaller();
     StringWriter writer = new StringWriter();
     marshaler.marshal(products, writer);
-
     System.out.println(writer.toString());
 
     //-- Unmarshalling
     Unmarshaller unmarshaler = context.createUnmarshaller();
     Products productsResult = (Products)unmarshaler.unmarshal(new StringReader(writer.toString()));
-
     System.out.print(productsResult.getCategory().getDescription());
-
 
   } catch (JAXBException e) {
     e.printStackTrace();
   }
-
   }
 
 }
@@ -186,7 +178,7 @@ public static void main(String[] args) {
 Y el proyecto está listo si ejecutamos la clase **_online.saidmlx.database.northwind.marshalling.Demo_** tendremos el resultado
 
 ### Marshaling
-```terminal
+```xml
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <products product_id="1"
 xmlns="http://www.saidmlx.online/database/northwind/products">
@@ -217,3 +209,9 @@ ___
 
 > Si lo que quieres es el codigo [aqui](https://github.com/saidmlx/jaxb-example){:target="_blank"}  esta
 
+
+## Documentación 
+[Maven Quickstart Archetype
+](https://maven.apache.org/archetypes/maven-archetype-quickstart/){:target="_blank"}
+[JAXB2 Maven Plugin
+](https://github.com/highsource/maven-jaxb2-plugin){:target="_blank"}
