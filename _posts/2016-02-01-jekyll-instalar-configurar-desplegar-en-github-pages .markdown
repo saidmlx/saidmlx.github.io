@@ -3,6 +3,7 @@ layout: post
 title:  "Jekyll: Instalar, configurar y desplegar en GitHub Pages  "
 date:   2016-02-01 21:11:15 -0500
 categories: Jekyll
+tags: Jekyll
 ---
 > Esta es una actualización a Junio 2018 con la version 3.8.3 de Jekyll.
 

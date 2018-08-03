@@ -3,7 +3,7 @@ layout: post
 title:  GIT comandos básicos
 date:   2017-10-21 12:00:00 -0000
 categories: Git
-short: Git es un software de control de versiones muy popular, en este post estoy dejando los comandos maás básicos que podemos utilizar...
+tags: Git
 ---
 
 ### Que es GIT

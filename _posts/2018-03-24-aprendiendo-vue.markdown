@@ -4,7 +4,6 @@ title: Ejemplo de una aplicación con Vue.js
 date: 2018-03-24 12:00:00 
 categories: Javascript Vue.js
 tags: JavaScript Vue.js Pug Stylus Webpack
-short: Actualmente hay muchos frameworks de javascript y vue.js se ha puesto como uno de los populares pese a que llego demasiado tarde. En este ejemplo vamos a mostrar de que es capaz he hacer este framework
 ---
 
 Actualmente hay muchos frameworks de javascript y  _**Vue.js**_ se ha puesto como uno de los populares pese a que ha llegado demasiado tarde.

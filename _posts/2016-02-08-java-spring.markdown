@@ -2,8 +2,8 @@
 layout: post
 title:  Configuración básica de Java Spring
 date:   2016-02-08 12:00:00 -0000
-categories: Java
-short: Java es una de los lenguajes mas utilizados y Java Spring es una de las herramientas más utilizadas para desarrollar aplicaciones web, en esta publicacion vamos a construir una aplicación con spring MVC...
+categories: Java JavaSpring
+tags: Java JavaSpring Maven Jetty
 ---
 
 **Java** es una de los lenguajes más utilizados y **Java Spring** es una de las herramientas
@@ -86,7 +86,7 @@ Vamos a configurar el contenedor **Jetty**, este se comporta al igual que un Tom
 y no se tiene que configurar nada solo hay que agregarlo como un Plugin.
  
 
-``` xml
+```xml
 <build>
   <finalName>SpringWebMvc</finalName>
   <plugins>
@@ -101,7 +101,7 @@ y no se tiene que configurar nada solo hay que agregarlo como un Plugin.
 
 Ya agregado este Plugin podemos lanzar nuestro proyecto
 
-``` shell
+```terminal
   mvn jetty:run
 ```
 
@@ -133,7 +133,7 @@ Agregamos al archivo **pom.xml** las dependencias que necesitamos:
 ### Creamos el Controller
 Creamos el Controller `io.saidmlx.controller.Hello`
 
-``` java
+```java
 package io.saidmlx.controller;
 
 import org.springframework.ui.ModelMap;
@@ -162,7 +162,7 @@ public class Hello{
 
 ### Agregamos la configuración al archivo `web.xml` 
 
-``` xml 
+```xml 
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
@@ -193,7 +193,7 @@ public class Hello{
 ### Agregamos View Resolver
 Creamos la configuración de View Resolver en el archivo `hello-spring-servlet.xml`
 
-``` java
+```xml
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -226,7 +226,7 @@ Creamos la configuración de View Resolver en el archivo `hello-spring-servlet.x
 
 `Wellcome.jsp`
 
-``` html
+```html
 <!DOCTYPE html>
 <html>
   <head>
@@ -242,7 +242,7 @@ Creamos la configuración de View Resolver en el archivo `hello-spring-servlet.x
 
 `sayWellcome.jsp`
 
-``` html
+```html
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <!DOCTYPE html>
@@ -262,7 +262,7 @@ Con lo anterior tenemos nuestro ejemplo listo
 
 La estructura de archivos quedaría de la siguiente forma
 
- ``` shell
+ ```terminal
  ├── SpringWebMvc
  │   ├── pom.xml
  │   ├── src

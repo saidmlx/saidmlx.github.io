@@ -3,8 +3,7 @@ layout: post
 title:  Encriptar y Desencriptar Mensajes RSA con OPENSSL
 date:   2017-10-01 12:00:00 -0000
 categories: Openssl
-tags: encriptacion rsa opnssl
-short: RSA es uno de los metodos preferidos para enviar mensajes, en este post mostrare como encriptar y desencriptar mensajes RSA con OpenSSL.
+tags: Encriptación RSA Openssl
 ---
 
 RSA es uno de los metodos preferidos para enviar mensajes, en este post mostrare como encriptar y desencriptar mensajes RSA con OpenSSL.

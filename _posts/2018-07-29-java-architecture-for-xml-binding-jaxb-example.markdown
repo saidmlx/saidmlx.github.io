@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Java Architecture for XML Binding (JAXB) Example
-date: 2018-03-24 12:00:00 
+date: 2018-07-29 1:00:00 
 categories: Java WebService
 tags: Java WebService XML JABXB
 ---

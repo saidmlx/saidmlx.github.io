@@ -3,9 +3,7 @@ layout: post
 title:  Promesas en Javascript
 date: 2017-11-01 12:00:00 -0000
 categories: Javascript
-tags: Javascript Ajax
-short: En algunas ocasiones necesitamos llamar peticiones HTTP, y sabemos que para que la experiencia de usuario no sea desfavorable estas peticiones deben ser asíncronas, pero que pasa si estas peticiones dependen una de otra, lo que significaría anidar estas peticiones; para este caso necesitamos promesas.
-
+tags: Javascript Ajax Promises
 ---
 
 En algunas ocasiones necesitamos llamar peticiones HTTP, y sabemos que para que la experiencia de usuario no sea desfavorable estas peticiones deben ser asíncronas, pero que pasa si estas peticiones dependen una de otra, lo que significaría anidar estas peticiones; para este caso necesitamos promesas.

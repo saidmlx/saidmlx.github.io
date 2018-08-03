@@ -5,5 +5,7 @@
 layout: root
 ---
 {%- include iterest.html -%}
-{%- include whereiam.html-%}
 
+{%- include portfolio.html-%}
+
+{%- include whereiam.html-%}
