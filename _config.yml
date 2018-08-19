@@ -15,7 +15,7 @@
 # in the templates via {{ site.myvariable }}.
 title: SAID MORALES LEMUS
 email: saidmlx@gmail.com
-description: Sitio personal de Said Morales Lemus, donde hablamos de desarrollo de software como Angular Java Polymer
+description: Ingeniero de Software, Líder de Proyecto, Programador y Analista de Requerimientos para productos de software con màs de 10 años trabajando en la industria, con amplia experiencia y capacidad para gestionar equipos ágiles, reducir incertidumbre y aumentar productividad aplicando técnicas, herramientas y buenas prácticas.
 baseurl: "" # the subpath of your site, e.g. /blog
 url: "http://saidmlx.online" # the base hostname & protocol for your site, e.g. http://example.com
 twitter_username: saidmlx
