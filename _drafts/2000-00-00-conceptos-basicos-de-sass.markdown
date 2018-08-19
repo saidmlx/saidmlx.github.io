@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Conceptos basicos de SASS
-date: 2018-07-29 1:00:00 
+date: 2000-01-01 1:00:00 
 categories: css SASS preprocesadores
 tags: css SASS
 ---

@@ -1,7 +1,7 @@
 ---
 layout: post
 title:  "Jekyll: modifacr el tema"
-date:   2016-02-08 21:11:15 -0500
+date:   2000-01-01 21:11:15 -0500
 categories: jekyll
 ---
 
