@@ -6,7 +6,7 @@ categories: DevOps
 tags: Devops Docker Mysql
 ---
 
-En este post vamos a crear un contenedor que contenga Mysql y persistir los datos para que a la hora de detener el proceso del contenedor nos quedemos con la información generada.
+Te han contado maravillas de Docker y no sabes por dónde empezar; en esta oacación vamos a crear un contenedor que contenga Mysql y persistir los datos, para que a la hora de detener el proceso del contenedor nos quedemos con la información generada.
 
 ## Obtener Docker
 
