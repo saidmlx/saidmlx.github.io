@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Como crear un contenedor en docker
+title: Como crear un contenedor con Docker-Mysql y persistir la información
 date: 2018-12-09 12:00:00 
 categories: DevOps
 tags: Devops Docker Mysql
@@ -8,19 +8,31 @@ tags: Devops Docker Mysql
 
 En este post vamos a crear un contenedor que contenga Mysql y persistir los datos para que a la hora de detener el proceso del contenedor nos quedemos con la información generada.
 
+## Obtener Docker
+
+No voy a decir que es Docker si hay muchos sitios que lo hacen mejor de lo que yo lo haria, [el Get Started de documentación oficial seria un buen punto de partida](https://docs.docker.com/get-started/).
+
+Si aún no lo tienes solo descárgalo desde el [sitio oficial Docker](https://www.docker.com/products/docker-desktop) y no hay que configurar nada adicional(*no en modo noob dev)
+
+Para verificar la instalacion lo poedes hacer desde la terminal
+```terminal
+$ docker --version
+Docker version 18.09.0, build 4d60db4
+```
+
 ## Descargamos una imagen
 
-Lo primero que hay que hacer es descargar el contenedor de MySql con el siguiente comando.
+Lo primero que hay que hacer es descargar el contenedor de Mysql con el siguiente comando.
 
 ```terminal
 $ docker run -d -p 33060:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret mysql
 
 ```
 
-* __-d__ Deatached Mode: para que corra en background.
-* __-p__ Puerto: el contenedor corre en el puerto 3306 pero hacemos un bind para que lo escuchemos en el puerto 33061.
+* __-d__: Deatached Mode es la forma en que indicamos que corra en background.
+* __-p__ : puerto, el contenedor corre en el puerto 3306 pero hacemos un bind para que lo escuchemos en Host el puerto 33061.
 * __--name__ : para no tener que hacer referencia al hash le asignamos un nombre.
-* __-e__ Environment: le asignamos la contraseña.
+* __-e__ : environment le asignamos la contraseña.
 
 Con esta tenemos nuestro contenedor escuchando
 
@@ -78,7 +90,7 @@ mysql>
 
 ```
 
-## Conectar el host al contenedor
+## Conectar el Host al contenedor
 
 Cuando levantamos el contenedor creamos una interfaz al puerto 33060:3306 donde el contenedor utiliza el puerto 3306 pero en el host 33060
 
@@ -88,7 +100,7 @@ De esta forma podemos conectar el host mediante el Workbench.
 
 ## Montar un volumen
 
-Hasta este punto no persistimos los datos que se realicen en nuestro contenedor lo que significa que cuando terminamos con el proceso los cambios se perderán, para eso Docker nos dice que hay que utilizar voumenes que no es otra cosa que una parte del disco host se reserve para los datos generados en el contenedor(no el contenedor).
+Hasta este punto no persistimos los datos que se realicen en nuestro contenedor lo que significa que cuando terminamos con el proceso los cambios se perderán, para eso Docker nos dice que hay que utilizar volúmenes que no es otra cosa que una parte del disco Host se reserve para los datos generados en el contenedor(no el contenedor).
 
 Para eso seguimos los siguientes pasos:
 
@@ -111,7 +123,7 @@ Para eso seguimos los siguientes pasos:
     DRIVER              VOLUME NAME
     local               mysql-db-data
     ```
-1. Levantamos nuevamente el docker y agregamos el volumen con la opcion --mount
+1. Levantamos nuevamente el Docker y agregamos el volumen con la opcion --mount
     ```terminal 
     $  docker run -d -p 33060:3306 --name mysql-db  -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-data,dst=/var/lib/mysql mysql
     ```
@@ -168,7 +180,7 @@ Para eso seguimos los siguientes pasos:
     mysql>                          
     ``` 
 
-Y de esta forma ya estamos trabajando con volumnes donde persistimos los datos el el Host de forma que si queremos utilizar la base de datos solo hay que montar el volumen. 
+Y de esta forma ya estamos trabajando con volúmenes donde persistimos los datos el el Host de forma que si queremos utilizar la base de datos solo hay que montar el volumen. 
 
 ## Conclusión
-Y de esta forma ya estamos trabajando con contenedores, como pudieron ver se instaló el Workbench para hacer una conexión vía http y asi como lo hacemos al 127.0.0.1:33060 lo podemos hacer a un contenedor remoto. 
+Y de esta forma ya estamos trabajando con contenedores, como pudieron ver se instaló el Workbench para hacer una conexión vía HTTP y así como lo hacemos al 127.0.0.1:33060 lo podemos hacer a un contenedor remoto. 
