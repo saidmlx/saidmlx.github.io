@@ -84,7 +84,7 @@ Cuando levantamos el contenedor creamos una interfaz al puerto 33060:3306 donde 
 
 De esta forma podemos conectar el host mediante el Workbench.
 
-![conectar mysql workbench a un contenedor as @saidmlx]({{ site.url }}/assets/images/docker/mysql-workbench-with-docker.jpg.gif)
+![conectar mysql workbench a un contenedor as @saidmlx]({{ site.url }}/assets/images/docker/mysql-workbench-with-docker.jpg)
 
 ## Montar un volumen
 
