@@ -17,10 +17,10 @@ $ docker run -d -p 33060:3306 --name mysql-db -e MYSQL_ROOT_PASSWORD=secret mysq
 
 ```
 
--d Deatached Mode: para que corra en background.
--p Puerto: el contenedor corre en el puerto 3306 pero hacemos un bind para que lo escuchemos en el puerto 33061.
---name : para no tener que hacer referencia al hash le asignamos un nombre.
--e Environment: le asignamos la contraseña.
+* __-d__ Deatached Mode: para que corra en background.
+* __-p__ Puerto: el contenedor corre en el puerto 3306 pero hacemos un bind para que lo escuchemos en el puerto 33061.
+* __--name__ : para no tener que hacer referencia al hash le asignamos un nombre.
+* __-e__ Environment: le asignamos la contraseña.
 
 Con esta tenemos nuestro contenedor escuchando
 
@@ -36,10 +36,10 @@ Para entrar al contenedor usamos un modo interactivo para asignar un TTY(termina
 $ docker exec -it mysql-db mysql -p
 ```
 
-Donde
-exec: indicamos que vamos a pasar un comando
--it Modo interactivo 
-mysql -p: es el comando para entrar a la consola de mysql con el usuario root(si has trabajado con mysql en consola es lo mismo)
+Donde:
+* __exec__: indicamos que vamos a pasar un comando.
+* __-it__ Modo interactivo.
+* __mysql -p__: es el comando para entrar a la consola de mysql con el usuario root(si has trabajado con mysql en consola es lo mismo).
 
 Una vez que se ejecuta la línea nos pedirá la contraseña que definimos en MYSQL_ROOT_PASSWORD y estamos dentro del contenedor y podemos lanzar comandos a MYSQl.
 En la parte inferior podemos ver un ejemplo de cómo creamos una base de datos.
@@ -90,7 +90,7 @@ De esta forma podemos conectar el host mediante el Workbench.
 
 Hasta este punto no persistimos los datos que se realicen en nuestro contenedor lo que significa que cuando terminamos con el proceso los cambios se perderán, para eso Docker nos dice que hay que utilizar voumenes que no es otra cosa que una parte del disco host se reserve para los datos generados en el contenedor(no el contenedor).
 
-Para eso seguimos los siguientes pasos.
+Para eso seguimos los siguientes pasos:
 
 1. Eliminamos el proceso que corre el contenedor creado.
     ```terminal
@@ -101,19 +101,16 @@ Para eso seguimos los siguientes pasos.
     ```terminal
     $ docker volume prune
     ```
-
 1. Creamos un volumen
     ```terminal
     $ docker volume create mysql-db-data
     ```
-
 1. Verificamos que se haya creado el volumen
     ```terminal
     $ docker volume ls
     DRIVER              VOLUME NAME
     local               mysql-db-data
     ```
-
 1. Levantamos nuevamente el docker y agregamos el volumen con la opcion --mount
     ```terminal 
     $  docker run -d -p 33060:3306 --name mysql-db  -e MYSQL_ROOT_PASSWORD=secret --mount src=mysql-db-data,dst=/var/lib/mysql mysql
@@ -121,7 +118,7 @@ Para eso seguimos los siguientes pasos.
 1. Entramos al contenedor de forma interactiva o desde el Workbench y creamos una base de datos
     ```terminal
     $ docker exec -it mysql-db mysql -p
-    ....
+    ...
     mysql> create database demo;         
     Query OK, 1 row affected (0.32 sec)  
                                         
@@ -152,7 +149,7 @@ Para eso seguimos los siguientes pasos.
 1. Entramos nuevamente al contenedor de forma interactiva y podemos ver que la base de datos que creamos se encuentra
     ```terminal
     $ docker exec -it mysql-db mysql -p
-    ....
+    ...
     mysql> create database demo;         
     Query OK, 1 row affected (0.32 sec)  
                                         
