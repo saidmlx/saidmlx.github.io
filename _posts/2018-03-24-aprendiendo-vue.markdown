@@ -151,7 +151,7 @@ y tenemos el siguiente resultado
 
 
 
-![Image of Yaktocat]({{ site.url }}/assets/images/2018-03-24-aprendiendo-vue/simple-vue.gif)
+![vue as @saidmlx]({{ site.url }}/assets/images/2018-03-24-aprendiendo-vue/simple-vue.gif)
 
 
 **Quieres ver como funciona**
