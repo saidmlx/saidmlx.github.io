@@ -1,6 +1,6 @@
 ---
 layout: post
-title: Crear una imagen customizada basada en Mysql
+title: Crear una imagen Docker customizada basada en Mysql
 date: 2018-12-12 12:00:00 
 categories: Devops
 tags: Devops Mysql Docker
