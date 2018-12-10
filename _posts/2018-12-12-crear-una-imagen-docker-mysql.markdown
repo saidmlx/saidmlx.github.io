@@ -2,8 +2,8 @@
 layout: post
 title: Crear una imagen Docker customizada basada en Mysql
 date: 2018-12-12 12:00:00 
-categories: Devops
-tags: Devops Mysql Docker
+categories: DevOps
+tags: DevOps Mysql Docker
 ---
 
 Las imágenes son la base de Docker, y crear una imagen customizada es el punto de partida para todo desarrollador ya que nos permite compartirlas con el equipo de trabajo o con el mundo entero.

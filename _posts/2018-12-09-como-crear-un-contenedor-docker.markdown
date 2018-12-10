@@ -3,7 +3,7 @@ layout: post
 title: Como crear un contenedor con Docker-Mysql y persistir la información
 date: 2018-12-09 12:00:00 
 categories: DevOps
-tags: Devops Docker Mysql
+tags: DevOps Docker Mysql
 ---
 
 Te han contado maravillas de Docker y no sabes por dónde empezar; en esta oacación vamos a crear un contenedor que contenga Mysql y persistir los datos, para que a la hora de detener el proceso del contenedor nos quedemos con la información generada.
