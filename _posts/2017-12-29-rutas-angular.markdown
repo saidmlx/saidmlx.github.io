@@ -2,7 +2,7 @@
 layout: post
 title:  Como manejar rutas en angular
 date:   2017-12-29 12:00:00 -0000
-categories: Javascript Angular
+categories: JavaScript Angular
 tags: Angular TypeScript JavaScript
 
 ---

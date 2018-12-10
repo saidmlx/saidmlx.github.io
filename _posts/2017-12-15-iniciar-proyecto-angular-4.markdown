@@ -2,7 +2,7 @@
 layout: post
 title:  Creando un proyecto con angular 4
 date:   2017-12-15 12:00:00 -0000
-categories: Javascript Angular
+categories: JavaScript Angular
 tags: Angular TypeScript JavaScript
 ---
 

@@ -2,7 +2,7 @@
 layout: post
 title: Ejemplo de una aplicación con Vue.js
 date: 2018-03-24 12:00:00 
-categories: Javascript Vue.js
+categories: JavaScript Vue.js
 tags: JavaScript Vue.js Pug Stylus Webpack
 ---
 
