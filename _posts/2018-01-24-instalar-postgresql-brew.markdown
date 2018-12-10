@@ -2,7 +2,7 @@
 layout: post
 title:  Instalar Postgresql utilizando brew
 date: 2018-01-02 12:00:00 
-categories: Databse PostgreSQL
+categories: SQL PostgreSQL
 tags: PostgreSQL SQL Brew 
 ---
 
