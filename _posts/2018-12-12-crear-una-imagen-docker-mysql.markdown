@@ -108,7 +108,7 @@ Donde:
 * __mysql -p__: es el comando para entrar a la consola de mysql con el usuario root(si has trabajado con mysql en consola es lo mismo).
 
 ```terminal
-λ docker exec -it mysql-saidmlx mysql -p                                      
+$ docker exec -it mysql-saidmlx mysql -p                                      
 Enter password:                                                               
 Welcome to the MySQL monitor.  Commands end with ; or \g.                     
 Your MySQL connection id is 9                                                 
@@ -185,7 +185,7 @@ mysql                      latest              f991c20cb508        3 weeks ago  
 Y ahora subimos la imagen
 
 ```terminal
-λ docker push saidmlx/mysql:withdatabase
+$ docker push saidmlx/mysql:withdatabase
 The push refers to repository [docker.io/saidmlx/mysql]
 48994486ea8f: Pushed
 withdatabase: digest: sha256:45a88952d0bf29136031b46608e154ee762c82ab3c37f7fa14e2cdb63fd08cb1 size: 3035
@@ -207,7 +207,7 @@ $ docker image rmi saidmlx/mysql:withdatabase
 Lanzamos un proceso Docker pero a la imagen __saidmlx/mysql:withdatabase__ y como no la encuentra en el Host la descarga
 
 ```terminal
-λ docker run -d -p 3306:3306 --name mysql-saidmlx -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=demo saidmlx/mysql:withdatabase 
+$ docker run -d -p 3306:3306 --name mysql-saidmlx -e MYSQL_ROOT_PASSWORD=secret -e MYSQL_DATABASE=demo saidmlx/mysql:withdatabase 
 Unable to find image 'saidmlx/mysql:withdatabase' locally
 withdatabase: Pulling from saidmlx/mysql
 a5a6f2f73cd8: Pull complete
@@ -228,7 +228,7 @@ ad1cb6c628e1        saidmlx/mysql:withdatabase   "docker-entrypoint.s…"   4 mi
 Entramos al contenedor en modo interactivo y podemos ver la base de datos y la tabla creada
 
 ```terminal
-λ docker exec -it mysql-saidmlx mysql -p
+$ docker exec -it mysql-saidmlx mysql -p
 Enter password:
 Welcome to the MySQL monitor.  Commands end with ; or \g.
 Your MySQL connection id is 8
