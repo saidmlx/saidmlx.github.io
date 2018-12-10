@@ -193,7 +193,7 @@ withdatabase: digest: sha256:45a88952d0bf29136031b46608e154ee762c82ab3c37f7fa14e
 
 y a partir de aquí la imagen esta disponible para el mundo entero.
 
-![docker hub repository ]({{ site.url }}/assets/images/docker/docker-hub.jpg)
+![docker hub repository ]({{ site.url }}/assets/images/docker/docker-hub.JPG)
 
 ## Descargar la imagen creada desde Docker-Hub
 
