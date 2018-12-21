@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Instalar MySQL en un entorno servidor
-date: 2000-01-01 12:00:00 
+date: 2018-12-14 12:00:00 
 categories: SQL MySQL 
 tags: SQL MySQL Server Terminal
 ---
