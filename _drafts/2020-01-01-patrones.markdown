@@ -1,0 +1,91 @@
+---
+layout: post
+title: Patrones de diseño
+date: 2000-01-01 12:00:00 
+categories: Java WebService
+tags: Java
+---
+
+En el mundo de la programación existen comportamientos que se repiten una y otra vez por lo tanto la solucion debe ser igual para cada uno de estos comportamientos y esta solucion se les llama patrodes de diseño.
+
+Los patrones de diseño no son otra cosa que soluciones a proplemas con comportamiento similar; esyos nos ayudan a sintetizar soluciones basado en implementaciones probadas anteriormente.
+
+Como desarrolladores debemos conocer los diferentes patrones de diseño para que cuando un problema se presenta podamos implementar una solucion ya probada.
+
+El hecho de usar patrones de diseño nos ayuda a tener un código mas flexible, reutilizable basado en mejores practicas y que usa un lenguaje comun en el argot del desarrollo de software. 
+
+Los patrones de diseño se pueden clasificar de acuerdo al tipo de problema que pueden solucionar
+
+Diferentes autores utilizan diferentes clasificaciones; el libro mas famoso _Design Patterns_,(1995, Erich Gamma, Richard Helm, Ralph Johnson, and John Vlissides utiliza tres grupos Creacion(Creational), Estructura(Structural) y comportamiento(Behavioral) pero fue escrito en 1995 basado en lenguajes orientado a objetos de su epoca C++ y smalltalk, en lo siguiente vamos a utilizar la clasificación de _Design patterns in Java_(2006, Steven John Metsker
+William C. Wake)
+
+
+1. Interfaces
+    1. Adapters
+    2. Facade
+    3. Composite
+    4. Bridge
+2. Responsability
+    1. Singleton
+    2. Observer
+    3. Mediator
+    4. Proxy
+    5. Chain of responsability
+    6. Flyweight
+3. Construction
+    1. Builder
+    2. Factory method
+    3. Abstract factory
+    4. Prototype
+    5. Memento
+4. Opertions
+    1. Template method
+    2. State
+    3. Atrategy
+    4. Command
+    5. Interpreter
+5. Extensions
+    1. Decorator
+    2. Iterator
+    3. Visitor
+
+## Interfaces
+Si partimos del concepto de interface podremos advertir que es una colección metodos y campos que delinian el comportamiento de una clase indicando lo que si y no debe contener una clase.
+
+De esta forma los patrones de tipo interface corresponden a la forma en que se estructuran soluciones que en mayor o menor medida utilizan interfaces.
+
+
+### Adapters
+  
+### Facade
+### Composite
+### Bridge
+## Responsability
+### Singleton
+### Observer
+### Mediator
+### Proxy
+### Chain of responsability
+### Flyweight
+## Construction
+### Builder
+### Factory method
+### Abstract factory
+### Prototype
+### Memento
+## Opertions
+### Template method
+### State
+### Atrategy
+### Command
+### Interpreter
+## Extensions
+### Decorator
+### Iterator
+### Visitor
+
+
+
+
+
+
