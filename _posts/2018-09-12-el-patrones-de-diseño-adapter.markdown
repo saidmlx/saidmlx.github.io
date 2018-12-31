@@ -1,7 +1,7 @@
 ---
 layout: post
 title: El patrón de diseño Adapter
-date: 2000-01-01 12:00:00 
+date: 2018-09-12 12:00:00 
 categories: Java Patherns
 tags: Java Patherns
 ---
