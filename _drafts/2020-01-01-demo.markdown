@@ -1,0 +1,25 @@
+---
+layout: post
+title: Oracle Database + websphere
+date: 2000-01-01 12:00:00 
+categories: Java Scala
+tags: Java Scala
+---
+
+Descargamos image de 
+
+https://hub.docker.com/_/oracle-database-enterprise-edition
+
+
+docker exec -it <Oracle-DB> bash -c "source /home/oracle/.bashrc; sqlplus /nolog
+
+docker run -d -it --name Oracle-DB 12a359cd0528
+
+docker run -d -it --name Oracle-DB 12a359cd0528
+
+docker run --name ora121  -p 15210:1521 -p 55000:5500   -e ORACLE_PWD=secret  -e ORACLE_CHARACTERSET=AL32UTF8 -v  data://opt/oracle/oradata  12a359cd0528
+
+
+```
+
+```
