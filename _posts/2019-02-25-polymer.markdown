@@ -99,7 +99,7 @@ Cuando queremos mostrar el valor de una propiedad dentro del HTML se hace un sim
 ```
 
 ### Two-way data binding
-Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una propiedad dentro del HTML utilizamos el double binding que es encerrar entre llaves el nombre de la propiedad ```{{month::input}}``` .de esta forma lo que se escriba en el input afectará a la propiedad.
+Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una propiedad dentro del HTML utilizamos el double binding que es encerrar entre llaves el nombre de la propiedad ``` {{month::input}} ``` .de esta forma lo que se escriba en el input afectará a la propiedad.
 
 ```javascript
 <dom-module id="polymer-element">
