@@ -11,6 +11,8 @@ __Tabla de contenido__
 - [Librerias a importar](## Librerias a importar)
 - [Estructura básica de un componente](## Estructura básica de un componente)
 - [Data binding](## Data binding)
+- [Estructura dom-repeat](## Estructura dom-repeat)
+- [Estructura dom-if](## Estructura dom-if)
 
 ## Librerias a importar 
 ```javascript
@@ -212,5 +214,44 @@ y en el template del componente generamos tantos botones como meses definidos
     <button>[[item.value]]</button>
   </div>
 </template>
+```
 
+## Estructura dom-if
+Para ocupar la estructura condicional if necesitamos ```<template is="dom-if" if="{ {spring} }" >``` dónde spring es la expresión a evaluar.
+En el ejemplo siguiente tenemos cuatro variables que corresponden a las estaciones del año de tipo Booleano y solo se encuentra una activa.
+
+```javascript
+spring:{
+ type: Boolean,
+ value: false
+},
+summer:{
+ type: Boolean,
+ value: true
+},
+fall:{
+ type: Boolean,
+ value: false
+},
+winter:{
+ type: Boolean,
+ value: false
+}
+```
+
+De esta forma podemos crear una estructura dentro del template principal de nuestro elemento para evaluar esta variable para que se muestre solo la estación actual
+
+```javascript
+<template is="dom-if" if="{{spring}}" >
+ <h3>Spring</h3>
+</template>
+<template is="dom-if" if="{{summer}}" >
+ <h3>Summer</h3>
+</template>
+<template is="dom-if" if="{{fall}}" >
+ <h3>Fall</h3>
+</template>
+<template is="dom-if" if="{{winter}}" >
+ <h3>Winter</h3>
+</template>
 ```
