@@ -1,0 +1,130 @@
+---
+layout: post
+title: Polymer
+date: 2019-02-25 12:00:00 
+categories: JavaScript Polymer
+tags: JavaScript Polymer
+---
+
+## Librerias a importar 
+```javascript
+<base href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/">
+<script src="webcomponentsjs/webcomponents-loader.js"></script>
+
+<link rel="import" href="iron-ajax/iron-ajax.html">
+
+<link rel="import" href="polymer/polymer-element.html">
+
+```
+
+## Estructura básica de un componente
+Un componente de Polmer está constituido por tres partes
+
+- __Template__: tag html que describe el la vista del componente.
+- __Style__: apartado donde se escriben los estilos
+- __Script__: definición del componente
+
+```javascript
+<dom-module id="polymer-element">
+ <template>
+   <style>
+     :host h1{
+       background-color: blue;
+       color : white;
+     }
+     :host h1 span{
+       color: cyan;
+     }
+   </style>
+   <h1>The current month is <span>[[month]]</span> !!</h1>
+ </template>
+  <script>
+   class PolymerElement extends Polymer.Element {
+     static get is() { return "polymer-element"; }
+     static get properties() {
+       return {
+         month: {
+           type: String,
+           value:'Janary'
+         }
+       };
+     }
+   }
+   customElements.define(PolymerElement.is, PolymerElement);
+ </script>
+</dom-module>
+```
+
+## Data binding
+Es la forma en que se vinculan los datos entre el javascript y el Template HTML y va en dos formas
+
+### One-way data binding
+Cuando queremos mostrar el valor de una propiedad dentro del HTML se hace un simple binding y esto de hace encerrando entre corchetes en nombre de la propiedad ```<span>[[month]]</span> ```
+
+```javascript
+<dom-module id="polymer-element">
+ <template>
+   <style>
+     :host h1{
+       background-color: blue;
+       color : white;
+     }
+     :host h1 span{
+       color: cyan;
+     }
+   </style>
+   <h1>The current month is <span>[[month]]</span> !!</h1>
+ </template>
+ <script>
+   class PolymerElement extends Polymer.Element {
+     static get is() { return "polymer-element"; }
+     static get properties() {
+       return {
+         month: {
+           type: String,
+           value:'Janary'
+         }
+       };
+     }
+   }
+   customElements.define(PolymerElement.is, PolymerElement);
+ </script>
+</dom-module>
+```
+
+### Two-way data binding
+Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una propiedad dentro del HTML utilizamos el double binding que es encerrar entre llaves el nombre de la propiedad ```{{month::input}}``` .de esta forma lo que se escriba en el input afectará a la propiedad.
+
+```javascript
+<dom-module id="polymer-element">
+ <template>
+   <style>
+     :host h2{
+       background-color: blue;
+       color : white;
+     }
+     :host h2 span{
+       color: cyan;
+     }
+   </style>
+   <h1>Two-way data binding</h1>
+   <h2>The current month is <span>[[month]]</span> !!</h2>
+   Change value <input type="text" value="{{month::input}}"></input>
+ </template>
+  <script>
+   class PolymerElement extends Polymer.Element {
+     static get is() { return "polymer-element"; }
+     static get properties() {
+       return {
+         month: {
+           type: String,
+           value:'Janary'
+         }
+       };
+     }
+   }
+   customElements.define(PolymerElement.is, PolymerElement);
+ </script>
+
+</dom-module>
+```
