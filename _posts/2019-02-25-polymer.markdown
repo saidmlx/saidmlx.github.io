@@ -6,6 +6,12 @@ categories: JavaScript Polymer
 tags: JavaScript Polymer
 ---
 
+__Tabla de contenido__
+
+- [Librerias a importar](## Librerias a importar)
+- [Estructura básica de un componente](## Estructura básica de un componente)
+- [Data binding](## Data binding)
+
 ## Librerias a importar 
 ```javascript
 <base href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/">
