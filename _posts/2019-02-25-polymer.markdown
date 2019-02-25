@@ -206,9 +206,9 @@ En el ejemplo se muestra la forma de iterar un array que contiene los meses del 
          }
 ```
 
-y en el template del componente generamos tantos botones como meses definidos
+y en el template del componente generamos tantos botones como meses definidos.
 
-````javascript
+```javascript
 <template is="dom-repeat" items="[[months]]">
   <div>
     <button>[[item.value]]</button>
@@ -255,3 +255,38 @@ De esta forma podemos crear una estructura dentro del template principal de nues
  <h3>Winter</h3>
 </template>
 ```
+
+
+## Métodos
+Los métodos son declarados dentro de la clase 
+```javascript
+class PolymerElement extends Polymer.Element {
+ static get is() { return "polymer-element"; }
+ static get properties() {...}
+ changeSeason(){
+   //--TODO
+ }
+}
+customElements.define(PolymerElement.is, PolymerElement);
+```
+
+## Eventos
+los eventos se establecen en dos fases, dentro del template ```<button on-click = "selectMonth" ></button>``` y su definición dentro de la clase del componente ```selectMonth(event){ //--TODO }``` .
+
+```javascript
+<template>
+ ...
+ <button on-click="selectMonth" >[[item.value]]</button>
+ ...
+</template>
+
+class PolymerElement extends Polymer.Element {
+ static get is() { return "polymer-element"; }
+ static get properties() {...}
+  selectMonth(event){
+   //--TODO
+ }
+}
+customElements.define(PolymerElement.is, PolymerElement);
+```
+
