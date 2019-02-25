@@ -128,3 +128,47 @@ Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una pro
 
 </dom-module>
 ```
+
+### Data binding a un atributo
+En ocasiones es necesario cambiar el valor de un atributo de un elemento HTML con el valor de una propiedad para eso el data binding se usa anteponiendo el signo __$__ antes del signo igual  ```<h2 class$="[[customColor]]">``` donde customColor es una propiedad del componente
+
+```javascript
+<dom-module id="polymer-element">
+ <template>
+   <style>
+     :host h2{
+       background-color: blue;
+       color : white;
+     }
+     :host h2 span{
+       color: cyan;
+     }
+     :host .orange{
+       background-color: #FF9A06;
+     }
+   </style>
+   <h1>Two-way data binding</h1>
+   <h2 class$="[[customColor]]">The current month is <span>[[month]]</span> !!</h2>
+   Change value <input type="text" value="{{month::input}}"></input>
+ </template>
+  <script>
+   class PolymerElement extends Polymer.Element {
+     static get is() { return "polymer-element"; }
+     static get properties() {
+       return {
+         month: {
+           type: String,
+           value:'Janary'
+         },
+         customColor:{
+           type: String,
+           value: 'orange'
+         }
+       };
+     }
+   }
+   customElements.define(PolymerElement.is, PolymerElement);
+ </script>
+</dom-module>
+
+```
