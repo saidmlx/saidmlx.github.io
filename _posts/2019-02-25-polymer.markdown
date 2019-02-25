@@ -178,3 +178,39 @@ En ocasiones es necesario cambiar el valor de un atributo de un elemento HTML co
 </dom-module>
 
 ```
+
+
+## Estructura dom-repeat
+En ocasiones es necesario utilizar ciclos para generar elementos para eso es necesario utilizar la estructura dom-repeate.
+En el ejemplo se muestra la forma de iterar un array que contiene los meses del año, para empezar se tiene una propiedad llamada months
+
+```javascript
+  months:{
+           type: Array,
+           value:[
+             {month:1,season:'Winter',value:'January'},
+             {month:2,season:'Winter',value:'February'},
+             {month:3,season:'Spring',value:'March'},
+             {month:4,season:'Spring',value:'April'},
+             {month:5,season:'Spring',value:'May'},
+             {month:6,season:'Summer',value:'June'},
+             {month:7,season:'Summer',value:'July'},
+             {month:8,season:'Summer',value:'August'},
+             {month:9,season:'Fall',value:'September'},
+             {month:10,season:'Fall',value:'October'},
+             {month:11,season:'Fall',value:'November'},
+             {month:12,season:'Winter',value:'December'}
+           ]
+         }
+```
+
+y en el template del componente generamos tantos botones como meses definidos
+
+````javascript
+<template is="dom-repeat" items="[[months]]">
+  <div>
+    <button>[[item.value]]</button>
+  </div>
+</template>
+
+```
