@@ -115,7 +115,7 @@ Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una pro
    </style>
    <h1>Two-way data binding</h1>
    <h2>The current month is <span>[[month]]</span> !!</h2>
-   Change value <input type="text" value="{{month::input}}"></input>
+   Change value <input type="text" value=" { { month::input } }  "></input>
  </template>
   <script>
    class PolymerElement extends Polymer.Element {
