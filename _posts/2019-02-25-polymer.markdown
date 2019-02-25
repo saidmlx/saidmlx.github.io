@@ -242,13 +242,13 @@ winter:{
 De esta forma podemos crear una estructura dentro del template principal de nuestro elemento para evaluar esta variable para que se muestre solo la estación actual
 
 ```javascript
-<template is="dom-if" if="{{spring}}" >
+<template is="dom-if" if="{ {spring} }" >
  <h3>Spring</h3>
 </template>
-<template is="dom-if" if="{{summer}}" >
+<template is="dom-if" if="{ {summer} }" >
  <h3>Summer</h3>
 </template>
-<template is="dom-if" if="{{fall}}" >
+<template is="dom-if" if="{ {fall} }" >
  <h3>Fall</h3>
 </template>
 <template is="dom-if" if="{{winter}}" >
