@@ -13,8 +13,8 @@ __Tabla de contenido__
 - [Data binding](## Data binding)
 - [Estructura dom-repeat](## Estructura dom-repeat)
 - [Estructura dom-if](## Estructura dom-if)
-- [## Métodos](## Métodos)
-- [## Eventos](## Eventos)
+- [Métodos](## Métodos)
+- [Eventos](## Eventos)
 
 ## Librerias a importar 
 ```javascript
