@@ -623,7 +623,7 @@ Object{
 ### Promise Callbacks
 
 Si no queremos utilizar jQuery la opción es utilizar el Objeto Promise que funciona masomenos como un proxy para encontrar un valor no disponible en el momento pero puede o no estar en el futuro.
-Tenemos el mismo ejemplo anterior, si analizamos ```promiseCallback```  veremos que regresa una promesa(return new Promise(function(resolve, reject) ) y mediante el objeto XMLHttpRequest() hace una petición asíncrona para obtener un usuario y una vez responda se valida que tipo de status regresa si es un 200 entonces la promesa envía un resolver (```resolve( req.response );```) y en caso contrario un reject ```reject( Error(req.statusText));```.
+Tenemos el mismo ejemplo anterior, si analizamos ```promiseCallback```  veremos que regresa una promesa(return new ```Promise(function(resolve, reject) )``` y mediante el objeto ```XMLHttpRequest()``` hace una petición asíncrona para obtener un usuario y una vez responda se valida que tipo de status regresa si es un __200__ entonces la promesa envía un resolver (```resolve( req.response );```) y en caso contrario un reject ```reject( Error(req.statusText));```.
 Para hacer la petición se hace de la siguiente forma  ```promiseCallback().then( resolvedAnswer, rejectedAnwer)``` y si observamos se utiliza también el then con los mismos parámetros el primero para una ejecución exitosa () y la segunda en caso de que exista algún error.
 
 ```javascript
@@ -684,3 +684,88 @@ __Resolved Answer__
  }
 
 ```
+
+### Fetch
+La siguiente implementación son promesas con API Fetch que es una API para recuperar recursos, es muy similar a la anterior.
+Lo que podemos decir de fetch es que tiene una particularidad de que todas las respuestas las responde de forma correcta lo que significa que todas caerán dentro del then y es ahí donde tenemos que evaluar el status para resolver la petición o rechazarla. 
+
+```javascript
+const promiseCallback = function () {
+    return new Promise((resolve, reject) => {
+     
+   fetch('https://jsonplaceholder.typicode.com/users/1')
+   .then((response) => {
+     if(response.status==200){
+       resolve(response.json())
+     }else{
+       reject(response);
+     }
+   })
+   .catch((error) => console.info(error) )
+   });
+ }
+  var resolvedAnswer = function(data){
+   console.debug('--resolvedAnswer--')
+   console.debug('->',data)
+ }
+ var rejectedAnwer = function(data){
+   console.debug('--rejectedAnwer--')
+   console.debug('-->',data)
+ }
+  promiseCallback().then(resolvedAnswer, rejectedAnwer)
+```
+
+
+### Async Await
+Async Await apareció en el __ES2017__  y es una nueva definición para implementar promesas, lo que hace es definir un método de tipo __async__ de la forma ```async function getData() {}``` este utiliza el await para hacer esperar a la función hasta que esta responda; de forma de una promesa resuelta y sólo si entra dentro de la estructura catch devolverá una promesa rechazada. 
+
+```javascript
+async function asyncAwaitCallback() {
+   try {
+     const response1 = await fetch('https://jsonplaceholder.typicode.com/users/1');
+     return await response1.json();
+   } catch (error) {     
+     throw error;
+   }
+ }
+ var resolvedAnswer = function(data){
+   console.debug('--resolvedAnswer--')
+   console.debug('->',data)
+ }
+ var rejectedAnwer = function(data){
+   console.debug('--rejectedAnwer--')
+   console.debug('-->',data)
+ }
+
+asyncAwaitCallback().then(resolvedAnswer) .catch(rejectedAnwer);
+```
+
+## Eventos
+Los eventos son interacciones de un usuario dentro del DOM(Document Object Model) como desarrollador usamos los eventos para generar tareas como por ejemplo cambiar el color de un botón cuando es presionado.
+Existen tres modos de generar eventos
+Evento dentro de las etiquetas HTML
+En este ejemplo se asocia el evento onclick a un botón para que despliegue un mensaje de alerta a ser presionado.
+```javascript
+<button onclick="alert('Hello world!')"></button>
+```
+
+### Evento como propiedad de un elemento DOM
+En este caso se referenci el objeto DOM y a la propiedad onclick se le asocia una función anónimo.
+
+```javascript
+const myButton = document.getElementsByTagName('button ')[0]
+myButton.onclick = function(event){alert('Hello world');};
+```
+
+### Evento con EventTarget.addEventListener
+Esta forma es la más utilizada en la actualidad, y lo que hace es registrar un evento específico y asociarse un método.
+
+```javascript
+const myButton = document.getElementsByTagName('button ')[0]
+myButton.addEventListener('onclick',function(event){alert('Hello world')});
+```
+
+
+
+
+
