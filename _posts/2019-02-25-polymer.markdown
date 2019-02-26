@@ -325,12 +325,13 @@ this.splice('months',1,2)
 ```
 
 ## Anidar componentes
+
 Para anidar componentes necesitamos definir dos componentes para este caso.
 
-´´´javascript
+```javascript
 <dom-module id="polymer-element-one">
 <dom-module id="polymer-element-two">
-´´´
+```
  
 Dentro del template de PolymerElementOne agregamos la línea siguiente para insertar el segundo componente.
 
@@ -397,13 +398,15 @@ Cuando se comparten valores entre componentes es necesario activar la propiedad 
 
 ## Observer
 En ocasiones es necesario observar una variable para aplicar una acción para eso son los observables; de esta forma en el último ejemplo si cuando cambia la variable ```name``` podríamos agregar un observable en dos pasos.
+
 1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie.
-
-  ```name:{ type:String,observer:"changedName"}```
-
+``` javascript
+name:{ type:String,observer:"changedName"}
+```
 2. La segunda es agregar el método, este define dos valores el actual y el anterior.
 ```changedName(new_value, old_value ){
  console.info(`Old value:[${old_value}] New Value:[${new_value}]`)
-}```
+}
+```
 
 
