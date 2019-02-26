@@ -536,4 +536,151 @@ console.info(numbers)
 console.info(`total: ${total}`)
 //--"total: 36"
 ```
+## Asincronismo (callbacks, promesas, async-await)
+En algunas ocasiones necesitamos llamar peticiones HTTP, y sabemos que para que la experiencia de usuario no sea desfavorable estas peticiones deben ser asíncronas, pero qué pasa si estas peticiones dependen una de otra, lo que significa anidar estas peticiones; para este caso necesitamos promesas.
+Una promesa no es más que una respuesta que puede o no estar disponible; esto significa que si lanzamos una petición la respuesta puede ser devuelta al instante o tardar 1,2,3,… minutos o no responder nunca.
+Para los ejemplos posteriores estaremos utilizando  la API REST JSON PLACEHOLDER
 
+### jQuery Callbacks 
+Si analizamos el método ajax ```ajaxCallback()``` podemos ver que existe la línea ```var deferred = $.Deferred();``` el método ```$.Deferred()``` es el que nos ayuda a generar una cola de llamadas y retransmite una petición resuelta o una petición rechazada como lo podemos ver en las líneas  ```deferred.resolve(data );  deferred.reject(data);```.
+Al analizar la llamada  ```ajaxCallback().then(resolvedAnswer, rejectedAnwer)``` podremos ver que llama al método then que es un manejador para ser llamado cuando un Objeto Deferred es resuelto o rechazado, este está aceptando dos funciones la primera es para cuando hay una petición ```resuelta(resolvedAnswer)``` y la segunda cuando hay una petición ```rechazada(rejectedAnwer)```.
+
+
+```javascript
+var ajaxCallback = function(){
+  var deferred = $.Deferred();
+  $.ajax ({
+    type: "GET",
+    url: 'https://jsonplaceholder.typicode.com/users/1',
+    dataType: 'json',
+    success: function (data,textStatus,jqXHR ){
+      deferred.resolve(data );
+    },
+    fail: function (data,textStatus,jqXHR){ 
+      deferred.reject(data);
+    },
+    error: function (data,textStatus,jqXHR){
+      deferred.reject(data);
+    }
+  });
+  return deferred.promise();
+}
+var resolvedAnswer = function(data){
+  console.debug('--resolvedAnswer--')
+  console.debug(data)
+}
+var rejectedAnwer = function(data){
+  console.debug('--rejectedAnwer--')
+  console.debug(data)
+}
+ 
+ajaxCallback().then(resolvedAnswer, rejectedAnwer)
+
+```
+
+__Resolved Answer__
+```terminal
+
+"--resolvedAnswer--"
+
+Object {
+ address: Object {
+   city: "Gwenborough",
+   geo: Object {},
+   street: "Kulas Light",
+   suite: "Apt. 556",
+   zipcode: "92998-3874"
+ },
+ company: Object {
+   bs: "harness real-time e-markets",
+   catchPhrase: "Multi-layered client-server neural-net",
+   name: "Romaguera-Crona"
+ },
+ email: "Sincere@april.biz",
+ id: 1,
+ name: "Leanne Graham",
+ phone: "1-770-736-8031 x56442",
+ username: "Bret",
+ website: "hildegard.org"
+}
+```
+__Rejected Answer__
+
+```terminal
+"--rejectedAnwer--"
+Object{
+  ...
+  readyState: 4,
+  responseJSON: Object{},
+  responsetext:"{}"
+  status:404,
+  statusText:'error',
+  ...
+}
+
+```
+
+### Promise Callbacks
+
+Si no queremos utilizar jQuery la opción es utilizar el Objeto Promise que funciona masomenos como un proxy para encontrar un valor no disponible en el momento pero puede o no estar en el futuro.
+Tenemos el mismo ejemplo anterior, si analizamos ```promiseCallback```  veremos que regresa una promesa(return new Promise(function(resolve, reject) ) y mediante el objeto XMLHttpRequest() hace una petición asíncrona para obtener un usuario y una vez responda se valida que tipo de status regresa si es un 200 entonces la promesa envía un resolver (```resolve( req.response );```) y en caso contrario un reject ```reject( Error(req.statusText));```.
+Para hacer la petición se hace de la siguiente forma  ```promiseCallback().then( resolvedAnswer, rejectedAnwer)``` y si observamos se utiliza también el then con los mismos parámetros el primero para una ejecución exitosa () y la segunda en caso de que exista algún error.
+
+```javascript
+const promiseCallback = function () {
+   return new Promise(function(resolve, reject) {
+     var req = new XMLHttpRequest();
+     req.open('GET', 'https://jsonplaceholder.typicode.com/users/1');
+      req.onload = function() {
+       if (req.status == 200) {
+         resolve(req.response);
+       }
+       else {
+         reject(Error(req.statusText));
+       }
+     };
+     req.onerror = function() {
+       reject(Error("Network Error"));
+     };
+     req.send();
+   });
+ }
+  var resolvedAnswer = function(data){
+   console.debug('--resolvedAnswer--')
+   console.debug(data)
+ }
+ var rejectedAnwer = function(data){
+   console.debug('--rejectedAnwer--')
+   console.debug(data)
+ }
+  promiseCallback().then(resolvedAnswer, rejectedAnwer)
+
+```
+__Resolved Answer__
+```terminal
+"--resolvedAnswer--"
+{
+   'id': 1,
+   'name': 'Leanne Graham',
+   'username': 'Bret',
+   'email': 'Sincere@april.biz',
+   'address': {
+     'street': 'Kulas Light',
+     'suite': 'Apt. 556',
+     'city': 'Gwenborough',
+     'zipcode': '92998-3874',
+     'geo': {
+       'lat': '-37.3159',
+       'lng': '81.1496'
+     }
+   },
+   'phone': '1-770-736-8031 x56442',
+   'website': 'hildegard.org',
+   'company': {
+     'name': 'Romaguera-Crona',
+     'catchPhrase': 'Multi-layered client-server neural-net',
+     'bs': 'harness real-time e-markets'
+   }
+ }
+
+```
