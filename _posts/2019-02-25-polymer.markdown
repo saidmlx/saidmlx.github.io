@@ -399,15 +399,97 @@ Cuando se comparten valores entre componentes es necesario activar la propiedad 
 ## Observer
 En ocasiones es necesario observar una variable para aplicar una acción para eso son los observables; de esta forma en el último ejemplo si cuando cambia la variable ```name``` podríamos agregar un observable en dos pasos.
 
-1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie.
- ``` javascript
- name:{ type:String,observer:"changedName"}
- ```
-2. La segunda es agregar el método, este define dos valores el actual y el anterior.
- ```javascript
- changedName(new_value, old_value ){
+1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie
+``` javascript
+name:{ type:String,observer:"changedName"}
+```
+2. La segunda es agregar el método, este define dos valores el actual y el anterior
+```javascript
+changedName(new_value, old_value ){
   console.info(`Old value:[${old_value}] New Value:[${new_value}]`)
- }
- ```
+}
+```
+
+````javascript
+
+<base href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/">
+<script src="webcomponentsjs/webcomponents-loader.js"></script>
+
+<link rel="import" href="iron-ajax/iron-ajax.html">
+
+<link rel="import" href="polymer/polymer-element.html">
+
+<polymer-element-one></polymer-element-one>
+
+<dom-module id="polymer-element-one">
+<template>
+  <style>
+    :host {
+      background-color: cyan;
+      display: block;
+      padding: 4px;
+    }
+  </style>
+  <h1>I am a component !!</h1>
+  <input type="text" value="{{name::input}}" >
+  <h2> Make by [[name]]</h2>
+  <polymer-element-two parent-name="{{name}}" ></polymer-element-two> 
+  
+  <polymer-element-two parent-name="{{child}}" ></polymer-element-two> 
+
+</template>
+ <script>
+  class PolymerElementOne extends Polymer.Element {
+    static get is() { return "polymer-element-one"; }
+    static get properties() {
+      return {
+        name:{
+          type: String,
+          value: "Said",
+          observer:"changedName"
+        },
+        child:{
+          type: String,
+          value: "Luis"
+        }
+      };
+    }
+    changedName(new_value, old_value){
+      console.info(` ${new_value} - ${old_value}`)
+    }
+  }
+  customElements.define(PolymerElementOne.is, PolymerElementOne);
+</script>
+</dom-module>
+
+<dom-module id="polymer-element-two">
+<template>
+     <style>
+    :host {
+      background-color: yellow;
+      display: block;
+      padding: 4px;
+    }
+  </style>
+  <h2> I am a second componente  !!</h2>
+  <input type="text" value="{{parentName::input}}" >
+  <h3>[[parentName]]</h3>
+</template>
+ <script>
+   class PolymerElementTwo extends Polymer.Element {
+     static get is() { return "polymer-element-two"; }
+     static get properties() {
+       return {   
+        parentName:{
+          type: String,
+          notify: true
+        }
+       }
+     }
+  }
+  customElements.define(PolymerElementTwo.is, PolymerElementTwo);
+</script>
+</dom-module> 
+```
 
 
