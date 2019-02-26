@@ -8,13 +8,13 @@ tags: JavaScript Polymer
 
 __Tabla de contenido__
 
-- [Librerias a importar](## Librerias a importar)
-- [Estructura básica de un componente](## Estructura básica de un componente)
-- [Data binding](## Data binding)
-- [Estructura dom-repeat](## Estructura dom-repeat)
-- [Estructura dom-if](## Estructura dom-if)
-- [Métodos](## Métodos)
-- [Eventos](## Eventos)
+- [Librerias a importar](#Librerias a importar)
+- [Estructura básica de un componente](#Estructura básica de un componente)
+- [Data binding](#Data binding)
+- [Estructura dom-repeat](#Estructura dom-repeat)
+- [Estructura dom-if](#Estructura dom-if)
+- [Métodos](# Métodos)
+- [Eventos](# Eventos)
 
 ## Librerias a importar 
 ```javascript
