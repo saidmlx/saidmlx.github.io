@@ -264,6 +264,7 @@ demo.actionForEach()
 ```
 
 Para solucionar lo anterior debemos hacer referencia al this de la siguiente forma, para poder acceder a las propiedades y métodos de la clase Demo 
+
 ```javascript
 class Demo{
    constructor(){
@@ -283,6 +284,105 @@ demo.print()
 demo.actionForEach()
 ```
 
+## This y el método bind
+
+Otro momento que analizar es cuando trabajamos con eventos, en este script se crea un Objeto Button y se le agrega un evento click y se le asigna el método ```nextMonth()``` para que incremente el valor de la  variable ```currentMonth``` en 1, pero en la línea ```this.currentMonth++;``` no puede acceder al objeto base porque este obedece al objeto que generó el evento en este caso el Button, por lo tanto el ```currentMonth``` siempre será ```January```.
+
+```javascript
+const Demo = function(){    
+this.months=['January','February','March','April','May','June','July','August','September','October','November','December']
+  this.currentMonth=0
+  this.btnNext = document.createElement('button')
+  this.btnNext.addEventListener('click', this.nextMonth);
+}
+Demo.prototype.nextMonth = function(){
+  this.currentMonth++;
+}
+Demo.prototype.printCurrentMonth = function(){
+  console.info(this.months[this.currentMonth])
+}
+const demo = new Demo();
+demo.printCurrentMonth(); //--print January
+demo.btnNext.dispatchEvent(new Event('click'));
+demo.printCurrentMonth(); //--print January
+demo.btnNext.dispatchEvent(new Event('click'));
+demo.printCurrentMonth(); //--print January
+``` 
+
+*If you copy and paste the script into Chrome Browser you will see the result*
+
+
+Para eso es necesario utilizar el método bind que lo que hace es enviar el this al método del evento para poder uso de sus propiedades de la forma ```this.nextMonth.bind(this).```
+
+```javascript
+const Demo = function(){
+   this.months=['January','February','March','April','May','June','July','August','September','October','November','December']
+   this.currentMonth=0
+   this.btnNext = document.createElement('button')
+   this.btnNext.addEventListener('click', this.nextMonth.bind(this));
+ }
+ Demo.prototype.nextMonth = function(){
+   this.currentMonth++;
+ }
+ Demo.prototype.printCurrentMonth = function(){
+   console.info(this.months[this.currentMonth])
+ }
+ const demo = new Demo();
+ demo.printCurrentMonth(); //--print January
+ demo.btnNext.dispatchEvent(new Event('click'));
+ demo.printCurrentMonth(); //--print February
+ demo.btnNext.dispatchEvent(new Event('click'));
+ demo.printCurrentMonth(); //--print March
+``` 
+
+## Objetos
+
+Las tres formas de escribir Clases
+
+### Prototype
+```javascript
+var Dog = function(){
+   console.log('Dog:Constructor()')
+ }
+ Dog.prototype.talk = function(){
+     console.info('auuuuuu');
+ }
+ var dog = new Dog();
+ dog.talk();
+ //--auuuuuu
+``` 
+
+### Object
+```javascript
+const Dog = {
+   init:function init(){
+     console.log('Dog:Constructor()');
+   },
+   talk : function talk(){
+     console.info('auuuuuu');
+   }
+ }
+ const dog = Object.create(Dog);
+ dog.talk();
+ //--"auuuuuu"
+```
+
+### Class
+```javascript
+class Dog  {
+   constructor(){
+    
+   }
+   talk(){
+     console.info('auuuuuu');
+   }
+ }
+ const dog = new Dog();
+ dog.talk();
+ //--"auuuuuu"
+ ```
+ 
+ 
 
 
 
