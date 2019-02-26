@@ -400,13 +400,14 @@ Cuando se comparten valores entre componentes es necesario activar la propiedad 
 En ocasiones es necesario observar una variable para aplicar una acción para eso son los observables; de esta forma en el último ejemplo si cuando cambia la variable ```name``` podríamos agregar un observable en dos pasos.
 
 1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie.
-``` javascript
-name:{ type:String,observer:"changedName"}
-```
+ ``` javascript
+ name:{ type:String,observer:"changedName"}
+ ```
 2. La segunda es agregar el método, este define dos valores el actual y el anterior.
-```changedName(new_value, old_value ){
- console.info(`Old value:[${old_value}] New Value:[${new_value}]`)
-}
-```
+ ```javascript
+ changedName(new_value, old_value ){
+  console.info(`Old value:[${old_value}] New Value:[${new_value}]`)
+ }
+ ```
 
 
