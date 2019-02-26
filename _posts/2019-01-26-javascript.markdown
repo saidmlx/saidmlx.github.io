@@ -368,6 +368,7 @@ const Dog = {
 ```
 
 ### Class
+
 ```javascript
 class Dog  {
    constructor(){
@@ -382,7 +383,157 @@ class Dog  {
  //--"auuuuuu"
  ```
  
- 
+## Arrow functions 
+
+Las arrow functions son una forma más reducida de escribir funciones, esta es una forma de escribir funciones anónimas además que provee una particularidad de desvincular el this.  
+La siguiente función calcula el área de un círculo y veras la forma de cómo los Array Functions te ayudan a reducir el código.
+__Versión 1__
+```javascript
+var radio = 2;
+var areaCircle =function(radio){
+   return Math.PI *  Math.pow(radio,2)
+}
+var area=areaCircle(radio);
+console.log('El area de un circulo con radio '+radio+' es: '+ area);//--El area de un circulo con radio 2 es: 12.566370614359172
+```
 
 
+__Versión 2: con reducción de codigo gracias __
+```javascript
+let radio = 2
+const areaCircle = (radio) => Math.PI *  Math.pow(radio,2)
+console.log(`El area de un circulo con radio ${radio} es: ${areaCircle(radio)}`);//--El area de un circulo con radio 2 es: 12.566370614359172
+```
+
+
+Pero qué pasa con el concepto de desvincular el this.
+Cantes cuando se utilizaba un foreach y se quería acceder al this del objeto que lo contenía era necesario reasignar el this o pasarlo como parámetro de esta forma
+```javascript
+const Sum = function(){
+   this.numbers =[1,2,3,4,5,6,7,8,9];
+   this.total=0
+    this.sumElements = function(){
+     this.numbers.forEach(function(item){
+       this.total= this.total+item;//en este punto this corresponde al objeto Window
+     });
+   }
+ }
+ let sum = new Sum();
+ sum.sumElements();
+ sum.total
+```
+
+```javascript
+const Sum = function(){
+   this.numbers =[1,2,3,4,5,6,7,8,9];
+   this.total=0
+   let self = this;
+   this.sumElements = function(){
+     this.numbers.forEach(function(item){
+       self.total= self.total+item;
+    })
+   }
+ }
+ let sum = new Sum();
+ sum.sumElements();
+ sum.total
+```
+
+Ahora si utilizamos Array Functions no tenemos que asignar a otra variable el objeto this
+
+```javascript
+const Sum = function(){
+   this.numbers =[1,2,3,4,5,6,7,8,9];
+   this.total=0
+    this.sumElements = function(){
+     this.numbers.forEach( (item) => {this.total= this.total+item;});
+   }
+ }
+ let sum = new Sum();
+ sum.sumElements();
+ sum.total
+```
+
+## Arrays (solo se describen los más importantes)
+__filter()__ : regresa todos los elementos que cumplan con el filtro aplicado
+
+```javascript
+let days=['Monday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+console.info(days.filter(item => item.length>6))
+//-- ["Tuesday", "Wednesday", "Thursday", "Saturday"]
+```
+
+
+__map()__:  regresa un nuevo arreglo con las operaciones aplicadas a cada elemento
+```javascript
+let days=['Monday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+console.info(days.map(item => item.toUpperCase()) )
+//--  ["MONDAY", "MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY", "SATURDAY", "SUNDAY"]
+```
+
+__push()__: agrega un nuevo elemento al array
+```javascript
+let days=['Monday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
+days.push('Sunday')
+console.info(days)
+//--["Monday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+```
+
+__pop()__: elimina el último elemento
+```javascript
+let days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+days.pop()
+console.info(days)
+//--["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+```
+
+__shift()__: elimina el primer elemento de un array
+```javascript
+let days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+var day = days.shift()
+console.info(days)
+//--["Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"]
+console.info(day)
+//--"Monday"
+```
+
+__slice__:([posición inicial], [posición final]): hace una copia de los elementos seleccionados y el array principal queda intacto
+let days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+```javascript
+var day = days.slice(2,4);
+
+console.info(days);
+//--["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+console.info(day);
+//--["Wednesday", "Thursday"]
+```
+
+
+__splice__([posición inicial], [número de elementos a extraer]): extrae elementos seleccionados del array principal.
+```javascript
+let days=['Monday','Tuesday','Wednesday','Thursday','Friday','Saturday','Sunday']
+
+var day = days.splice(2,2);
+
+console.info(days);
+//-- ["Monday", "Tuesday", "Friday", "Saturday", "Sunday"]
+console.info(day);
+//-- ["Wednesday", "Thursday"]
+```
+
+__reduce()__: El método reduce hace la funcion de acululador teniendo en cada ciclo el valor anterior con el valor nuevo.
+```javascript
+const numbers=[1,2,3,4,5,6,7,8]
+
+const total = numbers.reduce((a,b) => a+b)
+
+console.info(numbers)
+//--[1, 2, 3, 4, 5, 6, 7, 8]
+
+console.info(`total: ${total}`)
+//--"total: 36"
+```
 
