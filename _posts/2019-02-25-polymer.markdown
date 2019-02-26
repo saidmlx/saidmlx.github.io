@@ -8,16 +8,15 @@ tags: JavaScript Polymer
 
 __Tabla de contenido__
 
-- [Librerias a importar](#libreriasaimportar)
-- [Estructura básica de un componente](#Estructura básica de un componente)
+- [Librerias a importar](#librerias-a-importar)
+- [Estructura básica de un componente](#estructura-basica-de-un-componente)
 - [Data binding](#Data binding)
 - [Estructura dom-repeat](#Estructura dom-repeat)
 - [Estructura dom-if](#Estructura dom-if)
 - [Métodos](# Métodos)
 - [Eventos](# Eventos)
 
-## Librerias a importar 
-{#libreriasaimportar}
+## Librerias a importar
 ```javascript
 <base href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/">
 <script src="webcomponentsjs/webcomponents-loader.js"></script>
