@@ -293,3 +293,117 @@ class PolymerElement extends Polymer.Element {
 customElements.define(PolymerElement.is, PolymerElement);
 ```
 
+## Arrays
+Los array son tipo de dato especial al momento de asignar valores es por eso que es necesario acceder, obtener y agregar valores a través de los métodos siguientes, ya que si no lo hacemos a través de estos métodos no se disparan los observables 
+
+### Get
+
+Obtener un valor de un array donde 5 es la posición del array
+```javascript
+this.get('months.5.season')
+```
+
+### Set
+
+Actualizar un valor dentro de un array donde 5 es la posición a actualizar. 
+```javascript
+this.set('months.5.season','none')
+```
+
+### Push
+
+Utilizada para agregar un valor, este lo agregara al final
+```javascript
+this.push('months',{month:12,season:'Winter',value:'December'})
+```
+
+### Splice
+
+Cuando queremos eliminar un valor donde 1 es la posición inicial y 2 es el número de elementos a eliminar
+```javascript
+this.splice('months',1,2)
+```
+
+## Anidar componentes
+Para anidar componentes necesitamos definir dos componentes para este caso.
+
+´´´javascript
+<dom-module id="polymer-element-one">
+<dom-module id="polymer-element-two">
+´´´
+ 
+Dentro del template de PolymerElementOne agregamos la línea siguiente para insertar el segundo componente.
+
+```javascript
+<polymer-element-two></polymer-element-two> 
+```
+
+ ```javascript
+<polymer-element-one></polymer-element-one>
+
+<dom-module id="polymer-element-one">
+<template>
+  <style>
+    :host {
+      background-color: blue;
+      display: block;
+      padding: 4px;
+    }
+  </style>
+  <h1>I am a component !!</h1>
+<polymer-element-two></polymer-element-two> 
+</template>
+ <script>
+  class PolymerElementOne extends Polymer.Element {
+    static get is() { return "polymer-element-one"; }
+    static get properties() {
+      return {};
+    }
+  }
+  customElements.define(PolymerElementOne.is, PolymerElementOne);
+</script>
+</dom-module>
+
+<dom-module id="polymer-element-two">
+<template>
+     <style>
+    :host {
+      background-color: green;
+      display: block;
+      padding: 4px;
+    }
+  </style>
+  <h2> I am a second componente  !!</h2>
+</template>
+ <script>
+   class PolymerElementTwo extends Polymer.Element {
+     static get is() { return "polymer-element-two"; }
+     static get properties() {
+       return {     }
+     }
+  }
+  customElements.define(PolymerElementTwo.is, PolymerElementTwo);
+</script>
+</dom-module> 
+```
+
+## Como pasar propiedades entre componentes 
+Para pasar valores entre componentes es necesario enviarlos vía parámetros de esta forma para el ejemplo anterior para pasar el valor de la propiedad ```name``` del componente ```<polymer-element-one>``` al componente ```<polymer-element-two>``` es necesario cambiarlo de la forma ```<polymer-element-two name="{{name}}"></polymer-element-two>```
+
+
+## Notify
+Cuando se comparten valores entre componentes es necesario activar la propiedad ```notify``` para poder escuchar los cambios, de esta forma en el último ejercicio si se modifica la propiedad name en el componente ```<polymer-element-two>``` es necesario agregar la propiedad notify para que los cambios puedan ser escuchadas en el componente ```<polymer-element-one>``` de la forma ```name:{type:String, notify:true }```
+
+
+## Observer
+En ocasiones es necesario observar una variable para aplicar una acción para eso son los observables; de esta forma en el último ejemplo si cuando cambia la variable ```name``` podríamos agregar un observable en dos pasos.
+1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie.
+
+  ```name:{ type:String,observer:"changedName"}```
+
+2. La segunda es agregar el método, este define dos valores el actual y el anterior.
+```changedName(new_value, old_value ){
+ console.info(`Old value:[${old_value}] New Value:[${new_value}]`)
+}```
+
+
