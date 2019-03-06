@@ -21,6 +21,10 @@ __Tabla de contenido__
 - [Notify](#notify)
 - [Observer](#observer)
 
+
+## Test
+https://docs.google.com/forms/d/e/1FAIpQLSdQFaq8kpol9uHQ3XzLpr0_5RUKZnfS-S2gCKqEzmfge67PwA/viewform?usp=sf_link
+
 ## Librerias a importar
 ```javascript
 <base href="https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/">
