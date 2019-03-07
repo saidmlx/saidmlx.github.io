@@ -22,8 +22,6 @@ __Tabla de contenido__
 - [Observer](#observer)
 
 
-## Test
-https://docs.google.com/forms/d/e/1FAIpQLSdQFaq8kpol9uHQ3XzLpr0_5RUKZnfS-S2gCKqEzmfge67PwA/viewform?usp=sf_link
 
 ## Librerias a importar
 ```javascript
