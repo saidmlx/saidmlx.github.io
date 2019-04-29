@@ -491,4 +491,13 @@ changedName(new_value, old_value ){
 </dom-module> 
 ```
 
+# Polymer 1
+
+https://codepen.io/saidmlx/pen/gyyLQW?editors=1000
+
+https://codepen.io/saidmlx/pen/WzGxyX?editors=1000
+
+https://codepen.io/saidmlx/pen/YvLxYB
+
+
 
