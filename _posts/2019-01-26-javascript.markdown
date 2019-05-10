@@ -20,8 +20,6 @@ __Contenido__
 - [Eventos](#eventos)
 
 
-<iframe src="https://docs.google.com/forms/d/e/1FAIpQLSdwfRBwDb61jtoI-6FEuOy3_zAj487mj4LwLCHtAe1EJpMI4g/viewform?embedded=true" width="640" height="6837" frameborder="0" marginheight="0" marginwidth="0">Cargando…</iframe>
-
 ## Declaración de variables
 
 Las formas de escribir variables son las siguientes.
