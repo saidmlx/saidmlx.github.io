@@ -1,16 +1,16 @@
 ---
 layout: post
 title: Oracle Database + websphere
-date: 2000-01-01 12:00:00 
-categories: Java Scala
-tags: Java Scala
+date: 2019-09-09 12:00:00 
+categories: Azure 
+tags: LoadBalancer IaaS
 ---
 
 Azure Load Balancer noy ayuda a crear una arquitectura de alta disponibilidad, en esta ocacion crearemos un load balancer con tres maquinas virtuales y un servidor NGINX
 
 ###Creamos un grupo de recursos 
 
-Donde_ 
+Donde 
 - __az group create__: comando para crear  un grupo de recursos
 
 Parametros
