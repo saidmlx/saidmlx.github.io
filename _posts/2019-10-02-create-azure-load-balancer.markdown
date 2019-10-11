@@ -6,34 +6,36 @@ categories: Azure
 tags: LoadBalancer IaaS
 ---
 
-Azure Load Balancer noy ayuda a crear una arquitectura de alta disponibilidad, en esta ocacion crearemos un load balancer con tres maquinas virtuales y un servidor NGINX
+Azure Load Balancer nos ayuda a crear una arquitectura de alta disponibilidad; en esta ocación crearemos un Azure Load Balancer con tres maquinas virtuales y un servidor NGINX
 
 ### Creamos un grupo de recursos 
 
 Donde 
 - __az group create__: comando para crear  un grupo de recursos
 
-Parametros
-- __--name myResourceGroup__: se creara un grupo de recursos con el nombre de *myResourceGroup*
+Parámetros
+- __--name myResourceGroup__: se creará un grupo de recursos con el nombre de *myResourceGroup*
 - __--location eastus__: zona donde se creara la infraestructura en este caso *East US* puedes listar las zonas disponibles con el comando az account list-locations     
 
-    ```shell script
-    $ az group create  
-    --name myResourceGroup  
-    --location eastus
-    ```
+```shell script
+$ az group create  
+--name myResourceGroup  
+--location eastus
+```
 
 ### Creamos una dirección pública
 Donde 
 - __az network public-ip create__: comando para crear una IP pública
+
+Parámetros
 - __--name myPublicIp__: nombre de la IP pública
 - __--resource-group myResourceGroup__: grupo de recursos donde sera creada la IP  
 
-    ```shell script
-    az network public-ip create 
-    --resource-group myResourceGroup 
-    --name myPublicIp
-    ```
+```shell script
+az network public-ip create 
+--resource-group myResourceGroup 
+--name myPublicIp
+```
 ### Creamos el balanceador
 
 Donde 
