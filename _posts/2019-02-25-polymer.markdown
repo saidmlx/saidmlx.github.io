@@ -31,8 +31,8 @@ __Tabla de contenido__
 <link rel="import" href="iron-ajax/iron-ajax.html">
 
 <link rel="import" href="polymer/polymer-element.html">
-
 ```
+
 
 ## Estructura básica de un componente
 Un componente de Polmer está constituido por tres partes

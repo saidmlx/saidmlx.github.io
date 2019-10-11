@@ -8,46 +8,77 @@ tags: LoadBalancer IaaS
 
 Azure Load Balancer nos ayuda a crear una arquitectura de alta disponibilidad; en esta ocación crearemos un Azure Load Balancer con tres maquinas virtuales y un servidor NGINX
 
+![vue as @saidmlx]({{ site.url }}/assets/images/azure/azure-load-balancer.png)
+
+### Requerimientos
+
+1. tener una cuenta en [Azure](https://azure.microsoft.com/es-es/free/), puedes crear una gratuita
+2. tener [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) instalado
+
+## Crear un Load Balancer desde linea de comandos
+
+Una vez instalado [Azure CLI](https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest) iniciamos sesión desde la terminal ```$ az login```
+
+
+
 ### Creamos un grupo de recursos 
 
-Donde 
-- __az group create__: comando para crear  un grupo de recursos
+__Donde__
+ 
+>__az group create__: comando para crear  un grupo de recursos
 
-Parámetros
-- __--name myResourceGroup__: se creará un grupo de recursos con el nombre de *myResourceGroup*
-- __--location eastus__: zona donde se creara la infraestructura en este caso *East US* puedes listar las zonas disponibles con el comando az account list-locations     
+__Parámetros__
 
-```shell script
+>__--name myResourceGroup__: se creará un grupo de recursos con el nombre de *myResourceGroup*
+>
+>__--location eastus__: zona donde se creara la infraestructura en este caso *East US* puedes listar las zonas disponibles 
+con el comando __az account list-locations__     
+
+```shell
 $ az group create  
---name myResourceGroup  
---location eastus
+    --name myResourceGroup  
+    --location eastus
 ```
 
 ### Creamos una dirección pública
-Donde 
-- __az network public-ip create__: comando para crear una IP pública
 
-Parámetros
-- __--name myPublicIp__: nombre de la IP pública
-- __--resource-group myResourceGroup__: grupo de recursos donde sera creada la IP  
+__Donde__ 
 
-```shell script
-az network public-ip create 
---resource-group myResourceGroup 
---name myPublicIp
+>__az network public-ip create__: comando para crear una IP pública
+
+__Parámetros__
+
+>__--name myPublicIp__: nombre de la IP pública
+>
+>__--resource-group myResourceGroup__: grupo de recursos donde sera creada la IP  
+
+```shell 
+$ az network public-ip create 
+    --resource-group myResourceGroup 
+    --name myPublicIp
 ```
 ### Creamos el balanceador
 
-Donde 
-- __az network lb create__: comando para crear un balanceador (Load Balancer)
-- __--resource-group myResourceGroup__: grupo de recursos donde sera creado el balanceador
-- __--frontend-ip-name myFrontendIpName__: nombre de la configuracion frontal del balanceador
-- __--backend-pool-name myBackendPoolName__: nombre de la configuracion que se utilizara de forma interna
-- __--public-ip-address myPublicIp __: sobre que direccion IP publica estara el balanceador
-- __--name myLoadBalancer__: nombre de nuestro balanceador
+__Donde__ 
+>**az network lb create**: comando para crear un balanceador (Load Balancer)
+>
+>**--resource-group myResourceGroup**: grupo de recursos donde sera creado el balanceador
+>
+>**--frontend-ip-name myFrontendIpName**: nombre de la configuracion frontal del balanceador
+>
+>**--backend-pool-name myBackendPoolName**: nombre de la configuracion que se utilizara de forma interna
+>
+>**--public-ip-address myPublicIp**: sobre que direccion IP publica estara el balanceador
+>
+>**--name myLoadBalancer**: nombre de nuestro balanceador
 
-``` 
-az network lb create --resource-group myResourceGroup --frontend-ip-name myFrontendIpName --backend-pool-name myBackendPoolName --public-ip-address myPublicIp --name myLoadBalancer
+``` shell
+$ az network lb create 
+    --resource-group myResourceGroup 
+    --frontend-ip-name myFrontendIpName 
+    --backend-pool-name myBackendPoolName 
+    --public-ip-address myPublicIp 
+    --name myLoadBalancer
 ```
 
 ### Creamos una sonda de monitoreo para el Load Balancer
@@ -99,11 +130,13 @@ for i in `seq 1 3`; do
 az vm create --resource-group myResourceGroup --name myVM$i --availability-set myAvailabilitySet --nics myNick$i --image UbuntuLTS --admin-username azureuser --generate-ssh-key --custom-data cloud-init.txt --no-wait
 done
 ```
-
+a
 
 ### Script para crear un servidor NGINX 
 
-```yaml
+a
+
+```
 #cloud-config
 package_upgrade: true
 packages:
