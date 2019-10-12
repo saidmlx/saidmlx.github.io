@@ -1,2 +1,0 @@
-I"8<p>En algunas ocasiones necesitamos llamar peticiones HTTP, y sabemos que para que la experiencia de usuario no sea desfavorable estas peticiones deben ser asíncronas, pero que pasa si estas peticiones dependen una de otra, lo que significaría anidar estas peticiones; para este caso necesitamos promesas.</p>
-:ET

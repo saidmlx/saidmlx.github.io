@@ -1,9 +1,0 @@
-I"�<p>Cuando se implementa un Web Service se utiliza otra API para convertir de forma automática de XML a objetos; esto es muy útil cuando la definición del Web service es cambiante.
-JAXB está presente a partir de la versión 1.6 del JDK. 
-En esta entrega se demostrará cómo pasar de un XML Schema a Objetos Java y Viceversa.</p>
-<h2 id="entorno-de-trabajo">Entorno de Trabajo</h2>
-<ul>
-  <li>Apache Maven 3.3.3</li>
-  <li>JDK 1.8</li>
-</ul>
-:ET
