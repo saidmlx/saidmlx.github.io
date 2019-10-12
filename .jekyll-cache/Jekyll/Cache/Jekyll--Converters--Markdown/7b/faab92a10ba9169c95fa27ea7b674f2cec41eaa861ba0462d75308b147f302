@@ -1,0 +1,147 @@
+I"�1<p>Actualmente hay muchos frameworks de javascript y  <em><strong>Vue.js</strong></em> se ha puesto como uno de los populares pese a que ha llegado demasiado tarde.</p>
+
+<p>En este ejemplo mostraremos de que es capaz he hacer este framework.</p>
+
+<p>El objetivo es ecribir una pequeña aplicación, este documento no es una guia de referencia, para eso esta la <a href="https://vuejs.org" target="_blank">documentación</a> oficial mejor explicada de lo que podria hacer yo.</p>
+
+<h2 id="instalamos-vuejs">Instalamos <em>Vue.js</em></h2>
+
+<p>Para empezar se instala de forma global via NPM</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>npm <span class="nb">install</span> <span class="nt">-g</span> vue
+<span class="gp">$</span><span class="w"> </span>npm <span class="nb">install</span> <span class="nt">-g</span> vue-cli
+</code></pre></div></div>
+
+<h2 id="creamos-un-proyecto">Creamos un proyecto</h2>
+
+<p>Utilizando el Comand Line Interface (CLI) se crea un proyecto, que construira una estructura con su configuración minima requerida.</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>vue init webpack-simple my-project
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>my-project
+<span class="gp">$</span><span class="w"> </span>npm <span class="nb">install</span>
+<span class="gp">$</span><span class="w"> </span>npm run dev
+</code></pre></div></div>
+<h2 id="que-vamos-a-construir">Que vamos a construir</h2>
+
+<p>La idea es crear una aplicaciòn donde seleccionando un pais nos despliege Los Top Artist.</p>
+
+<h2 id="agregamos-un-api-para-consumir-servicios">Agregamos un <em>API</em> para consumir servicios</h2>
+
+<p>Para la aplicaciòn se necesita un endpoint de donde se tomara la informacón a mostrar; para esto utilizamos la API de <a href="https://www.last.fm/api" target="_blank">last.fm</a>.</p>
+
+<p>Para eso se crea una clase que nos ayudara a obtener la información de la API</p>
+
+<p>Dentro de <strong>src/api/index</strong></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">const</span> <span class="nx">apikey</span> <span class="o">=</span> <span class="nx">xxxxxxxxxx</span>
+<span class="kd">const</span> <span class="nx">url</span> <span class="o">=</span> <span class="s2">`http://ws.audioscrobbler.com/2.0/?method=geo.gettopartists&amp;country=:country&amp;api_key=</span><span class="p">${</span><span class="nx">apikey</span><span class="p">}</span><span class="s2">&amp;format=json`</span>
+<span class="k">export</span> <span class="k">default</span> <span class="kd">function</span> <span class="nx">getArtists</span> <span class="p">(</span><span class="nx">country</span><span class="p">){</span>
+    <span class="kd">const</span> <span class="nx">simpleUrl</span> <span class="o">=</span> <span class="nx">url</span><span class="p">.</span><span class="nx">replace</span><span class="p">(</span><span class="dl">'</span><span class="s1">:country</span><span class="dl">'</span><span class="p">,</span><span class="nx">country</span><span class="p">)</span> 
+    <span class="k">return</span> <span class="nx">fetch</span><span class="p">(</span><span class="nx">simpleUrl</span><span class="p">)</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">res</span> <span class="o">=&gt;</span> <span class="nx">res</span><span class="p">.</span><span class="nx">json</span><span class="p">())</span>
+    <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="nx">json</span> <span class="o">=&gt;</span> <span class="nx">json</span><span class="p">.</span><span class="nx">topartists</span><span class="p">.</span><span class="nx">artist</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h2 id="agregamos-un-componente-artist">Agregamos un componente Artist</h2>
+
+<p>Se crea un componente Vue de tipo Artist donde se muestra el nombre y la imagen del artista</p>
+
+<p>Dentro de <strong>src/component/Artist.vue</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">lang</span><span class="o">=</span><span class="dl">"</span><span class="s2">pug</span><span class="dl">"</span><span class="o">&gt;</span>
+  <span class="nx">li</span><span class="p">.</span><span class="nx">artist</span>
+    <span class="nx">h2</span><span class="p">:</span> <span class="nx">a</span><span class="p">(:</span><span class="nx">href</span><span class="o">=</span><span class="dl">"</span><span class="s2">artist.url</span><span class="dl">"</span> <span class="nx">target</span><span class="o">=</span><span class="dl">"</span><span class="s2">_blank</span><span class="dl">"</span><span class="p">)</span> 
+    <span class="nx">img</span><span class="p">(:</span><span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">artist.image[2]['#text']</span><span class="dl">"</span><span class="p">)</span>
+<span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span><span class="dl">'</span><span class="s1">artist</span><span class="dl">'</span><span class="p">,</span>
+  <span class="na">props</span><span class="p">:[</span><span class="dl">'</span><span class="s1">artist</span><span class="dl">'</span><span class="p">]</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">style</span> <span class="nx">lang</span><span class="o">=</span><span class="dl">"</span><span class="s2">stylus</span><span class="dl">"</span> <span class="nx">scoped</span><span class="o">&gt;</span>
+<span class="nx">li</span><span class="p">.</span><span class="nx">artist</span>
+  <span class="nx">display</span> <span class="nx">block</span>
+  <span class="nx">margin</span> <span class="mi">10</span><span class="nx">px</span> <span class="mi">0</span>
+<span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h2 id="agregar-el-template">Agregar el template</h2>
+<p>Dentro de la aplicación configuramos nuestro Template</p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;template</span> <span class="na">lang=</span><span class="s">"pug"</span><span class="nt">&gt;</span>
+#app
+  img(src='http://saidmlx.online/simple-vue/dist/logo.png')
+  h1 SaidMusic
+  select(v-model="selectedCountry")
+    option(v-for= "country in countries" :value="country.value") 
+  ul
+    artist(v-for= "artist in artists" v-bind:artist="artist" v-bind:key="artist.mbid") 
+<span class="nt">&lt;/template&gt;</span>
+</code></pre></div></div>
+
+<h2 id="agregar-el-javascript">Agregar el javascript</h2>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+<span class="k">import</span> <span class="nx">getArtists</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./api</span><span class="dl">'</span><span class="p">;</span>
+<span class="k">import</span> <span class="nx">Artist</span> <span class="k">from</span>  <span class="dl">'</span><span class="s1">./components/Artist.vue</span><span class="dl">'</span><span class="p">;</span>
+
+<span class="k">export</span> <span class="k">default</span> <span class="p">{</span>
+  <span class="na">name</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app</span><span class="dl">'</span><span class="p">,</span>
+  <span class="nx">data</span> <span class="p">()</span> <span class="p">{</span>
+    <span class="k">return</span> <span class="p">{</span>
+      <span class="na">artists</span><span class="p">:</span> <span class="p">[],</span>
+      <span class="na">countries</span><span class="p">:[</span>
+        <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="dl">"</span><span class="s2">España</span><span class="dl">"</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">"</span><span class="s2">spain</span><span class="dl">"</span><span class="p">},</span>
+        <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="dl">"</span><span class="s2">México</span><span class="dl">"</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">"</span><span class="s2">mexico</span><span class="dl">"</span><span class="p">},</span>
+        <span class="p">{</span><span class="na">name</span><span class="p">:</span><span class="dl">"</span><span class="s2">Colombia</span><span class="dl">"</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">"</span><span class="s2">colombia</span><span class="dl">"</span><span class="p">}</span>
+      <span class="p">],</span>
+      <span class="na">selectedCountry</span><span class="p">:</span><span class="dl">'</span><span class="s1">colombia</span><span class="dl">'</span><span class="p">,</span>
+      <span class="na">loadding</span><span class="p">:</span><span class="kc">true</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">methods</span><span class="p">:{</span>
+    <span class="nx">refreshArtist</span><span class="p">(){</span>
+      <span class="kd">var</span> <span class="nb">self</span> <span class="o">=</span> <span class="k">this</span>
+      <span class="nb">self</span><span class="p">.</span><span class="nx">artists</span><span class="o">=</span><span class="p">[];</span>
+      <span class="nx">getArtists</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">selectedCountry</span><span class="p">)</span>
+      <span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="kd">function</span><span class="p">(</span><span class="nx">artists</span><span class="p">){</span>
+        <span class="nb">self</span><span class="p">.</span><span class="nx">artists</span> <span class="o">=</span> <span class="nx">artists</span>
+      <span class="p">})</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">components</span><span class="p">:{</span>
+    <span class="nx">Artist</span><span class="p">,</span>
+    <span class="nx">spinner</span>
+  <span class="p">},</span>
+  <span class="na">watch</span><span class="p">:{</span>
+    <span class="na">selectedCountry</span><span class="p">:</span><span class="kd">function</span><span class="p">(){</span>
+      <span class="k">this</span><span class="p">.</span><span class="nx">refreshArtist</span><span class="p">()</span>
+    <span class="p">}</span>
+  <span class="p">},</span>
+  <span class="na">mounted</span><span class="p">:</span> <span class="kd">function</span><span class="p">()</span> <span class="p">{</span>
+    <span class="k">this</span><span class="p">.</span><span class="nx">refreshArtist</span><span class="p">()</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h2 id="ejecución">Ejecución</h2>
+
+<p>Ya con eso tenemos nuestra aplicación, solo es cuestión de ejecutar nuestra aplicación</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>npm run dev
+</code></pre></div></div>
+<p>y tenemos el siguiente resultado</p>
+
+<p><img src="http://localhost:4000/assets/images/2018-03-24-aprendiendo-vue/simple-vue.gif" alt="vue as @saidmlx" /></p>
+
+<p><strong>Quieres ver como funciona</strong></p>
+<blockquote>
+  <p><a href="http://saidmlx.online/simple-vue/">saidmlx.online/simple-vue</a></p>
+</blockquote>
+
+<p><strong>Quieres descagar el codigo</strong></p>
+<blockquote>
+  <p><a href="https://github.com/saidmlx/simple-vue">github.com/saidmlx/simple-vue</a></p>
+</blockquote>
+
+:ET

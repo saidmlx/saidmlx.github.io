@@ -1,0 +1,159 @@
+I"x1<h2 id="inicializamos-un-protecto">Inicializamos un protecto</h2>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir </span>webpack-template
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>webpack-template
+<span class="gp">$</span><span class="w"> </span>npm init <span class="nt">-y</span>
+</code></pre></div></div>
+<h2 id="instalamos-dependencias">Instalamos dependencias</h2>
+<p>Las dependencias que utilizaremos son</p>
+
+<ol>
+  <li>babel-core 6.26.3</li>
+  <li>babel-loader 7.1.5</li>
+  <li>babel-preset-es2015 6.24.1</li>
+  <li>css-loader 1.0.0”,</li>
+  <li>mini-css-extract-plugin 0.4.1</li>
+  <li>node-sass 4.9.2</li>
+  <li>path 0.12.7</li>
+  <li>sass-loader 7.1.0</li>
+  <li>style-loader 0.21.0</li>
+  <li>webpack 4.16.4</li>
+  <li>webpack-cli 3.1.0</li>
+</ol>
+
+<h2 id="creamos-el-archivo-de-configuracion">Creamos el archivo de configuracion</h2>
+
+<p>La configuración esta definida en el archivo <code class="highlighter-rouge">webpack.config.js</code></p>
+<h3 id="configuracion-básica">Configuracion básica</h3>
+<p>La configuración basica solo agrega configuracion para generar un bundle para Javascript</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">entry</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">src/js/index.js</span><span class="dl">'</span><span class="p">),</span>
+  <span class="na">output</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">filename</span><span class="p">:</span> <span class="dl">'</span><span class="s1">app.js</span><span class="dl">'</span><span class="p">,</span>
+    <span class="na">path</span><span class="p">:</span> <span class="nx">path</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">__dirname</span><span class="p">,</span> <span class="dl">'</span><span class="s1">dist</span><span class="dl">'</span><span class="p">)</span>
+  <span class="p">},</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span><span class="sr">/</span><span class="se">\.</span><span class="sr">js$/</span><span class="p">,</span>
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">}</span>
+<span class="p">};</span>
+
+</code></pre></div></div>
+
+<h3 id="agregamos-babel">Agregamos babel</h3>
+<p>Para poder escribir ES7 y todos los navegadores puedan leer el Javascript</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">...</span>
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span><span class="sr">/</span><span class="se">\.</span><span class="sr">js$/</span><span class="p">,</span>
+        <span class="na">use</span><span class="p">:</span> <span class="p">{</span>
+            <span class="na">loader</span><span class="p">:</span> <span class="dl">'</span><span class="s1">babel-loader</span><span class="dl">'</span><span class="p">,</span>
+            <span class="na">options</span><span class="p">:</span> <span class="p">{</span>
+                <span class="na">presets</span><span class="p">:</span> <span class="p">[</span><span class="dl">'</span><span class="s1">es2015</span><span class="dl">'</span><span class="p">]</span>
+            <span class="p">}</span>
+        <span class="p">}</span>
+      <span class="p">},</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h3 id="agregamos-sass-como-preprocesador-de-estilos">Agregamos SASS como preprocesador de estilos</h3>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="kd">const</span> <span class="nx">path</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">'</span><span class="s1">path</span><span class="dl">'</span><span class="p">);</span>
+<span class="kd">const</span> <span class="nx">MiniCssExtractPlugin</span> <span class="o">=</span> <span class="nx">require</span><span class="p">(</span><span class="dl">"</span><span class="s2">mini-css-extract-plugin</span><span class="dl">"</span><span class="p">);</span> 
+
+<span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="p">{</span>
+
+  <span class="na">module</span><span class="p">:</span> <span class="p">{</span>
+    <span class="na">rules</span><span class="p">:</span> <span class="p">[</span>
+      <span class="p">{</span>
+        <span class="na">test</span><span class="p">:</span> <span class="sr">/</span><span class="se">\.</span><span class="sr">scss$/</span><span class="p">,</span>
+        <span class="na">use</span><span class="p">:</span> <span class="p">[</span>
+          <span class="nx">process</span><span class="p">.</span><span class="nx">env</span><span class="p">.</span><span class="nx">NODE_ENV</span> <span class="o">!==</span> <span class="dl">'</span><span class="s1">production</span><span class="dl">'</span> <span class="p">?</span> <span class="dl">'</span><span class="s1">style-loader</span><span class="dl">'</span> <span class="p">:</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">.</span><span class="nx">loader</span><span class="p">,</span>
+          <span class="dl">"</span><span class="s2">css-loader</span><span class="dl">"</span><span class="p">,</span>
+          <span class="dl">"</span><span class="s2">sass-loader</span><span class="dl">"</span>
+        <span class="p">]</span> 
+      <span class="p">}</span>
+    <span class="p">]</span>
+  <span class="p">},</span>
+  <span class="na">plugins</span><span class="p">:</span> <span class="p">[</span>
+    <span class="k">new</span> <span class="nx">MiniCssExtractPlugin</span><span class="p">({</span>
+      <span class="na">filename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[name].css</span><span class="dl">"</span><span class="p">,</span>
+      <span class="na">chunkFilename</span><span class="p">:</span> <span class="dl">"</span><span class="s2">[id].css</span><span class="dl">"</span>
+    <span class="p">})</span>
+    <span class="p">]</span>
+<span class="p">};</span>
+</code></pre></div></div>
+
+<h2 id="agregamos-la-tarea-al-archivo-packagejson">Agregamos la tarea al archivo <code class="highlighter-rouge">package.json</code></h2>
+
+<div class="language-json highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">...</span><span class="w">
+</span><span class="nl">"scripts"</span><span class="p">:</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="nl">"build"</span><span class="p">:</span><span class="w"> </span><span class="s2">"webpack --mode=development"</span><span class="p">,</span><span class="w">
+  </span><span class="p">}</span><span class="err">,</span><span class="w">
+</span><span class="err">...</span><span class="w">
+</span></code></pre></div></div>
+
+<h2 id="ahora-la-estructura-de-archivos">Ahora la estructura de archivos</h2>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">├── package.json
+├── src
+│   ├── html
+│   │   └── index.html
+│   ├── js
+│   │   ├── app.js
+│   │   └── index.js
+│   └── sass
+│       └── styles.scss
+└── webpack.config.js
+</span></code></pre></div></div>
+
+<p><strong>index.html</strong></p>
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!doctype html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span>Getting Started<span class="nt">&lt;/title&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"https://unpkg.com/lodash@4.16.6"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;script </span><span class="na">src=</span><span class="s">"../../dist/app.js"</span><span class="nt">&gt;&lt;/script&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+<p><strong>app.js</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">App</span> <span class="p">{</span>
+  <span class="kd">constructor</span><span class="p">(){</span>
+    <span class="kd">const</span> <span class="nx">element</span> <span class="o">=</span> <span class="nb">document</span><span class="p">.</span><span class="nx">createElement</span><span class="p">(</span><span class="dl">'</span><span class="s1">h1</span><span class="dl">'</span><span class="p">);</span>
+    <span class="nx">element</span><span class="p">.</span><span class="nx">innerHTML</span><span class="o">=</span><span class="dl">'</span><span class="s1">Wellcome to WebPack</span><span class="dl">'</span><span class="p">;</span>
+    <span class="nb">document</span><span class="p">.</span><span class="nx">body</span><span class="p">.</span><span class="nx">appendChild</span><span class="p">(</span><span class="nx">element</span><span class="p">);</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+<span class="k">export</span> <span class="k">default</span> <span class="nx">App</span><span class="p">;</span>  
+</code></pre></div></div>
+<p><strong>index.js</strong></p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">import</span> <span class="dl">'</span><span class="s1">../sass/styles.scss</span><span class="dl">'</span>
+<span class="k">import</span> <span class="nx">App</span> <span class="k">from</span> <span class="dl">'</span><span class="s1">./app.js</span><span class="dl">'</span>
+<span class="kd">const</span> <span class="nx">a</span><span class="o">=</span> <span class="k">new</span> <span class="nx">App</span><span class="p">()</span>
+</code></pre></div></div>
+<p><strong>styles.scss</strong></p>
+<div class="language-css highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="err">$</span><span class="nt">font-color</span><span class="o">:</span> <span class="nf">#121212</span><span class="o">;</span>
+<span class="err">$</span><span class="nt">font-inverse-color</span><span class="o">:</span> <span class="nf">#F2F2F2</span><span class="o">;</span>
+<span class="err">$</span><span class="nt">color-background-color</span><span class="o">:</span> <span class="nf">#0BC8FF</span><span class="o">;</span>
+<span class="nt">body</span><span class="p">{</span>
+  <span class="nl">background-color</span><span class="p">:</span> <span class="err">$</span><span class="n">color-background-color</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nt">h1</span><span class="p">{</span>
+  <span class="nl">text-align</span><span class="p">:</span> <span class="nb">center</span><span class="p">;</span>
+  <span class="nl">color</span><span class="p">:</span> <span class="err">$</span><span class="n">font-inverse-color</span><span class="p">;</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+:ET

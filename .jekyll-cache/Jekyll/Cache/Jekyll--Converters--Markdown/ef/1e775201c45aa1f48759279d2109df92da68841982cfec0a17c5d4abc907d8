@@ -1,0 +1,8 @@
+I"><h2 id="inicializamos-un-protecto">Inicializamos un protecto</h2>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">mkdir </span>webpack-template
+<span class="gp">$</span><span class="w"> </span><span class="nb">cd </span>webpack-template
+<span class="gp">$</span><span class="w"> </span>npm init <span class="nt">-y</span>
+</code></pre></div></div>
+<h2 id="instalamos-dependencias">Instalamos dependencias</h2>
+<p>Las dependencias que utilizaremos son</p>
+:ET

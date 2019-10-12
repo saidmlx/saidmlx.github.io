@@ -1,0 +1,279 @@
+I"8H<p><strong>Java</strong> es una de los lenguajes más utilizados y <strong>Java Spring</strong> es una de las herramientas
+mas utilizadas para desarrollar aplicaciones web, en esta publicación vamos a construir
+una aplicación con <strong>Java Spring MVC</strong>.</p>
+
+<h3 id="que-necesitamos">Que necesitamos</h3>
+<ul>
+  <li><strong>Java:</strong> con un nivel básico es suficiente.</li>
+  <li><strong>Maven:</strong> hay que tenerlo configurado.</li>
+</ul>
+
+<h3 id="verificar-maven">Verificar Maven</h3>
+<p>Verificamos que tengamos instalado Maven correctamente para eso dentro de la terminal ejecutamos lo siguiente.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  mvn -v
+</code></pre></div></div>
+
+<p>Si la instalación es correcta veremos la versión que tengamos instalada</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  Apache Maven 3.3.3
+</code></pre></div></div>
+
+<h3 id="crear-el-proyecto-vacío">Crear el proyecto vacío</h3>
+<p>Para crear un proyecto vacío ejecutamos lo siguiente en la terminal.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mvn archetype:generate
+-DarchetypeArtifactId=maven-archetype-webapp
+-DgroupId=io.saidmlx
+-DartifactId=SpringWebMvc
+-DinteractiveMode=false
+</code></pre></div></div>
+
+<p>Este comando construirá la siguiente estructura.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>├── SpringWebMvc
+│   ├── pom.xml
+│   └── src
+│       └── main
+│           ├── resources
+│           └── webapp
+│               ├── WEB-INF
+│               │   └── web.xml
+│               └── index.jsp
+</code></pre></div></div>
+
+<p>Lo más importante de esta estructura es el archivo <strong>pom.xml</strong> donde se encuentran las
+dependencias de nuestro proyecto.</p>
+
+<p>Nuestro archivo pom.xml al iniciar se encuentra de esta forma.</p>
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+<span class="nt">&lt;project</span> <span class="na">xmlns=</span><span class="s">"http://maven.apache.org/POM/4.0.0"</span> <span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+  <span class="na">xsi:schemaLocation=</span><span class="s">"http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;modelVersion&gt;</span>4.0.0<span class="nt">&lt;/modelVersion&gt;</span>
+  <span class="nt">&lt;groupId&gt;</span>io.saidmlx<span class="nt">&lt;/groupId&gt;</span>
+  <span class="nt">&lt;artifactId&gt;</span>SpringWebMvc<span class="nt">&lt;/artifactId&gt;</span>
+  <span class="nt">&lt;packaging&gt;</span>war<span class="nt">&lt;/packaging&gt;</span>
+  <span class="nt">&lt;version&gt;</span>1.0<span class="nt">&lt;/version&gt;</span>
+  <span class="nt">&lt;name&gt;</span>SpringWebMvc Maven Webapp<span class="nt">&lt;/name&gt;</span>
+  <span class="nt">&lt;url&gt;</span>http://maven.apache.org<span class="nt">&lt;/url&gt;</span>
+  <span class="nt">&lt;dependencies&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>junit<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>junit<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>3.8.1<span class="nt">&lt;/version&gt;</span>
+      <span class="nt">&lt;scope&gt;</span>test<span class="nt">&lt;/scope&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+  <span class="nt">&lt;build&gt;</span>
+    <span class="nt">&lt;finalName&gt;</span>SpringWebMvc<span class="nt">&lt;/finalName&gt;</span>
+  <span class="nt">&lt;/build&gt;</span>
+<span class="nt">&lt;/project&gt;</span>
+
+</code></pre></div></div>
+
+<h3 id="configurar-jetty-como-contenedor-web">Configurar Jetty como contenedor web</h3>
+<p>Vamos a configurar el contenedor <strong>Jetty</strong>, este se comporta al igual que un Tomcat o un Jboss pero tiene funcionalidades como que puede lanzar cambios en caliente es más rápido, más liviano
+y no se tiene que configurar nada solo hay que agregarlo como un Plugin.</p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;build&gt;</span>
+  <span class="nt">&lt;finalName&gt;</span>SpringWebMvc<span class="nt">&lt;/finalName&gt;</span>
+  <span class="nt">&lt;plugins&gt;</span>
+    <span class="nt">&lt;plugin&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.eclipse.jetty<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>jetty-maven-plugin<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>9.3.7.v20160115<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/plugin&gt;</span>
+  <span class="nt">&lt;/plugins&gt;</span>
+<span class="nt">&lt;/build&gt;</span>
+</code></pre></div></div>
+
+<p>Ya agregado este Plugin podemos lanzar nuestro proyecto</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">  mvn jetty:run
+</span></code></pre></div></div>
+
+<p>Vamos al navegador y tenemos el siguiente resultado</p>
+
+<div class="text-center">
+  <img src="http://localhost:4000/assets/images/javaSpring/1.png" class="rounded img-thumbnail post-img-center" alt="Spring MVC configuración basica" />
+</div>
+
+<h3 id="agregar-dependencias-java-spring">Agregar dependencias Java Spring</h3>
+<p>Agregamos al archivo <strong>pom.xml</strong> las dependencias que necesitamos:</p>
+
+<ul>
+  <li>Spring Core</li>
+  <li>Spring MVC</li>
+</ul>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;dependencies&gt;</span>
+	<span class="c">&lt;!-- Spring  dependences--&gt;</span>
+    <span class="nt">&lt;dependency&gt;</span>
+      <span class="nt">&lt;groupId&gt;</span>org.springframework<span class="nt">&lt;/groupId&gt;</span>
+      <span class="nt">&lt;artifactId&gt;</span>spring-webmvc<span class="nt">&lt;/artifactId&gt;</span>
+      <span class="nt">&lt;version&gt;</span>4.2.2.RELEASE<span class="nt">&lt;/version&gt;</span>
+    <span class="nt">&lt;/dependency&gt;</span>
+  <span class="nt">&lt;/dependencies&gt;</span>
+</code></pre></div></div>
+
+<h3 id="creamos-el-controller">Creamos el Controller</h3>
+<p>Creamos el Controller <code class="highlighter-rouge">io.saidmlx.controller.Hello</code></p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kn">package</span> <span class="n">io</span><span class="o">.</span><span class="na">saidmlx</span><span class="o">.</span><span class="na">controller</span><span class="o">;</span>
+
+<span class="kn">import</span> <span class="nn">org.springframework.ui.ModelMap</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.servlet.ModelAndView</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.stereotype.Controller</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMapping</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.RequestMethod</span><span class="o">;</span>
+<span class="kn">import</span> <span class="nn">org.springframework.web.bind.annotation.PathVariable</span><span class="o">;</span>
+
+<span class="nd">@Controller</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">Hello</span><span class="o">{</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span> <span class="s">"/"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span> <span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">String</span> <span class="nf">wellcome</span><span class="o">(){</span>
+    <span class="k">return</span> <span class="s">"wellcome"</span><span class="o">;</span>
+  <span class="o">}</span>
+  <span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span> <span class="s">"/wellcome/{name}"</span><span class="o">,</span> <span class="n">method</span> <span class="o">=</span> <span class="nc">RequestMethod</span><span class="o">.</span><span class="na">GET</span> <span class="o">)</span>
+  <span class="kd">public</span> <span class="nc">ModelAndView</span> <span class="nf">sayWellcome</span><span class="o">(</span><span class="nd">@PathVariable</span><span class="o">(</span> <span class="n">value</span> <span class="o">=</span> <span class="s">"name"</span><span class="o">)</span> <span class="nc">String</span> <span class="n">name</span> <span class="o">){</span>
+    <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">name</span><span class="o">);</span>
+    <span class="nc">ModelAndView</span> <span class="n">model</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ModelAndView</span><span class="o">();</span>
+    <span class="n">model</span><span class="o">.</span><span class="na">setViewName</span><span class="o">(</span><span class="s">"sayWellcome"</span><span class="o">);</span>
+    <span class="n">model</span><span class="o">.</span><span class="na">addObject</span><span class="o">(</span><span class="s">"name"</span><span class="o">,</span><span class="n">name</span><span class="o">);</span>
+    <span class="k">return</span> <span class="n">model</span><span class="o">;</span>
+  <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h3 id="agregamos-la-configuración-al-archivo-webxml">Agregamos la configuración al archivo <code class="highlighter-rouge">web.xml</code></h3>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE web-app PUBLIC
+ "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+ "http://java.sun.com/dtd/web-app_2_3.dtd" &gt;</span>
+
+<span class="nt">&lt;web-app</span> <span class="na">xmlns=</span><span class="s">"http://java.sun.com/xml/ns/javaee"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"http://java.sun.com/xml/ns/javaee
+	http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"</span>
+	<span class="na">version=</span><span class="s">"2.5"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;display-name&gt;</span>Archetype Created Web Application<span class="nt">&lt;/display-name&gt;</span>
+
+  <span class="nt">&lt;servlet&gt;</span>
+    <span class="nt">&lt;servlet-name&gt;</span>hello-spring<span class="nt">&lt;/servlet-name&gt;</span>
+    <span class="nt">&lt;servlet-class&gt;</span>
+      org.springframework.web.servlet.DispatcherServlet
+    <span class="nt">&lt;/servlet-class&gt;</span>
+    <span class="nt">&lt;load-on-startup&gt;</span>1<span class="nt">&lt;/load-on-startup&gt;</span>
+  <span class="nt">&lt;/servlet&gt;</span>
+  <span class="nt">&lt;servlet-mapping&gt;</span>
+		<span class="nt">&lt;servlet-name&gt;</span>hello-spring<span class="nt">&lt;/servlet-name&gt;</span>
+		<span class="nt">&lt;url-pattern&gt;</span>/<span class="nt">&lt;/url-pattern&gt;</span>
+	<span class="nt">&lt;/servlet-mapping&gt;</span>
+
+<span class="nt">&lt;/web-app&gt;</span>
+
+</code></pre></div></div>
+
+<h3 id="agregamos-view-resolver">Agregamos View Resolver</h3>
+<p>Creamos la configuración de View Resolver en el archivo <code class="highlighter-rouge">hello-spring-servlet.xml</code></p>
+
+<div class="language-xml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;beans</span> <span class="na">xmlns=</span><span class="s">"http://www.springframework.org/schema/beans"</span>
+	<span class="na">xmlns:context=</span><span class="s">"http://www.springframework.org/schema/context"</span>
+	<span class="na">xmlns:xsi=</span><span class="s">"http://www.w3.org/2001/XMLSchema-instance"</span>
+	<span class="na">xmlns:mvc=</span><span class="s">"http://www.springframework.org/schema/mvc"</span>
+	<span class="na">xsi:schemaLocation=</span><span class="s">"
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc-3.2.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-3.2.xsd"</span><span class="nt">&gt;</span>
+  <span class="c">&lt;!-- Scan Controllers --&gt;</span>
+  <span class="nt">&lt;context:component-scan</span> <span class="na">base-package=</span><span class="s">"io.saidmlx.controller"</span> <span class="nt">/&gt;</span>
+  <span class="c">&lt;!-- Define  View Resolver--&gt;</span>
+  <span class="nt">&lt;bean</span> <span class="na">class=</span><span class="s">"org.springframework.web.servlet.view.InternalResourceViewResolver"</span><span class="nt">&gt;</span>
+  	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"prefix"</span><span class="nt">&gt;</span>
+  		<span class="nt">&lt;value&gt;</span>/WEB-INF/views/<span class="nt">&lt;/value&gt;</span>
+  	<span class="nt">&lt;/property&gt;</span>
+  	<span class="nt">&lt;property</span> <span class="na">name=</span><span class="s">"suffix"</span><span class="nt">&gt;</span>
+  		<span class="nt">&lt;value&gt;</span>.jsp<span class="nt">&lt;/value&gt;</span>
+  	<span class="nt">&lt;/property&gt;</span>
+  <span class="nt">&lt;/bean&gt;</span>
+
+  <span class="nt">&lt;mvc:annotation-driven/&gt;</span>
+<span class="nt">&lt;/beans&gt;</span>
+
+</code></pre></div></div>
+
+<h3 id="creamos-los-jsp-que-resolverán-la-vista">Creamos los jsp que resolverán la vista</h3>
+
+<p><code class="highlighter-rouge">Wellcome.jsp</code></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;h1&gt;</span>Wellcome<span class="nt">&lt;/h1&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+
+</code></pre></div></div>
+
+<p><code class="highlighter-rouge">sayWellcome.jsp</code></p>
+
+<div class="language-html highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"spring"</span> <span class="na">uri=</span><span class="s">"http://www.springframework.org/tags"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="nt">&lt;</span><span class="err">%@</span> <span class="na">taglib</span> <span class="na">prefix=</span><span class="s">"c"</span> <span class="na">uri=</span><span class="s">"http://java.sun.com/jsp/jstl/core"</span><span class="err">%</span><span class="nt">&gt;</span>
+<span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html</span> <span class="na">lang=</span><span class="s">"es"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;meta</span> <span class="na">charset=</span><span class="s">"utf-8"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;title&gt;&lt;/title&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;h1&gt;</span> Wellcome <span class="nt">&lt;strong&gt;</span>${name}<span class="nt">&lt;/strong&gt;</span> to Spring Web MVC<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</code></pre></div></div>
+
+<p>Con lo anterior tenemos nuestro ejemplo listo</p>
+
+<p>La estructura de archivos quedaría de la siguiente forma</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go"> ├── SpringWebMvc
+ │   ├── pom.xml
+ │   ├── src
+ │   │   └── main
+ │   │       ├── java
+ │   │       │   └── io
+ │   │       │       └── saidmlx
+ │   │       │           └── controller
+ │   │       │               └── Hello.java
+ │   │       ├── resources
+ │   │       └── webapp
+ │   │           └── WEB-INF
+ │   │               ├── hello-spring-servlet.xml
+ │   │               ├── views
+ │   │               │   ├── sayWellcome.jsp
+ │   │               │   └── wellcome.jsp
+ │   │               └── web.xml
+</span></code></pre></div></div>
+
+<p>Y podemos observar en el explorador dos peticiones</p>
+<h3 id="el-resultado">El resultado</h3>
+
+<h4 id="httplocalhost8080">http://localhost:8080/</h4>
+
+<div class="text-center">
+  <img src="http://localhost:4000/assets/images/javaSpring/2.png" class="rounded img-thumbnail post-img-center" alt="Spring MVC configuración basica" />
+</div>
+
+<h4 id="httplocalhost8080wellcomesaidmlx">http://localhost:8080/wellcome/saidmlx</h4>
+
+<div class="text-center">
+  <img src="http://localhost:4000/assets/images/javaSpring/3.png" class="rounded img-thumbnail post-img-center" alt="Spring MVC configuración basica" />
+</div>
+
+<h3 id="el-código-fuente">El código fuente</h3>
+<p>El código fuente lo puedes encontrar en mi repositorio <a href="https://github.com/saidmlx/SpringWebMvc"> github </a></p>
+:ET

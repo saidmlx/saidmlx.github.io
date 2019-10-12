@@ -1,0 +1,112 @@
+I"�<p>En este post es una guía práctica de como instalar MySQL en un entorno de servidor.</p>
+
+<h2 id="descargar-mysql">Descargar MySQL</h2>
+
+<p>Hay que dirigirnos a la <a href="https://dev.mysql.com/downloads/">pagina oficial</a> y descargar la versión requerida.</p>
+
+<p>Para este caso estaremos instalando la version <strong>MySQL Community Server mysql-5.7</strong> asegúrate de bajar la versión ZIP</p>
+
+<h2 id="configuración-inicial">Configuración inicial</h2>
+
+<p>Inicializamos el servicio de base de datos que creara una contraseña temporal para root.</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>mysqld <span class="nt">--initialize</span> <span class="nt">--console</span>
+<span class="c">...
+</span><span class="go">2018-12-12T22:40:31.809023Z 1 [Note] A temporary password is generated for root@localhost: Gh+fCo_/b8.5
+</span></code></pre></div></div>
+
+<p>Iniciamos el servicio.</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>mysqld <span class="nt">--console</span>
+</code></pre></div></div>
+
+<p>Entramos con la contraseña temporal.</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>mysql <span class="nt">-u</span> root <span class="nt">-p</span>
+Enter password: <span class="k">************</span>
+Welcome to the MySQL monitor.  Commands end with <span class="p">;</span> or <span class="se">\g</span><span class="nb">.</span>
+Your MySQL connection <span class="nb">id </span>is 6
+Server version: 5.7.20
+
+Copyright <span class="o">(</span>c<span class="o">)</span> 2000, 2017, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type <span class="s1">'help;'</span> or <span class="s1">'\h'</span> <span class="k">for </span>help. Type <span class="s1">'\c'</span> to clear the current input statement.
+
+mysql&gt;
+</code></pre></div></div>
+
+<p>Reseteamos la contraseña para que nos permita hacer operaciones.
+Una vez la contraseña ha sido cambiada hay que salirnos de la sesión y hay que volver a entrar.
+Terminando este proceso nuestro servidor ya está listo para trabajar</p>
+
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">ALTER</span> <span class="k">USER</span> <span class="s1">'root'</span><span class="o">@</span><span class="s1">'localhost'</span> <span class="n">IDENTIFIED</span>  <span class="k">BY</span> <span class="s1">'secret'</span><span class="p">;</span>
+<span class="n">Query</span> <span class="n">OK</span><span class="p">,</span> <span class="mi">0</span> <span class="k">rows</span> <span class="n">affected</span> <span class="p">(</span><span class="mi">0</span><span class="p">.</span><span class="mi">00</span> <span class="n">sec</span><span class="p">)</span>
+
+<span class="n">mysql</span><span class="o">&gt;</span> <span class="n">quit</span>
+</code></pre></div></div>
+
+<h2 id="crear-usuarios">Crear usuarios</h2>
+
+<p>Creamos un usuario</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">CREATE</span> <span class="k">USER</span> <span class="s1">'enero'</span><span class="o">@</span><span class="s1">'localhost'</span> <span class="n">IDENTIFIED</span>  <span class="k">BY</span> <span class="s1">'enero'</span><span class="p">;</span>
+</code></pre></div></div>
+
+<p>Ver usuarios creados.</p>
+<div class="language-sql highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">mysql</span><span class="o">&gt;</span> <span class="k">SELECT</span> <span class="k">user</span> <span class="k">FROM</span> <span class="n">mysql</span><span class="p">.</span><span class="k">user</span><span class="p">;</span>
+<span class="o">+</span><span class="c1">------------------+</span>
+<span class="o">|</span> <span class="k">user</span>             <span class="o">|</span>
+<span class="o">+</span><span class="c1">------------------+</span>
+<span class="o">|</span> <span class="n">diciembre</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="p">.</span><span class="n">infoschema</span> <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="p">.</span><span class="k">session</span>    <span class="o">|</span>
+<span class="o">|</span> <span class="n">mysql</span><span class="p">.</span><span class="n">sys</span>        <span class="o">|</span>
+<span class="o">|</span> <span class="n">root</span>             <span class="o">|</span>
+<span class="o">+</span><span class="c1">------------------+</span>
+</code></pre></div></div>
+
+<h2 id="crear-una-base-de-datos">Crear una base de datos</h2>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>...
+
+mysql&gt; create database myDatabaseDemo<span class="p">;</span>
+Query OK, 1 row affected <span class="o">(</span>0.01 sec<span class="o">)</span>
+</code></pre></div></div>
+<p>Ver bases de datos</p>
+<pre><code class="language-mysql">
+mysql&gt; show databases;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| mydatabasedemo     |
+| mysql              |
+| performance_schema |
+| platziprofesores   |
+| sys                |
++--------------------+
+6 rows in set (0.03 sec)
+
+
+</code></pre>
+
+<h2 id="respaldo-una-base-de-datos">Respaldo una base de datos</h2>
+
+<p>Cargar un respaldo de una base de datos</p>
+
+<p>Desde la terminal( fuera de la interfaz de mysql)</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">mysql -u root -p myDatabaseDemo  platziprofesores.dump
+Enter password: 
+</span></code></pre></div></div>
+
+<p>Hacer el respaldo de una base de datos</p>
+
+<div class="language-bash highlighter-rouge"><div class="highlight"><pre class="highlight"><code>mysql <span class="nt">-u</span> root <span class="nt">-p</span> myDatabaseDemo  platziprofesores.dump
+
+</code></pre></div></div>
+
+:ET

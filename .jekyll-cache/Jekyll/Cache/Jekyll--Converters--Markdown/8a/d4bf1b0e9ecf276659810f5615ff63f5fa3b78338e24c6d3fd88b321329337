@@ -1,0 +1,49 @@
+I"<blockquote>
+  <p>Esta es una actualización a Junio 2018 con la version 3.8.3 de Jekyll.</p>
+</blockquote>
+
+<p>Esta es una guia básica de como instalar Jekyll y desplegar un blog en <strong>GitHub Pages</strong>.</p>
+
+<h2 id="instalación">Instalación</h2>
+
+<p>Esta instalacion es sobre OSX asi que toda instalacion sera via <strong>Homebrew</strong>.</p>
+
+<ol>
+  <li>Para mepezar hay que instalar <strong>GEM Ruby</strong>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> $</span><span class="w"> </span>brew <span class="nb">install </span>ruby
+</code></pre></div>    </div>
+  </li>
+  <li>Instalamos <strong>Jekyll</strong>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> $</span><span class="w"> </span>gem <span class="nb">install </span>bundler jekyll
+</code></pre></div>    </div>
+  </li>
+  <li>El siguiente paso creara un proyecto básico con un post de ejemplo.
+    <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code> $ jekyll new my-awesome-site
+</code></pre></div>    </div>
+  </li>
+  <li>Ejecutamos el servidor local <em>http://127.0.0.1:4000/</em>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp"> $</span><span class="w"> </span><span class="nb">cd </span>my-awesome-site
+<span class="gp"> $</span><span class="w"> </span>bundle <span class="nb">exec </span>jekyll serve
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="agregar-el-proyecto-en-github-pages">Agregar el proyecto en GitHub Pages</h2>
+
+<p>Para esta configuracion es necesario tener una cuenta en <strong>GitHub</strong></p>
+
+<p>Creamos el repositorio con el mismo nombre que nuesta cuenta.
+Por ejemplo si nuestra cuenta se llama <strong><em>username</em></strong> creamos una cuenta como <strong><em>username.github.io</em></strong></p>
+
+<p>Dentro de nuestro blog inicializamos el repositorio.</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>git init
+<span class="gp">$</span><span class="w"> </span>git add <span class="nb">.</span>
+<span class="gp">$</span><span class="w"> </span>git commit <span class="nt">-m</span> <span class="s2">"Initial commit blog"</span>
+<span class="gp">$</span><span class="w"> </span>git remote add https://github.com/username/username.github.io.git
+<span class="gp">$</span><span class="w"> </span>git push <span class="nt">-u</span> origin master
+</code></pre></div></div>
+
+<p>Y con eso podemos acceder a nuestra blog con la url <strong>https://username.github.io</strong></p>
+
+<p>Con esto ultimo podemos ver nuestro proyecto en http://127.0.0.1:4000/</p>
+:ET

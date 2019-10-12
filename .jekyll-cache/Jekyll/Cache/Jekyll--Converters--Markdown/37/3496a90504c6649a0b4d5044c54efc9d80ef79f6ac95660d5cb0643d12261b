@@ -1,0 +1,376 @@
+I"E<p>Azure Load Balancer nos ayuda a crear una arquitectura de alta disponibilidad.
+En esta ocación crearemos un Azure Load Balancer con tres maquinas virtuales y un servidor NGINX</p>
+
+<p><img src="http://localhost:4000/assets/images/azure/azure-load-balancer.png" alt="vue as @saidmlx" /></p>
+
+<h3 id="requerimientos">Requerimientos</h3>
+
+<ol>
+  <li>tener una cuenta en <a href="https://azure.microsoft.com/es-es/free/">Azure</a>, puedes crear una gratuita</li>
+  <li>tener <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> instalado</li>
+</ol>
+
+<h2 id="crear-un-load-balancer-desde-linea-de-comandos">Crear un Load Balancer desde linea de comandos</h2>
+
+<p>Una vez instalado <a href="https://docs.microsoft.com/en-us/cli/azure/install-azure-cli?view=azure-cli-latest">Azure CLI</a> iniciamos sesión desde la terminal <code class="highlighter-rouge">$ az login</code></p>
+
+<h3 id="creamos-un-grupo-de-recursos">Creamos un grupo de recursos</h3>
+
+<p><strong>Donde</strong></p>
+
+<blockquote>
+  <p><strong>az group create</strong>: comando para crear  un grupo de recursos</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–name myResourceGroup</strong>: se creará un grupo de recursos con el nombre de <em>myResourceGroup</em></p>
+
+  <p><strong>–location eastus</strong>: zona donde se creara la infraestructura en este caso <em>East US</em> puedes listar las zonas disponibles 
+con el comando <strong>az account list-locations</strong></p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>az group create  
+    <span class="nt">--name</span> myResourceGroup  
+    <span class="nt">--location</span> eastus
+</code></pre></div></div>
+
+<h3 id="creamos-una-dirección-pública">Creamos una dirección pública</h3>
+
+<p><strong>Donde</strong></p>
+
+<blockquote>
+  <p><strong>az network public-ip create</strong>: comando para crear una IP pública</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–name myPublicIp</strong>: nombre de la IP pública</p>
+
+  <p><strong>–resource-group myResourceGroup</strong>: grupo de recursos donde sera creada la IP</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>az network public-ip create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--name</span> myPublicIp
+</code></pre></div></div>
+<h3 id="creamos-el-balanceador">Creamos el balanceador</h3>
+
+<p><strong>Donde</strong></p>
+<blockquote>
+  <p><strong>az network lb create</strong>: comando para crear un balanceador (Load Balancer)</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo de recursos donde sera creado el balanceador</p>
+
+  <p><strong>–frontend-ip-name myFrontendIpName</strong>: nombre de la configuracion frontal del balanceador</p>
+
+  <p><strong>–backend-pool-name myBackendPoolName</strong>: nombre de la configuracion que se utilizara de forma interna</p>
+
+  <p><strong>–public-ip-address myPublicIp</strong>: sobre que direccion IP publica estara el balanceador</p>
+
+  <p><strong>–name myLoadBalancer</strong>: nombre de nuestro balanceador</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>az network lb create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--frontend-ip-name</span> myFrontendIpName 
+    <span class="nt">--backend-pool-name</span> myBackendPoolName 
+    <span class="nt">--public-ip-address</span> myPublicIp 
+    <span class="nt">--name</span> myLoadBalancer
+</code></pre></div></div>
+
+<h3 id="creamos-una-sonda-de-monitoreo-para-el-load-balancer">Creamos una sonda de monitoreo para el Load Balancer</h3>
+<p><strong>Donde</strong></p>
+<blockquote>
+  <p><strong>az network lb probe create</strong>: comando para crear una sonda de monitoreo</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: a que grupo pertenece</p>
+
+  <p><strong>–lb-name myLoadBalancer</strong>: a que Load Balancer  pertenece</p>
+
+  <p><strong>–protocol tcp</strong>: el protocolo a monitorear (http, https, tcp)</p>
+
+  <p><strong>–port 80</strong>: el puerto a vigilar</p>
+
+  <p><strong>–name myHealthProbe</strong>: el nombre de la sonda</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az network lb probe create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--lb-name</span> myLoadBalancer 
+    <span class="nt">--protocol</span> tcp 
+    <span class="nt">--port</span> 80  
+    <span class="nt">--name</span> myHealthProbe
+</code></pre></div></div>
+
+<h3 id="creamos-una-regla-de-red-del-load-balancer">Creamos una regla de red del Load Balancer</h3>
+
+<p>__Donde:</p>
+<blockquote>
+  <p><strong>az network lb rule create</strong>: comando para crear una regla de red
+<strong>Parametros</strong> 
+<strong>–resource-group myResourceGroup</strong>: a que grupo pertenece</p>
+
+  <p><strong>–lb-name myLoadBalancer</strong>: a que Load Balancer  pertenece</p>
+
+  <p><strong>–name myLoadBalancerRule</strong>: nombre de la regla</p>
+
+  <p><strong>–protocol tcp</strong>: protocolo sobre el cual se va aplicar</p>
+
+  <p><strong>–frontend-port 80</strong>: puerto de comunicación de entrada</p>
+
+  <p><strong>–backend-port 80</strong>: puerto de comunicación hacia las maquinas virtuales</p>
+
+  <p><strong>–frontend-ip-name myFrontendIpName</strong>: nombre de la interfaz de entrada</p>
+
+  <p><strong>–backend-pool-name myBackendPool</strong>: nombre de la colección de comunicación hacia las maquinas virtuales</p>
+
+  <p><strong>–probe-name myHealthprobe</strong>: nombre de la regla de red</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az network lb rule create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--lb-name</span> myLoadBalancer 
+    <span class="nt">--name</span> myLoadBalancerRule 
+    <span class="nt">--protocol</span> tcp 
+    <span class="nt">--frontend-port</span> 80 
+    <span class="nt">--backend-port</span> 80 
+    <span class="nt">--frontend-ip-name</span> myFrontendIpName 
+    <span class="nt">--backend-pool-name</span> myBackendPool 
+    <span class="nt">--probe-name</span> myHealthprobe
+</code></pre></div></div>
+
+<h3 id="creamos-una-red-virtual">Creamos una red virtual</h3>
+<p>Para ensamblar todo necesitamos una red virtual y para eso creamos un Red  y una Subred virtual</p>
+
+<p><strong>Donde</strong></p>
+
+<blockquote>
+  <p><strong>az network vnet create</strong>:</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo al que pertenece</p>
+
+  <p><strong>–name myVnet</strong>: nombre de la red virtual</p>
+
+  <p><strong>–subnet-name mySubnet</strong>:nombre de la subred</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az network vnet create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--name</span> myVnet 
+    <span class="nt">--subnet-name</span> mySubnet
+</code></pre></div></div>
+
+<h3 id="creamos-un-grupo-de-seguridad-de-red-nsg">Creamos un grupo de seguridad de red (NSG)</h3>
+
+<p><strong>Donde</strong></p>
+
+<blockquote>
+  <p><strong>az network nsg  create</strong>: comando para crear un grupo de seguridad (Network security Group)</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo al que pertenece</p>
+
+  <p><strong>–name myNetworkSecurityGroup</strong>: nombre del grupo de seguridad de red (NSG)</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az network nsg  create 
+    <span class="nt">--resource-group</span> myResourceGroup  
+    <span class="nt">--name</span> myNetworkSecurityGroup 
+</code></pre></div></div>
+
+<h3 id="creamos-una-regla-tcp-para-el-grupo-de-seguridad-de-red">creamos una regla TCP para el grupo de seguridad de red</h3>
+
+<p><strong>Donde</strong></p>
+
+<blockquote>
+  <p><strong>az network nsg rule create</strong>: comando para crear un regla TCP para  el grupo de suguridad</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo al que pertenece</p>
+
+  <p><strong>–nsg-name myNetworkSecurityGroup</strong>: nombre del grupo de seguridad de red al que pertenece</p>
+
+  <p><strong>–name myNetworkSecurityGroupRule</strong>: nombre de la regla para el grupo de seguridad de red</p>
+
+  <p><strong>–priority 1001</strong>: que priodidad tiene donde 100 es la mas alta y 4096 la mas baja, esta prioridad no se puede duplicar si se tiene mas de una regla</p>
+
+  <p><strong>–protocol tcp</strong>: protocolo sobre el cual va actuar (*, Esp, Icmp, Tcp, Udp)</p>
+
+  <p><strong>–destination-port-range 80</strong>: aqui  definimos  los puertos del protocolo que va actuar</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az network nsg rule create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--nsg-name</span> myNetworkSecurityGroup 
+    <span class="nt">--name</span> myNetworkSecurityGroupRule 
+    <span class="nt">--priority</span> 1001 
+    <span class="nt">--protocol</span> tcp 
+    <span class="nt">--destination-port-range</span> 80
+</code></pre></div></div>
+
+<h3 id="creamos-interfaces-de-red-para-nuestras-maquinas-virtuales">Creamos interfaces de red para nuestras maquinas virtuales</h3>
+
+<p>En este caso tres porque vamos a crear tres maquinas interfaces de red una para cada una de las maquinas virtuales</p>
+
+<p><strong><em>Este proceso lo tenemos que realizar de acuerdo al numero de maquinas virtuales que deseemos crear para este caso 3, por lo cual al final del proceso tendremos tres interfaces de red myNick1, myNick2 y myNick3</em></strong></p>
+
+<p><strong>Donde</strong></p>
+<blockquote>
+  <p><strong>az network nic create</strong>: comando para crear la interfaz de red</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo al que pertenece</p>
+
+  <p><strong>–vnet-name myVnet</strong>: nombre de la red a la que pertenece</p>
+
+  <p><strong>–subnet mySubnet</strong>: nombre de la subred a la que pertenece</p>
+
+  <p><strong>–network-security-group myNetworkSecurityGroup</strong>: nombre del grupo de seguridad de red al que pertenece</p>
+
+  <p><strong>–lb-name myloadBalancer</strong>: nombre del Load balancer al que pertenece</p>
+
+  <p><strong>–lb-address-pools myBackendPoolName</strong>: nombre de la colleción de comunicación al que pertenece</p>
+
+  <p><strong>–name myNick1</strong>: nombre de la interfaz de red</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span>az network nic create 
+    <span class="nt">--resource-group</span> myResourceGroup  
+    <span class="nt">--vnet-name</span> myVnet 
+    <span class="nt">--subnet</span> mySubnet 
+    <span class="nt">--network-security-group</span> mynetworkSecurityGroup 
+    <span class="nt">--lb-name</span> myloadBalancer 
+    <span class="nt">--lb-address-pools</span> myBackendPoolName
+    <span class="nt">--name</span> myNick1
+</code></pre></div></div>
+
+<h3 id="crear-un-conjunto-de-disponibilidad">Crear un conjunto de disponibilidad</h3>
+
+<p>Para asegurar que el servicio siempre este disponible es necesario un conjunto de disponibilidad al grupo de recursos; 
+esto nos ayudara que al menos una maquina virtual este despachando el servicio, muy util en caso de mantenimiento</p>
+
+<p><strong>donde</strong></p>
+
+<blockquote>
+  <p><strong>az vm availability-set create</strong>: comado para crear un conjunto de disponibilidad</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>:  grupo de recursos al que pertenece</p>
+
+  <p><strong>–name myAvailabilitySet</strong>: nombre del conjunto de disponibilidad</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az vm availability-set create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--name</span> myAvailabilitySet
+</code></pre></div></div>
+
+<h3 id="creamos-las-maquinas-virtuales">Creamos las maquinas virtuales</h3>
+
+<p>Por fin llegamos a las maquinas virtuales, aqui vamos a crear tres maquinas virtuales dependiendo</p>
+
+<p><em><strong>Este proceso al igual que las interfaces de red hay que hacerlo tres veces</strong></em></p>
+
+<p><strong>Donde</strong></p>
+<blockquote>
+  <p><strong>az vm create</strong>:  comando para crear una maquina virtual</p>
+</blockquote>
+
+<p><strong>Parámetros</strong></p>
+
+<blockquote>
+  <p><strong>–resource-group myResourceGroup</strong>: grupo de recursos la que pertenece</p>
+
+  <p><strong>–availability-set myAvailabilitySet</strong>: nombre del conjunto de disponibilidad al que pertenece</p>
+
+  <p><strong>–nics myNick1</strong>: nombre de la interfaz de red asociado</p>
+
+  <p><strong>–image UbuntuLTS</strong>: imagen de sistema operativo que vamos a crear</p>
+
+  <p><strong>–admin-username azureuser</strong>: usuario para esta maquina virtual</p>
+
+  <p><strong>–generate-ssh-key</strong>: indicamos que nos autenticaremos por SSH</p>
+
+  <p><strong>–custom-data cloud-init.txt</strong>: este archivo de texto es el script para generar nuestro servidor NGNIX en la parte inferior hablamos de el</p>
+
+  <p><strong>–name myVM1</strong>: nombre de la maquina virtual, recuerda que los nombres no pueden repetir</p>
+</blockquote>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>az vm create 
+    <span class="nt">--resource-group</span> myResourceGroup 
+    <span class="nt">--availability-set</span> myAvailabilitySet 
+    <span class="nt">--nics</span> myNick1 
+    <span class="nt">--name</span> myVM1
+    <span class="nt">--image</span> UbuntuLTS 
+    <span class="nt">--admin-username</span> azureuser 
+    <span class="nt">--generate-ssh-key</span> 
+    <span class="nt">--custom-data</span> cloud-init.txt
+</code></pre></div></div>
+
+<h3 id="script-para-crear-un-servidor-nginx">Script para crear un servidor NGINX</h3>
+
+<div class="language-yaml highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">#cloud-config</span>
+<span class="na">package_upgrade</span><span class="pi">:</span> <span class="no">true</span>
+<span class="na">packages</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">nginx</span>
+  <span class="pi">-</span> <span class="s">nodejs</span>
+  <span class="pi">-</span> <span class="s">npm</span>
+<span class="na">write_files</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="na">owner</span><span class="pi">:</span> <span class="s">www-data:www-data</span>
+  <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/etc/nginx/sites-available/default</span>
+    <span class="na">content</span><span class="pi">:</span> <span class="pi">|</span>
+      <span class="s">server {</span>
+        <span class="s">listen 80;</span>
+        <span class="s">location / {</span>
+          <span class="s">proxy_pass http://localhost:3000;</span>
+          <span class="s">proxy_http_version 1.1;</span>
+          <span class="s">proxy_set_header Upgrade $http_upgrade;</span>
+          <span class="s">proxy_set_header Connection keep-alive;</span>
+          <span class="s">proxy_set_header Host $host;</span>
+          <span class="s">proxy_cache_bypass $http_upgrade;</span>
+        <span class="s">}</span>
+      <span class="s">}</span>
+  <span class="pi">-</span> <span class="na">owner</span><span class="pi">:</span> <span class="s">azureuser:azureuser</span>
+  <span class="pi">-</span> <span class="na">path</span><span class="pi">:</span> <span class="s">/home/azureuser/myapp/index.js</span>
+    <span class="na">content</span><span class="pi">:</span> <span class="pi">|</span>
+      <span class="s">var express = require('express')</span>
+      <span class="s">var app = express()</span>
+      <span class="s">var os = require('os');</span>
+      <span class="s">app.get('/', function (req, res) {</span>
+        <span class="s">res.send('Hello World from host ' + os.hostname() + '!')</span>
+      <span class="s">})</span>
+      <span class="s">app.listen(3000, function () {</span>
+        <span class="s">console.log('Hello world app listening on port 3000!')</span>
+      <span class="s">})</span>
+<span class="na">runcmd</span><span class="pi">:</span>
+  <span class="pi">-</span> <span class="s">service nginx restart</span>
+  <span class="pi">-</span> <span class="s">cd "/home/azureuser/myapp"</span>
+  <span class="pi">-</span> <span class="s">npm init</span>
+  <span class="pi">-</span> <span class="s">npm install express -y</span>
+  <span class="pi">-</span> <span class="s">nodejs index.js</span>
+</code></pre></div></div>
+:ET

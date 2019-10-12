@@ -1,0 +1,64 @@
+I"�<p>En algunas ocasiones necesitamos llamar peticiones HTTP, y sabemos que para que la experiencia de usuario no sea desfavorable estas peticiones deben ser asíncronas, pero que pasa si estas peticiones dependen una de otra, lo que significaría anidar estas peticiones; para este caso necesitamos promesas.</p>
+
+<p>Una promesa no es más que una respuesta que puede o no estar disponible; esto significa que si lanzamos una petición la respuesta puede ser devuelta al instante o tardar 1,2,3,… minutos o no responder nunca.</p>
+
+<h2 id="la-idea-principal-de-una-promesa">La idea principal de una promesa</h2>
+<p>El método siguiente no es más que una petición <strong><em>Ajax</em></strong> con <strong><em>Jquery</em></strong> que utiliza el objeto _<strong>Defered_</strong> que nos ayuda a registrar diferentes callbacks, este objeto lo que hace es regresar el objeto cuando se tiene una respuesta ya sea satisfactoria (<strong><em>resolve</em></strong>) o cuando falla (<strong><em>reject</em></strong>).</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">var</span> <span class="nx">ajaxCall</span> <span class="o">=</span> <span class="kd">function</span><span class="p">(</span><span class="nx">url</span><span class="p">,</span><span class="nx">data</span><span class="p">){</span>
+  <span class="kd">var</span> <span class="nx">deferred</span> <span class="o">=</span> <span class="nx">$</span><span class="p">.</span><span class="nx">Deferred</span><span class="p">();</span>
+  <span class="nx">$</span><span class="p">.</span><span class="nx">ajax</span> <span class="p">({</span>
+    <span class="na">type</span><span class="p">:</span> <span class="dl">"</span><span class="s2">GET</span><span class="dl">"</span><span class="p">,</span>
+    <span class="na">url</span><span class="p">:</span> <span class="nx">url</span><span class="p">,</span>
+    <span class="na">dataType</span><span class="p">:</span> <span class="dl">'</span><span class="s1">json</span><span class="dl">'</span><span class="p">,</span> 
+    <span class="na">data</span><span class="p">:</span><span class="nx">data</span><span class="p">,</span>
+    <span class="na">success</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">){</span>
+      <span class="nx">deferred</span><span class="p">.</span><span class="nx">resolve</span><span class="p">(</span><span class="nx">data</span> <span class="p">);</span>
+    <span class="p">},</span>
+    <span class="na">fail</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="nx">status</span><span class="p">){</span>  
+      <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+    <span class="p">},</span>
+    <span class="na">error</span><span class="p">:</span> <span class="kd">function</span> <span class="p">(</span><span class="nx">data</span><span class="p">,</span><span class="nx">status</span><span class="p">){</span> 
+      <span class="nx">deferred</span><span class="p">.</span><span class="nx">reject</span><span class="p">(</span><span class="nx">data</span><span class="p">);</span> 
+    <span class="p">}</span>
+  <span class="p">});</span>
+  <span class="k">return</span> <span class="nx">deferred</span><span class="p">.</span><span class="nx">promise</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<h3 id="petición-básica">Petición básica</h3>
+
+<p>Un ejemplo de petición básica seria la siguiente, el método <strong><em>getBooks()</em></strong> llama al servicio <strong>http://localhost:4001/books</strong> una vez responda el servicio se jecuta el metodo <strong><em>printBooks()</em></strong>.</p>
+
+<pre><code class="language-Javascript">getBooks = function(){
+  return this.ajaxCall('http://localhost:4001/books',{});
+}
+printBooks = function(books){
+  return books.forEach(this.printBook);		 
+}
+
+getBooks()
+.then(this.printBooks.bind(this));
+</code></pre>
+
+<h3 id="peticiones-anidadas">Peticiones anidadas</h3>
+<p>Cuando necesitamos anidar peticiones podemos utilizar el método antes definido y utilizar el objeto <strong>then</strong>.</p>
+
+<p>En este ejemplo tenemos la siguiente secuencia.</p>
+<ol>
+  <li>Con el método <strong><em>getBooks()</em></strong> se realiza la petición al servicio <strong><em>http://localhost:4001/books</em></strong> que nos regresara un listado de libros.</li>
+  <li>Con el método <strong><em>getMusic()</em></strong> construimos HTML de los libros.</li>
+  <li>Con el método <strong><em>getMusic()</em></strong> se realiza la petición al servicio <strong><em>http://localhost:4001/music</em></strong> que nos regresara un listado de los álbumes de música.</li>
+  <li>Con el método <strong><em>printMusic()</em></strong> construimos HTML de los álbumes de música que nos regresó el servicio.</li>
+</ol>
+
+<p>El código para hacer lo anterior es el siguiente.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">getBooks</span><span class="p">()</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">printBooks</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">getMusic</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">))</span>
+<span class="p">.</span><span class="nx">then</span><span class="p">(</span><span class="k">this</span><span class="p">.</span><span class="nx">printMusic</span><span class="p">.</span><span class="nx">bind</span><span class="p">(</span><span class="k">this</span><span class="p">));</span>
+</code></pre></div></div>
+
+<h2 id="peticiones-encadenadas">Peticiones encadenadas</h2>
+
+:ET

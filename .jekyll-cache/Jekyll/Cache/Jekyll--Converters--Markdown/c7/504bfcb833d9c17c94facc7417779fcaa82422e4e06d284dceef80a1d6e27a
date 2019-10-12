@@ -1,0 +1,150 @@
+I"�&<p>Si vas utilizar una base de datos relacional <a href="https://www.postgresql.org">Postgresql</a>   en una buena opción y en esta ocasión vamos a instalarlo utilizando <a href="https://brew.sh"><strong>Homebrew</strong></a>.</p>
+
+<p>Como breviario cultural <a href="https://brew.sh"><strong>homebrew</strong></a> es el manejador de paquetes para OSX.</p>
+
+<h2 id="instalamos-postgresql">Instalamos Postgresql</h2>
+
+<ol>
+  <li>Como primer paso hay que actualizar brew
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>brew update
+<span class="gp">$</span><span class="w"> </span>brew doctor
+</code></pre></div>    </div>
+  </li>
+  <li>Intalamos <a href="https://www.postgresql.org">Postgresql</a>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>brew <span class="nb">install </span>postgresql
+</code></pre></div>    </div>
+    <p>Listo ya tenemos instalado PostgreSql, y lo verificamos de la siguiente forma.</p>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>postgres <span class="nt">--version</span>
+<span class="go">postgres (PostgreSQL) 10.1
+</span></code></pre></div>    </div>
+  </li>
+  <li>Lanzamos el servicio
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>brew services start postgresql
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="trabajando-con-psql">Trabajando con PSQL</h2>
+
+<p>PSQL es una terminal interactiva, a partir de aquí vamos hacer algunas operaciones básicas</p>
+
+<ol>
+  <li>Creamos una base de datos
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>psql postgres
+<span class="go">psql (10.1)
+Type "help" for help.
+</span><span class="gp">postgres=#</span><span class="w"> </span>CREATE ROLE userdemo WITH LOGIN PASSWORD <span class="s1">'userdemo'</span><span class="p">;</span>
+<span class="gp">postgres=#</span><span class="w"> </span>CREATE DATABASE mydb<span class="p">;</span>
+<span class="gp">postgres=#</span><span class="w"> </span>GRANT ALL PRIVILLEGES ON DATABASE mydb TO userdemo
+</code></pre></div>    </div>
+    <p>Si no reconoce el comando puedes utilizar la opción siguiente</p>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>/usr/local/Cellar/postgresql/10.1/bin/createdb mydb
+</code></pre></div>    </div>
+  </li>
+  <li>Creamos una tabla
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>psql mydb
+<span class="gp">mydb=#</span><span class="w"> </span>create table tasks<span class="o">(</span>
+<span class="gp">mydb(#</span><span class="w"> </span><span class="nb">id </span>int,
+<span class="gp">mydb(#</span><span class="w"> </span>description varchar<span class="o">(</span>50<span class="o">)</span>,
+<span class="gp">mydb(#</span><span class="w"> </span>status int,
+<span class="gp">mydb(#</span><span class="w"> </span>active boolean<span class="o">)</span><span class="p">;</span>
+</code></pre></div>    </div>
+  </li>
+  <li>Insertamos datos a la tabla creada
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">mydb=#</span><span class="w"> </span>insert into tasks values <span class="o">(</span>1, <span class="s1">'make a coffe'</span>, 2,true<span class="o">)</span><span class="p">;</span>
+<span class="go">INSERT 0 1
+</span></code></pre></div>    </div>
+  </li>
+  <li>Consultamos datos
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">mydb=#</span><span class="w"> </span><span class="k">select</span> <span class="k">*</span> from tasks<span class="p">;</span>
+<span class="go"> id | description  | status | active 
+----+--------------+--------+--------
+  1 | make a coffe |      2 | t
+(1 row)
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="logs">Logs</h2>
+
+<p>Para poder ver los logs</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">tail</span> <span class="nt">-f</span> /usr/local/var/log/postgres.log
+</code></pre></div></div>
+
+<h2 id="comandos-básicos">Comandos básicos</h2>
+
+<ol>
+  <li>Mostrar la tablas <strong>\dt</strong>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">mydb=#</span><span class="w"> </span><span class="se">\d</span>t
+<span class="go">          List of relations
+ Schema | Name  | Type  |      Owner       
+--------+-------+-------+------------------
+ public | tasks | table | saidmoraleslemus
+(1 row)
+</span></code></pre></div>    </div>
+  </li>
+  <li>Mostrar la estructura de una tabla  <strong>\d tasks</strong>
+    <div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">mydb=#</span><span class="w"> </span><span class="se">\d</span> tasks
+<span class="go">                      Table "public.tasks"
+Column    |         Type          | Collation | Nullable | Default 
+-------------+-----------------------+-----------+----------+---------
+ id          | integer               |           |          | 
+ description | character varying(50) |           |          | 
+ status      | integer               |           |          | 
+ active      | boolean               |           |          | 
+</span></code></pre></div>    </div>
+  </li>
+</ol>
+
+<h2 id="modifcar-la-configuración">Modifcar la configuración</h2>
+<p>Por default todas las entradas son confiables es decir si entramos a la base de datos no nos pide la contraseña</p>
+
+<p>Si queremos que siempre nos pida la contrasela tenemos que modificar el archivo <strong>pg_hba.conf</strong> y se debe cambiar el metodo <strong>trust</strong> por <strong>password</strong></p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cat</span> /usr/local/var/postgres/pg_hba.conf
+<span class="go">
+</span><span class="gp">#</span><span class="w"> </span>TYPE  DATABASE        USER            ADDRESS                 METHOD
+<span class="go">
+</span><span class="gp">#</span><span class="w"> </span><span class="s2">"local"</span> is <span class="k">for </span>Unix domain socket connections only
+<span class="go">local   all             all                                     trust
+</span><span class="gp">#</span><span class="w"> </span>IPv4 <span class="nb">local </span>connections:
+<span class="go">host    all             all             127.0.0.1/32            trust
+</span><span class="gp">#</span><span class="w"> </span>IPv6 <span class="nb">local </span>connections:
+<span class="go">host    all             all             ::1/128                 trust
+</span><span class="gp">#</span><span class="w"> </span>Allow replication connections from localhost, by a user with the
+<span class="gp">#</span><span class="w"> </span>replication privilege.
+<span class="go">local   replication     all                                     trust
+host    replication     all             127.0.0.1/32            trust
+host    replication     all             ::1/128                 trust
+</span></code></pre></div></div>
+
+<p>Quedando de la siguiente forma</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span><span class="nb">cat</span> /usr/local/var/postgres/pg_hba.conf
+<span class="go">
+</span><span class="gp">#</span><span class="w"> </span>TYPE  DATABASE        USER            ADDRESS                 METHOD
+<span class="go">
+</span><span class="gp">#</span><span class="w"> </span><span class="s2">"local"</span> is <span class="k">for </span>Unix domain socket connections only
+<span class="go">local   all             all                                     password
+</span><span class="gp">#</span><span class="w"> </span>IPv4 <span class="nb">local </span>connections:
+<span class="go">host    all             all             127.0.0.1/32            password
+</span><span class="gp">#</span><span class="w"> </span>IPv6 <span class="nb">local </span>connections:
+<span class="go">host    all             all             ::1/128                 password
+</span><span class="gp">#</span><span class="w"> </span>Allow replication connections from localhost, by a user with the
+<span class="gp">#</span><span class="w"> </span>replication privilege.
+<span class="go">local   replication     all                                     password
+host    replication     all             127.0.0.1/32            password
+host    replication     all             ::1/128                 password
+</span></code></pre></div></div>
+
+<p>Reiniciamos el server</p>
+
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="gp">$</span><span class="w"> </span>brew services restart postgres
+</code></pre></div></div>
+
+<p>Y listo cuando tratamos de entrar nos pide la contraseña</p>
+<div class="language-terminal highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="go">Password for user userdemo:  
+
+</span><span class="gp">mydb=&gt;</span><span class="w">
+</span></code></pre></div></div>
+:ET

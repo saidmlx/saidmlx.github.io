@@ -1,0 +1,473 @@
+I"E�<p><strong>Tabla de contenido</strong></p>
+
+<ul>
+  <li><a href="#librerias-a-importar">Librerias a importar</a></li>
+  <li><a href="#estructura-básica-de-un-componente">Estructura básica de un componente</a></li>
+  <li><a href="#data-binding">Data binding</a></li>
+  <li><a href="#estructura-dom-repeat">Estructura dom-repeat</a></li>
+  <li><a href="#estructura-dom-if">Estructura dom-if</a></li>
+  <li><a href="#métodos">Métodos</a></li>
+  <li><a href="#eventos">Eventos</a></li>
+  <li><a href="#arrays">Arrays</a></li>
+  <li><a href="#anidar-componentes">Anidar componentes</a></li>
+  <li><a href="#como-pasar-propiedades-entre-componentes">Como pasar propiedades entre componentes</a></li>
+  <li><a href="#notify">Notify</a></li>
+  <li><a href="#observer">Observer</a></li>
+</ul>
+
+<h2 id="librerias-a-importar">Librerias a importar</h2>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">base</span> <span class="nx">href</span><span class="o">=</span><span class="dl">"</span><span class="s2">https://cdn.rawgit.com/download/polymer-cdn/2.6.0/lib/</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">script</span> <span class="nx">src</span><span class="o">=</span><span class="dl">"</span><span class="s2">webcomponentsjs/webcomponents-loader.js</span><span class="dl">"</span><span class="o">&gt;&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="dl">"</span><span class="s2">import</span><span class="dl">"</span> <span class="nx">href</span><span class="o">=</span><span class="dl">"</span><span class="s2">iron-ajax/iron-ajax.html</span><span class="dl">"</span><span class="o">&gt;</span>
+
+<span class="o">&lt;</span><span class="nx">link</span> <span class="nx">rel</span><span class="o">=</span><span class="dl">"</span><span class="s2">import</span><span class="dl">"</span> <span class="nx">href</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer/polymer-element.html</span><span class="dl">"</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<h2 id="estructura-básica-de-un-componente">Estructura básica de un componente</h2>
+<p>Un componente de Polmer está constituido por tres partes</p>
+
+<ul>
+  <li><strong>Template</strong>: tag html que describe el la vista del componente.</li>
+  <li><strong>Style</strong>: apartado donde se escriben los estilos</li>
+  <li><strong>Script</strong>: definición del componente</li>
+</ul>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h1</span><span class="p">{</span>
+       <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">blue</span><span class="p">;</span>
+       <span class="nl">color</span> <span class="p">:</span> <span class="nx">white</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h1</span> <span class="nx">span</span><span class="p">{</span>
+       <span class="nl">color</span><span class="p">:</span> <span class="nx">cyan</span><span class="p">;</span>
+     <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">The</span> <span class="nx">current</span> <span class="nx">month</span> <span class="nx">is</span> <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">month</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/span&gt; !!&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>
+         <span class="na">month</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+           <span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">Janary</span><span class="dl">'</span>
+         <span class="p">}</span>
+       <span class="p">};</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+ <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h2 id="data-binding">Data binding</h2>
+<p>Es la forma en que se vinculan los datos entre el javascript y el Template HTML y va en dos formas</p>
+
+<h3 id="one-way-data-binding">One-way data binding</h3>
+<p>Cuando queremos mostrar el valor de una propiedad dentro del HTML se hace un simple binding y esto de hace encerrando entre corchetes en nombre de la propiedad <code class="highlighter-rouge">&lt;span&gt;[[month]]&lt;/span&gt;</code></p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h1</span><span class="p">{</span>
+       <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">blue</span><span class="p">;</span>
+       <span class="nl">color</span> <span class="p">:</span> <span class="nx">white</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h1</span> <span class="nx">span</span><span class="p">{</span>
+       <span class="nl">color</span><span class="p">:</span> <span class="nx">cyan</span><span class="p">;</span>
+     <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">The</span> <span class="nx">current</span> <span class="nx">month</span> <span class="nx">is</span> <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">month</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/span&gt; !!&lt;/</span><span class="nx">h1</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>
+         <span class="na">month</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+           <span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">Janary</span><span class="dl">'</span>
+         <span class="p">}</span>
+       <span class="p">};</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+ <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h3 id="two-way-data-binding">Two-way data binding</h3>
+<p>Cuando necesitamos mostrar y tener la capacidad de modificar el valor de una propiedad dentro del HTML utilizamos el double binding que es encerrar entre llaves el nombre de la propiedad <code class="highlighter-rouge"></code> .de esta forma lo que se escriba en el input afectará a la propiedad.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h2</span><span class="p">{</span>
+       <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">blue</span><span class="p">;</span>
+       <span class="nl">color</span> <span class="p">:</span> <span class="nx">white</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h2</span> <span class="nx">span</span><span class="p">{</span>
+       <span class="nl">color</span><span class="p">:</span> <span class="nx">cyan</span><span class="p">;</span>
+     <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Two</span><span class="o">-</span><span class="nx">way</span> <span class="nx">data</span> <span class="nx">binding</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span><span class="nx">The</span> <span class="nx">current</span> <span class="nx">month</span> <span class="nx">is</span> <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">month</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/span&gt; !!&lt;/</span><span class="nx">h2</span><span class="o">&gt;</span>
+   <span class="nx">Change</span> <span class="nx">value</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text</span><span class="dl">"</span> <span class="nx">value</span><span class="o">=</span><span class="dl">"</span><span class="s2"> { { month::input } }  </span><span class="dl">"</span><span class="o">&gt;&lt;</span><span class="sr">/input</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>
+         <span class="na">month</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+           <span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">Janary</span><span class="dl">'</span>
+         <span class="p">}</span>
+       <span class="p">};</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+ <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h3 id="data-binding-a-un-atributo">Data binding a un atributo</h3>
+<p>En ocasiones es necesario cambiar el valor de un atributo de un elemento HTML con el valor de una propiedad para eso el data binding se usa anteponiendo el signo <strong>$</strong> antes del signo igual  <code class="highlighter-rouge">&lt;h2 class$="[[customColor]]"&gt;</code> donde customColor es una propiedad del componente</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+   <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h2</span><span class="p">{</span>
+       <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">blue</span><span class="p">;</span>
+       <span class="nl">color</span> <span class="p">:</span> <span class="nx">white</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="nx">h2</span> <span class="nx">span</span><span class="p">{</span>
+       <span class="nl">color</span><span class="p">:</span> <span class="nx">cyan</span><span class="p">;</span>
+     <span class="p">}</span>
+     <span class="p">:</span><span class="nx">host</span> <span class="p">.</span><span class="nx">orange</span><span class="p">{</span>
+       <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="err">#</span><span class="nx">FF9A06</span><span class="p">;</span>
+     <span class="p">}</span>
+   <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">Two</span><span class="o">-</span><span class="nx">way</span> <span class="nx">data</span> <span class="nx">binding</span><span class="o">&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>   <span class="o">&lt;</span><span class="nx">h2</span> <span class="kd">class</span><span class="nx">$</span><span class="o">=</span><span class="dl">"</span><span class="s2">[[customColor]]</span><span class="dl">"</span><span class="o">&gt;</span><span class="nx">The</span> <span class="nx">current</span> <span class="nx">month</span> <span class="nx">is</span> <span class="o">&lt;</span><span class="nx">span</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">month</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/span&gt; !!&lt;/</span><span class="nx">h2</span><span class="o">&gt;</span>
+   <span class="nx">Change</span> <span class="nx">value</span> <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text</span><span class="dl">"</span> <span class="nx">value</span><span class="o">=</span><span class="dl">""</span><span class="o">&gt;&lt;</span><span class="sr">/input</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>
+         <span class="na">month</span><span class="p">:</span> <span class="p">{</span>
+           <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+           <span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">Janary</span><span class="dl">'</span>
+         <span class="p">},</span>
+         <span class="na">customColor</span><span class="p">:{</span>
+           <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+           <span class="na">value</span><span class="p">:</span> <span class="dl">'</span><span class="s1">orange</span><span class="dl">'</span>
+         <span class="p">}</span>
+       <span class="p">};</span>
+     <span class="p">}</span>
+   <span class="p">}</span>
+   <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+ <span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span>
+</code></pre></div></div>
+
+<h2 id="estructura-dom-repeat">Estructura dom-repeat</h2>
+<p>En ocasiones es necesario utilizar ciclos para generar elementos para eso es necesario utilizar la estructura dom-repeate.
+En el ejemplo se muestra la forma de iterar un array que contiene los meses del año, para empezar se tiene una propiedad llamada months</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code>  <span class="nx">months</span><span class="p">:{</span>
+           <span class="nl">type</span><span class="p">:</span> <span class="nb">Array</span><span class="p">,</span>
+           <span class="nx">value</span><span class="p">:[</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">1</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Winter</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">January</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">2</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Winter</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">February</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">3</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Spring</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">March</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">4</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Spring</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">April</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">5</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Spring</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">May</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">6</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Summer</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">June</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">7</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Summer</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">July</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">8</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Summer</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">August</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">9</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Fall</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">September</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">10</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Fall</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">October</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">11</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Fall</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">November</span><span class="dl">'</span><span class="p">},</span>
+             <span class="p">{</span><span class="na">month</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Winter</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">December</span><span class="dl">'</span><span class="p">}</span>
+           <span class="p">]</span>
+         <span class="p">}</span>
+</code></pre></div></div>
+
+<p>y en el template del componente generamos tantos botones como meses definidos.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">is</span><span class="o">=</span><span class="dl">"</span><span class="s2">dom-repeat</span><span class="dl">"</span> <span class="nx">items</span><span class="o">=</span><span class="dl">"</span><span class="s2">[[months]]</span><span class="dl">"</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">div</span><span class="o">&gt;</span>
+    <span class="o">&lt;</span><span class="nx">button</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">item</span><span class="p">.</span><span class="nx">value</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="sr">/div</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h2 id="estructura-dom-if">Estructura dom-if</h2>
+<p>Para ocupar la estructura condicional if necesitamos <code class="highlighter-rouge">&lt;template is="dom-if" if="{ {spring} }" &gt;</code> dónde spring es la expresión a evaluar.
+En el ejemplo siguiente tenemos cuatro variables que corresponden a las estaciones del año de tipo Booleano y solo se encuentra una activa.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">spring</span><span class="p">:{</span>
+ <span class="nl">type</span><span class="p">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+ <span class="nx">value</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">},</span>
+<span class="nx">summer</span><span class="p">:{</span>
+ <span class="nl">type</span><span class="p">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+ <span class="nx">value</span><span class="p">:</span> <span class="kc">true</span>
+<span class="p">},</span>
+<span class="nx">fall</span><span class="p">:{</span>
+ <span class="nl">type</span><span class="p">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+ <span class="nx">value</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">},</span>
+<span class="nx">winter</span><span class="p">:{</span>
+ <span class="nl">type</span><span class="p">:</span> <span class="nb">Boolean</span><span class="p">,</span>
+ <span class="nx">value</span><span class="p">:</span> <span class="kc">false</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>De esta forma podemos crear una estructura dentro del template principal de nuestro elemento para evaluar esta variable para que se muestre solo la estación actual</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">is</span><span class="o">=</span><span class="dl">"</span><span class="s2">dom-if</span><span class="dl">"</span> <span class="k">if</span><span class="o">=</span><span class="dl">"</span><span class="s2">{ {spring} }</span><span class="dl">"</span> <span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Spring</span><span class="o">&lt;</span><span class="sr">/h3</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">is</span><span class="o">=</span><span class="dl">"</span><span class="s2">dom-if</span><span class="dl">"</span> <span class="k">if</span><span class="o">=</span><span class="dl">"</span><span class="s2">{ {summer} }</span><span class="dl">"</span> <span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Summer</span><span class="o">&lt;</span><span class="sr">/h3</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">is</span><span class="o">=</span><span class="dl">"</span><span class="s2">dom-if</span><span class="dl">"</span> <span class="k">if</span><span class="o">=</span><span class="dl">"</span><span class="s2">{ {fall} }</span><span class="dl">"</span> <span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Fall</span><span class="o">&lt;</span><span class="sr">/h3</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">template</span> <span class="nx">is</span><span class="o">=</span><span class="dl">"</span><span class="s2">dom-if</span><span class="dl">"</span> <span class="k">if</span><span class="o">=</span><span class="dl">""</span> <span class="o">&gt;</span>
+ <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="nx">Winter</span><span class="o">&lt;</span><span class="sr">/h3</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span></code></pre></div></div>
+
+<h2 id="métodos">Métodos</h2>
+<p>Los métodos son declarados dentro de la clase</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+ <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{...}</span>
+ <span class="nx">changeSeason</span><span class="p">(){</span>
+   <span class="c1">//--TODO</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="eventos">Eventos</h2>
+<p>los eventos se establecen en dos fases, dentro del template <code class="highlighter-rouge">&lt;button on-click = "selectMonth" &gt;&lt;/button&gt;</code> y su definición dentro de la clase del componente <code class="highlighter-rouge">selectMonth(event){ //--TODO }</code> .</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+ <span class="p">...</span>
+ <span class="o">&lt;</span><span class="nx">button</span> <span class="nx">on</span><span class="o">-</span><span class="nx">click</span><span class="o">=</span><span class="dl">"</span><span class="s2">selectMonth</span><span class="dl">"</span> <span class="o">&gt;</span><span class="p">[[</span><span class="nx">item</span><span class="p">.</span><span class="nx">value</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/button</span><span class="err">&gt;
+</span> <span class="p">...</span>
+<span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span>
+<span class="kd">class</span> <span class="nx">PolymerElement</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+ <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+ <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{...}</span>
+  <span class="nx">selectMonth</span><span class="p">(</span><span class="nx">event</span><span class="p">){</span>
+   <span class="c1">//--TODO</span>
+   <span class="c1">//--event.model.item</span>
+ <span class="p">}</span>
+<span class="p">}</span>
+<span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElement</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElement</span><span class="p">);</span>
+</code></pre></div></div>
+
+<h2 id="arrays">Arrays</h2>
+<p>Los array son tipo de dato especial al momento de asignar valores es por eso que es necesario acceder, obtener y agregar valores a través de los métodos siguientes, ya que si no lo hacemos a través de estos métodos no se disparan los observables</p>
+
+<h3 id="get">Get</h3>
+
+<p>Obtener un valor de un array donde 5 es la posición del array</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="kd">get</span><span class="p">(</span><span class="dl">'</span><span class="s1">months.5.season</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="set">Set</h3>
+
+<p>Actualizar un valor dentro de un array donde 5 es la posición a actualizar.</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="kd">set</span><span class="p">(</span><span class="dl">'</span><span class="s1">months.5.season</span><span class="dl">'</span><span class="p">,</span><span class="dl">'</span><span class="s1">none</span><span class="dl">'</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h3 id="push">Push</h3>
+
+<p>Utilizada para agregar un valor, este lo agregara al final</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">push</span><span class="p">(</span><span class="dl">'</span><span class="s1">months</span><span class="dl">'</span><span class="p">,{</span><span class="na">month</span><span class="p">:</span><span class="mi">12</span><span class="p">,</span><span class="na">season</span><span class="p">:</span><span class="dl">'</span><span class="s1">Winter</span><span class="dl">'</span><span class="p">,</span><span class="na">value</span><span class="p">:</span><span class="dl">'</span><span class="s1">December</span><span class="dl">'</span><span class="p">})</span>
+</code></pre></div></div>
+
+<h3 id="splice">Splice</h3>
+
+<p>Cuando queremos eliminar un valor donde 1 es la posición inicial y 2 es el número de elementos a eliminar</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">this</span><span class="p">.</span><span class="nx">splice</span><span class="p">(</span><span class="dl">'</span><span class="s1">months</span><span class="dl">'</span><span class="p">,</span><span class="mi">1</span><span class="p">,</span><span class="mi">2</span><span class="p">)</span>
+</code></pre></div></div>
+
+<h2 id="anidar-componentes">Anidar componentes</h2>
+
+<p>Para anidar componentes necesitamos definir dos componentes para este caso.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-one</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-two</span><span class="dl">"</span><span class="o">&gt;</span>
+</code></pre></div></div>
+
+<p>Dentro del template de PolymerElementOne agregamos la línea siguiente para insertar el segundo componente.</p>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">two</span><span class="o">&gt;&lt;</span><span class="sr">/polymer-element-two&gt;</span><span class="err"> 
+</span></code></pre></div></div>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">one</span><span class="o">&gt;&lt;</span><span class="sr">/polymer-element-one</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-one</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+    <span class="p">:</span><span class="nx">host</span> <span class="p">{</span>
+      <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">blue</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nx">block</span><span class="p">;</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="mi">4</span><span class="nx">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">I</span> <span class="nx">am</span> <span class="nx">a</span> <span class="nx">component</span> <span class="o">!!&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">two</span><span class="o">&gt;&lt;</span><span class="sr">/polymer-element-two&gt;</span><span class="err"> 
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="kd">class</span> <span class="nx">PolymerElementOne</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element-one</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{};</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElementOne</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElementOne</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-two</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+    <span class="p">:</span><span class="nx">host</span> <span class="p">{</span>
+      <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">green</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nx">block</span><span class="p">;</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="mi">4</span><span class="nx">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">a</span> <span class="nx">second</span> <span class="nx">componente</span>  <span class="o">!!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElementTwo</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element-two</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>     <span class="p">}</span>
+     <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElementTwo</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElementTwo</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module&gt;</span><span class="err"> 
+</span></code></pre></div></div>
+
+<h2 id="como-pasar-propiedades-entre-componentes">Como pasar propiedades entre componentes</h2>
+<p>Para pasar valores entre componentes es necesario enviarlos vía parámetros de esta forma para el ejemplo anterior para pasar el valor de la propiedad <code class="highlighter-rouge">name</code> del componente <code class="highlighter-rouge">&lt;polymer-element-one&gt;</code> al componente <code class="highlighter-rouge">&lt;polymer-element-two&gt;</code> es necesario cambiarlo de la forma <code class="highlighter-rouge">&lt;polymer-element-two name=""&gt;&lt;/polymer-element-two&gt;</code></p>
+
+<h2 id="notify">Notify</h2>
+<p>Cuando se comparten valores entre componentes es necesario activar la propiedad <code class="highlighter-rouge">notify</code> para poder escuchar los cambios, de esta forma en el último ejercicio si se modifica la propiedad name en el componente <code class="highlighter-rouge">&lt;polymer-element-two&gt;</code> es necesario agregar la propiedad notify para que los cambios puedan ser escuchadas en el componente <code class="highlighter-rouge">&lt;polymer-element-one&gt;</code> de la forma <code class="highlighter-rouge">name:{type:String, notify:true }</code></p>
+
+<h2 id="observer">Observer</h2>
+<p>En ocasiones es necesario observar una variable para aplicar una acción para eso son los observables; de esta forma en el último ejemplo si cuando cambia la variable <code class="highlighter-rouge">name</code> podríamos agregar un observable en dos pasos.</p>
+
+<p>1- Declarar la propiedad observer dentro de la definición de una propiedad y asignarle qué método se disparará cuando la variable cambie</p>
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">name</span><span class="p">:{</span> <span class="nl">type</span><span class="p">:</span><span class="nb">String</span><span class="p">,</span><span class="nx">observer</span><span class="p">:</span><span class="dl">"</span><span class="s2">changedName</span><span class="dl">"</span><span class="p">}</span>
+</code></pre></div></div>
+<ol>
+  <li>La segunda es agregar el método, este define dos valores el actual y el anterior
+    <div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nx">changedName</span><span class="p">(</span><span class="nx">new_value</span><span class="p">,</span> <span class="nx">old_value</span> <span class="p">){</span>
+  <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s2">`Old value:[</span><span class="p">${</span><span class="nx">old_value</span><span class="p">}</span><span class="s2">] New Value:[</span><span class="p">${</span><span class="nx">new_value</span><span class="p">}</span><span class="s2">]`</span><span class="p">)</span>
+<span class="p">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<div class="language-javascript highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">one</span><span class="o">&gt;&lt;</span><span class="sr">/polymer-element-one</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-one</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+    <span class="p">:</span><span class="nx">host</span> <span class="p">{</span>
+      <span class="nx">background</span><span class="o">-</span><span class="nx">color</span><span class="p">:</span> <span class="nx">cyan</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nx">block</span><span class="p">;</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="mi">4</span><span class="nx">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">h1</span><span class="o">&gt;</span><span class="nx">I</span> <span class="nx">am</span> <span class="nx">a</span> <span class="nx">component</span> <span class="o">!!&lt;</span><span class="sr">/h1</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text</span><span class="dl">"</span> <span class="nx">value</span><span class="o">=</span><span class="dl">""</span> <span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span> <span class="nx">Make</span> <span class="nx">by</span> <span class="p">[[</span><span class="nx">name</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">two</span> <span class="nx">parent</span><span class="o">-</span><span class="nx">name</span><span class="o">=</span><span class="dl">""</span> <span class="o">&gt;&lt;</span><span class="sr">/polymer-element-two&gt;</span><span class="err"> 
+</span>  
+  <span class="o">&lt;</span><span class="nx">polymer</span><span class="o">-</span><span class="nx">element</span><span class="o">-</span><span class="nx">two</span> <span class="nx">parent</span><span class="o">-</span><span class="nx">name</span><span class="o">=</span><span class="dl">""</span> <span class="o">&gt;&lt;</span><span class="sr">/polymer-element-two&gt;</span><span class="err"> 
+</span>
+<span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+  <span class="kd">class</span> <span class="nx">PolymerElementOne</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+    <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element-one</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+    <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+      <span class="k">return</span> <span class="p">{</span>
+        <span class="na">name</span><span class="p">:{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+          <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Said</span><span class="dl">"</span><span class="p">,</span>
+          <span class="na">observer</span><span class="p">:</span><span class="dl">"</span><span class="s2">changedName</span><span class="dl">"</span>
+        <span class="p">},</span>
+        <span class="na">child</span><span class="p">:{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+          <span class="na">value</span><span class="p">:</span> <span class="dl">"</span><span class="s2">Luis</span><span class="dl">"</span>
+        <span class="p">}</span>
+      <span class="p">};</span>
+    <span class="p">}</span>
+    <span class="nx">changedName</span><span class="p">(</span><span class="nx">new_value</span><span class="p">,</span> <span class="nx">old_value</span><span class="p">){</span>
+      <span class="nx">console</span><span class="p">.</span><span class="nx">info</span><span class="p">(</span><span class="s2">` </span><span class="p">${</span><span class="nx">new_value</span><span class="p">}</span><span class="s2"> - </span><span class="p">${</span><span class="nx">old_value</span><span class="p">}</span><span class="s2">`</span><span class="p">)</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElementOne</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElementOne</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module</span><span class="err">&gt;
+</span>
+<span class="o">&lt;</span><span class="nx">dom</span><span class="o">-</span><span class="nx">module</span> <span class="nx">id</span><span class="o">=</span><span class="dl">"</span><span class="s2">polymer-element-two</span><span class="dl">"</span><span class="o">&gt;</span>
+<span class="o">&lt;</span><span class="nx">template</span><span class="o">&gt;</span>
+     <span class="o">&lt;</span><span class="nx">style</span><span class="o">&gt;</span>
+    <span class="p">:</span><span class="nx">host</span> <span class="p">{</span>
+      <span class="nx">background</span><span class="o">-</span><span class="na">color</span><span class="p">:</span> <span class="nx">yellow</span><span class="p">;</span>
+      <span class="nl">display</span><span class="p">:</span> <span class="nx">block</span><span class="p">;</span>
+      <span class="nl">padding</span><span class="p">:</span> <span class="mi">4</span><span class="nx">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="o">&lt;</span><span class="sr">/style</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">h2</span><span class="o">&gt;</span> <span class="nx">I</span> <span class="nx">am</span> <span class="nx">a</span> <span class="nx">second</span> <span class="nx">componente</span>  <span class="o">!!&lt;</span><span class="sr">/h2</span><span class="err">&gt;
+</span>  <span class="o">&lt;</span><span class="nx">input</span> <span class="nx">type</span><span class="o">=</span><span class="dl">"</span><span class="s2">text</span><span class="dl">"</span> <span class="nx">value</span><span class="o">=</span><span class="dl">""</span> <span class="o">&gt;</span>
+  <span class="o">&lt;</span><span class="nx">h3</span><span class="o">&gt;</span><span class="p">[[</span><span class="nx">parentName</span><span class="p">]]</span><span class="o">&lt;</span><span class="sr">/h3</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/template</span><span class="err">&gt;
+</span> <span class="o">&lt;</span><span class="nx">script</span><span class="o">&gt;</span>
+   <span class="kd">class</span> <span class="nx">PolymerElementTwo</span> <span class="kd">extends</span> <span class="nx">Polymer</span><span class="p">.</span><span class="nx">Element</span> <span class="p">{</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">is</span><span class="p">()</span> <span class="p">{</span> <span class="k">return</span> <span class="dl">"</span><span class="s2">polymer-element-two</span><span class="dl">"</span><span class="p">;</span> <span class="p">}</span>
+     <span class="kd">static</span> <span class="kd">get</span> <span class="nx">properties</span><span class="p">()</span> <span class="p">{</span>
+       <span class="k">return</span> <span class="p">{</span>   
+        <span class="na">parentName</span><span class="p">:{</span>
+          <span class="na">type</span><span class="p">:</span> <span class="nb">String</span><span class="p">,</span>
+          <span class="na">notify</span><span class="p">:</span> <span class="kc">true</span>
+        <span class="p">}</span>
+       <span class="p">}</span>
+     <span class="p">}</span>
+  <span class="p">}</span>
+  <span class="nx">customElements</span><span class="p">.</span><span class="nx">define</span><span class="p">(</span><span class="nx">PolymerElementTwo</span><span class="p">.</span><span class="nx">is</span><span class="p">,</span> <span class="nx">PolymerElementTwo</span><span class="p">);</span>
+<span class="o">&lt;</span><span class="sr">/script</span><span class="err">&gt;
+</span><span class="o">&lt;</span><span class="sr">/dom-module&gt;</span><span class="err"> 
+</span></code></pre></div></div>
+
+<h1 id="polymer-1">Polymer 1</h1>
+
+<p>https://codepen.io/saidmlx/pen/gyyLQW?editors=1000</p>
+
+<p>https://codepen.io/saidmlx/pen/WzGxyX?editors=1000</p>
+
+<p>https://codepen.io/saidmlx/pen/YvLxYB</p>
+
+:ET
