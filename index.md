@@ -8,4 +8,8 @@ layout: root
 
 {%- include portfolio.html-%}
 
+
+
+{%- include readings.html-%}
+
 {%- include whereiam.html-%}

@@ -1,0 +1,18 @@
+
+.readings{
+  border-top: 1px solid whitesmoke;
+  padding-top: 32px;
+  .module-line {
+    background: #49e2d6;
+    width: 55px;
+    height: 1px;
+    margin: 30px auto;
+  }
+  h1{
+    text-align: center;
+  }
+  .readings-content{
+  display: grid;
+  grid-template-columns: 1fr 2fr 1fr 2fr;
+  grid-gap: 16px;}
+}

@@ -2,8 +2,8 @@
 layout: post
 title: Crear un Azure Load Balancer
 date: 2019-09-09 12:00:00 
-categories: Azure 
-tags: LoadBalancer IaaS
+categories: Azure Linux
+tags: [Load Balancer, IaaS]
 ---
 
 Azure Load Balancer nos ayuda a crear una arquitectura de alta disponibilidad.
